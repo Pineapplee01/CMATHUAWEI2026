@@ -48,5 +48,14 @@ def test_two_stage_training_checkpoint_and_evaluation(tmp_path, smoke):
     assert evaluation["training_provenance"]["used_valid"] == (3 if smoke else 4)
     assert all(c["metrics"]["n"] == 4 for c in evaluation["conditions"])
     assert len(evaluation["conditions"]) == 3
+    assert evaluation["protocol_version"] == "e-competition-v1"
+    for condition in evaluation["conditions"]:
+        assert condition["output_adapter"]["clip"] == [-3, 3]
+        for row in condition["predictions"]:
+            assert row["polarity"] in {"Negative", "Neutral", "Positive"}
+            assert row["intensity"] == np.clip(row["raw_intensity"], -3, 3)
+        from e_emotion.evaluation import score_records
+        truth = [{"id": row["id"], "intensity": row["target"]} for row in condition["predictions"]]
+        assert score_records(truth, condition["predictions"]) == condition["metrics"]["competition"]
     with pytest.raises(FileExistsError):
         train_run(config, output, device="cpu", project_root=tmp_path)

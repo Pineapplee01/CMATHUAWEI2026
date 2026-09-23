@@ -9,6 +9,8 @@ from typing import Sequence
 
 from e_emotion.config import ConfigError, load_config
 from e_emotion.data import inspect_data_root, validate_data_root
+from e_emotion.data.paths import DataPathPolicy
+from e_emotion.evaluation import read_records_csv, score_records
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -23,6 +25,11 @@ def build_parser() -> argparse.ArgumentParser:
     run = subparsers.add_parser("run", help="reserved task-domain execution entry point")
     run.add_argument("task", choices=("alignment", "robustness", "explainability"))
     run.add_argument("--config", default="configs/base.yaml", type=Path)
+    score = subparsers.add_parser("score", help="score final prediction CSV without modifying predictions")
+    score.add_argument("--config", default="configs/base.yaml", type=Path)
+    score.add_argument("--truth", required=True, type=Path, help="label CSV inside project data/")
+    score.add_argument("--predictions", required=True, type=Path)
+    score.add_argument("--output", type=Path, help="optional new JSON report inside artifacts/")
     return parser
 
 
@@ -33,6 +40,23 @@ def main(argv: Sequence[str] | None = None) -> int:
     except ConfigError as exc:
         print(f"configuration error: {exc}")
         return 2
+    if args.command == "score":
+        try:
+            labels = DataPathPolicy(config.project_root / "data").require_file(
+                config.project_root / args.truth)
+            report = score_records(read_records_csv(labels),
+                                   read_records_csv(config.project_root / args.predictions))
+            rendered = json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False)
+            if args.output:
+                output = DataPathPolicy(config.output_root).resolve(config.project_root / args.output)
+                output.parent.mkdir(parents=True, exist_ok=True)
+                with output.open("x", encoding="utf-8") as handle:
+                    handle.write(rendered)
+            print(rendered)
+            return 0
+        except (ValueError, OSError) as exc:
+            print(f"scoring error: {exc}")
+            return 2
     if args.command == "inspect-data":
         print(json.dumps(inspect_data_root(config.data_root), ensure_ascii=False, indent=2))
         return 0

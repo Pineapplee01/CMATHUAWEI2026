@@ -28,7 +28,7 @@ def test_polarity_keeps_zero_as_neutral_and_pearson_undefined():
     assert result["accuracy_3"] == 1
     assert result["macro_f1_3"] == 1
     assert metrics(np.zeros(3), np.zeros(3))["pearson"] is None
-    assert select_neutral_threshold(np.array([-1., 0., 1.]), np.array([-.8, .1, .9])) >= .1
+    assert select_neutral_threshold(np.array([-1., 0., 1.]), np.array([-.8, .1, .9]), split="valid") >= .1
 
 
 def test_path_escape_is_rejected(tmp_path):
@@ -59,3 +59,15 @@ def test_train_only_scaling_and_no_sample_drop(tmp_path):
     assert audit["split_sizes"] == {"train": 2, "valid": 2, "test": 2}
     assert datasets["train"][0]["valid"]["text"].sum() == 3
     assert torch.count_nonzero(datasets["train"][0]["features"]["text"][3:]) == 0
+
+
+def test_aumdf_scoring_does_not_silently_clip():
+    with pytest.raises(ValueError, match="range"):
+        metrics(np.array([-3., 0., 3.]), np.array([-4., 0., 4.]))
+
+
+def test_aumdf_metrics_delegate_to_shared_protocol():
+    result = metrics(np.array([-1., 0., 1.]), np.array([-1., .1, 1.]), threshold=.1)
+    assert result["protocol_version"] == "e-competition-v1"
+    assert result["competition"]["accuracy"] == result["accuracy_3"] == 1
+    assert result["competition"]["mae"] == result["mae"]

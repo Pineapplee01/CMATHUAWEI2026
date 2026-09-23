@@ -11,5 +11,7 @@
 - [Python 规范](code_styleguides/python.md)
 - [系统架构](../docs/architecture/overview.md)
 - [数据契约](../docs/data/contract.md)
+- [独立竞赛需求](../docs/evaluation/requirements.md)
+- [统一评分协议](../docs/evaluation/protocol.md)
 - [术语表](../UBIQUITOUS_LANGUAGE.md)
 - [参考论文与方法汇总](../references/reference.md)

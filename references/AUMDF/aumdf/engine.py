@@ -13,6 +13,9 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader, Subset
 
+from e_emotion.evaluation import adapt_output, prediction_rows, score_records
+from e_emotion.evaluation.outputs import PROTOCOL_VERSION
+
 from aumdf.data import PROJECT_ROOT, load_attachment2, resolve_data_path
 from aumdf.losses import DistillationLoss, freeze_teacher
 from aumdf.metrics import metrics, select_neutral_threshold
@@ -74,10 +77,11 @@ def predict(model, loader, device, rate=0.0, mode="random", seed=2026, modalitie
     for batch in loader:
         x, valid, observed, y = transfer(batch, device, rate, mode, generator, modalities)
         output = model(x, valid, observed)
-        predictions.extend(output.score.clamp(-3,3).cpu().tolist())
+        predictions.extend(output.score.cpu().tolist())
         targets.extend(y.cpu().tolist())
         ids.extend(batch["id"])
-    return np.asarray(targets), np.asarray(predictions), ids
+    adapted = adapt_output(predictions)
+    return np.asarray(targets), adapted.intensity, ids, adapted.raw_intensity
 
 
 def save_checkpoint(path, model, criterion, config, scaler, stage, epoch, validation_score,
@@ -87,6 +91,7 @@ def save_checkpoint(path, model, criterion, config, scaler, stage, epoch, valida
                "model_config": asdict(model.config), "config": config, "scaler": scaler,
                "stage": stage, "epoch": epoch, "validation_score": validation_score,
                "neutral_threshold": threshold, "implementation": "independent_competition_adaptation"}
+    payload["scoring_protocol_version"] = PROTOCOL_VERSION
     payload["training_provenance"] = dict(run_metadata or {})
     temporary = path.with_suffix(".tmp")
     torch.save(payload, temporary)
@@ -208,11 +213,11 @@ def train_run(config, output_dir, device="auto", project_root=PROJECT_ROOT,
                     count += n
                     for key,value in losses.items():
                         sums[key] = sums.get(key,0.0) + float(value.detach())*n
-                y,p,_ = predict(model,loaders["valid"],device,seed=seed+1000)
+                y,p,_,_ = predict(model,loaders["valid"],device,seed=seed+1000)
                 clean = metrics(y,p)
                 damaged = None
                 if stage=="student":
-                    yy,pp,_ = predict(model,loaders["valid"],device,validation_rate,mode,seed+1000)
+                    yy,pp,_,_ = predict(model,loaders["valid"],device,validation_rate,mode,seed+1000)
                     damaged = metrics(yy,pp)
                 selection = (clean["mae"]+damaged["mae"])/2 if damaged else clean["mae"]
                 if selection < best:
@@ -231,15 +236,15 @@ def train_run(config, output_dir, device="auto", project_root=PROJECT_ROOT,
                 if epoch-best_epoch >= int(training.get("patience",20)):
                     break
             best_model,checkpoint = restore(output/(stage+".pt"),device)
-            y,p,_ = predict(best_model,loaders["valid"],device,seed=seed+1000)
-            threshold = select_neutral_threshold(y,p)
+            y,p,_,_ = predict(best_model,loaders["valid"],device,seed=seed+1000)
+            threshold = select_neutral_threshold(y,p,split="valid")
             checkpoint["neutral_threshold"] = threshold
             torch.save(checkpoint,output/(stage+".pt"))
             summary[stage] = {"epochs_completed":completed,"best_epoch":best_epoch,
                               "selection_mae":best,"valid_clean":metrics(y,p,threshold),
                               "seconds":time.monotonic()-stage_start}
             if stage=="student":
-                yy,pp,_ = predict(best_model,loaders["valid"],device,validation_rate,mode,seed+1000)
+                yy,pp,_,_ = predict(best_model,loaders["valid"],device,validation_rate,mode,seed+1000)
                 summary[stage]["valid_missing"] = metrics(yy,pp,threshold)
             summary["stages"].append(stage)
         summary["seconds"] = time.monotonic()-start
@@ -275,14 +280,22 @@ def evaluate_checkpoint(checkpoint_path, split="valid", device="auto", project_r
             for keep in itertools.combinations(MODALITIES,size):
                 plans.append(("only_"+"_".join(keep),1.0,"whole",tuple(m for m in MODALITIES if m not in keep)))
     for name,rate,mode,modalities in plans:
-        y,p,ids=predict(model,loader,device,rate,mode,seed,modalities)
-        conditions.append({"name":name,"rate":rate,"mode":mode,"metrics":metrics(y,p,threshold),
-                           "predictions":[{"id":i,"target":float(a),"intensity":float(b)}
-                                          for i,a,b in zip(ids,y,p)]})
+        y,p,ids,raw=predict(model,loader,device,rate,mode,seed,modalities)
+        adapted = adapt_output(raw, threshold=threshold)
+        rows = prediction_rows(ids, adapted)
+        truth = [{"id": sample_id, "intensity": float(target)} for sample_id, target in zip(ids,y)]
+        scores = metrics(y,p,threshold)
+        # Score the very same records that run.py exports, including exact ID coverage.
+        scores["competition"] = score_records(truth, rows)
+        for row, target in zip(rows,y):
+            row["target"] = float(target)
+        conditions.append({"name":name,"rate":rate,"mode":mode,"metrics":scores,
+                           "output_adapter":adapted.metadata,"predictions":rows})
     evaluation_scope = {"smoke_only":"smoke_evaluation",
                         "competition_subset_reproduction":"competition_subset_evaluation"}.get(
                             provenance["scope"], "unknown_training_scope")
-    return {"checkpoint":str(path),"checkpoint_sha256":sha256(path),"split":split,
+    return {"protocol_version":PROTOCOL_VERSION,
+            "checkpoint":str(path),"checkpoint_sha256":sha256(path),"split":split,
             "scope":evaluation_scope,"training_provenance":provenance,
             "neutral_threshold_source":"best checkpoint clean valid",
             "conditions":conditions,"data_audit":audit}

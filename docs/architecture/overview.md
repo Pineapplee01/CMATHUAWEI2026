@@ -32,3 +32,7 @@ flowchart LR
 ## CodeGraph 验收
 
 骨架完成后运行 `codegraph init .`、`codegraph status` 和 `codegraph files`；后续大改动用 `codegraph impact` 检查公共契约影响范围。
+
+## 预测评分边界
+
+问题2/3及参考基线的输出进入 `evaluation.outputs`（固定反归一化、截断和极性适配），生成最终记录；`evaluation.records`负责CSV和ID覆盖，`evaluation.scoring`只计算最终值。评分模块不依赖模型或PyTorch。题面与团队细则分别记录于 [独立需求](../evaluation/requirements.md)，决策见 [ADR-003](../decisions/ADR-003-unified-scoring.md)。

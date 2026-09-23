@@ -30,7 +30,7 @@ python -m pytest -c references/AUMDF/pyproject.toml references/AUMDF/tests -q
 python references/AUMDF/run.py --help
 ```
 
-无需安装本包；run.py以本目录的aumdf包为入口。
+无需安装本包；run.py以本目录的aumdf包为入口，并加载项目共享src。作为库导入aumdf时，需同时安装根项目（`pip install -e .`）或把根src加入PYTHONPATH。
 
 ## 数据与输出
 
@@ -80,6 +80,8 @@ python references/AUMDF/run.py evaluate --checkpoint artifacts/aumdf/RUN/student
 
 默认评估完整输入及0.1/0.3/0.5/0.7随机位置、连续区间缺失；`--whole-modalities`另加六种非完整模态组合。中性阈值从检查点载入，评估不重新调阈值。报告中的预测保留样本ID，按条件分组，避免混用协议。
 
+自统一评分协议e-competition-v1起，强度截断仅发生在共享输出适配层。评分入口不再裁剪，常数Pearson为null，统一指标见 `metrics.competition`。JSON记录包含raw_intensity、intensity与polarity，同时向输出JSON同名目录导出各条件CSV，保持评分／导出一致。旧指标字段为兼容别名；二分类／七分类属于paper_diagnostics。规则及官方／团队边界见 [评分协议](../../docs/evaluation/protocol.md)。历史运行报告和权重保持原样。
+
 ## 产物与判断边界
 
 每次训练输出：
@@ -99,7 +101,7 @@ aumdf/
   losses.py       CSD / SRD / QKV regularization
   missingness.py  random / block / whole protocols
   data.py         restricted input / masks / train-only scaler
-  metrics.py      MAE / Pearson / 3-class / paper-style metrics
+  metrics.py      shared competition scorer adapter / paper diagnostics
   engine.py       teacher-student training / frozen evaluation
 configs/adapted.yaml
 tests/

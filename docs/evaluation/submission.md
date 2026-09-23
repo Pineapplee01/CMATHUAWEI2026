@@ -1,5 +1,7 @@
 # 评价与提交约束
 
+权威需求拆解见 [requirements.md](requirements.md)，预测输出与评分细则见 [protocol.md](protocol.md)。本文为摘要，不替代题面。
+
 ## 指标
 
 - 分类：Accuracy、F1。

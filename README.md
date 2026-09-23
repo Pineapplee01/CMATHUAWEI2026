@@ -22,6 +22,8 @@ e-emotion validate-data --config configs/base.yaml
 pytest
 ```
 
-问题2和问题3的 `dataset.variant` 必须明确填写 `aligned` 或 `unaligned` 后再运行。当前初始化只提供契约、校验器和任务接口，不包含模型训练。
+问题2和问题3的 `dataset.variant` 必须明确填写 `aligned` 或 `unaligned` 后再运行。共享核心提供契约、校验器、评分和任务接口；已有 [AUMDF赛题适配基线](references/AUMDF/README.md)，不代表三项任务均已完成。
+
+独立的 [竞赛需求清单](docs/evaluation/requirements.md) 区分官方规则与团队约定。所有基线应接入 [统一评分层](docs/evaluation/protocol.md)：输出适配时固定截断，评分时不改预测。使用 `python -m e_emotion score --help` 查看跨模型CSV评分入口。
 
 术语约束见 [UBIQUITOUS_LANGUAGE.md](UBIQUITOUS_LANGUAGE.md)，项目上下文见 [conductor/index.md](conductor/index.md)。
