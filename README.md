@@ -1,0 +1,27 @@
+# 2026年中国研究生数学建模竞赛 E题
+
+本项目面向“复杂场景下多模态情感预测的数学建模与算法设计”，采用共享核心与三任务域结构：
+
+1. 问题1：多模态特征提取与时序对齐；
+2. 问题2：局部模态缺失下的鲁棒情感预测；
+3. 问题3：可解释多模态情感预测。
+
+## 初始化环境
+
+```powershell
+conda env create -f environment.yml
+conda activate cmath-e2026
+python -m pip install -e ".[data,visualization,test]"
+```
+
+将题目附件完整复制到 `data/raw/` 后，执行数据探针：
+
+```powershell
+e-emotion inspect-data --config configs/base.yaml
+e-emotion validate-data --config configs/base.yaml
+pytest
+```
+
+问题2和问题3的 `dataset.variant` 必须明确填写 `aligned` 或 `unaligned` 后再运行。当前初始化只提供契约、校验器和任务接口，不包含模型训练。
+
+术语约束见 [UBIQUITOUS_LANGUAGE.md](UBIQUITOUS_LANGUAGE.md)，项目上下文见 [conductor/index.md](conductor/index.md)。

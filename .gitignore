@@ -1,0 +1,35 @@
+# Competition data and generated artifacts
+data/*
+!data/README.md
+!data/raw/
+data/raw/*
+!data/raw/.gitkeep
+E题数据/
+*.docx
+artifacts/
+models/
+logs/
+*.ckpt
+*.pth
+*.pt
+*.onnx
+
+# Local tooling caches
+.codegraph/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+__pycache__/
+*.py[cod]
+
+# Existing third-party research snapshots kept outside this project
+CMAD/
+EMOE/
+HyperDiff/
+P-RMF/
+
+# Local environments and editor files
+.venv/
+*.egg-info/
+.idea/
+.vscode/

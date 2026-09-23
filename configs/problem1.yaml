@@ -1,0 +1,7 @@
+project: e_emotion
+seed: 2026
+dataset:
+  data_root: data/raw
+  variant: null
+  source: attachment1
+output_root: artifacts/problem1
