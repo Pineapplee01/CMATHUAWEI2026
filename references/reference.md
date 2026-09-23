@@ -403,6 +403,19 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 - 本文件是文献与方法索引，不代替逐篇精读、引用审计或本题实验结果。
 - 本次没有改动四套参考算法，也没有新增模型训练或专项测试预测。
 
+## 10.1 本题建议的对比方法簇
+
+图片中的 `EF-LSTM / MulT / P-RMF / CMAD` 已补齐为四个互补簇，而不是四个平行的“最高分模型”：
+
+| 簇 | 代表方法 | 解释的差异 | 输入与本地证据 |
+| --- | --- | --- | --- |
+| 直接融合 | Concat-MLP、EF-LSTM、Early Fusion + GRU | 只做池化/逐位置拼接，检验多模态信息是否本身有收益 | EF-LSTM在 `MMSA`；Concat-MLP/GRU为待实现控制组 |
+| 非对齐交互 | MulT | 用方向性跨模态注意替代显式对齐 | `MMSA/MULT.py`；作者 [yaohungt/Multimodal-Transformer](https://github.com/yaohungt/Multimodal-Transformer)，MIT |
+| 不完整输入鲁棒 | P-RMF、Masked-Train、CMAD、AUMDF | 区分代理重构、连续缺失增强、教师—学生蒸馏和动态融合 | P-RMF/CMAD本地快照；AUMDF为本项目适配实现 |
+| 动态/可解释交互 | Graph-MFN/DFG、EMOE、置换/遮挡归因 | 检验动态权重是否真能解释决策，而非只展示注意力 | Graph-MFN/DFG在 `MMSA`/`CMU-MultimodalSDK`；EMOE在本地 |
+
+首轮最小集合为 `Text-only → Concat-MLP → EF-LSTM → MulT → P-RMF或CMAD → AUMDF/Ours`；问题3将Graph-MFN/DFG加入解释对照。完整的输入版本、缺失矩阵、代码状态、指标和停止条件见 [baseline-clusters.md](../docs/experiments/baseline-clusters.md)。
+
 ## 11. 代码公开与本地保存核验（2026-09-23）
 
 本节补充并更新前文的代码可用性信息。**公开仓库存在、存在实际源码、具有完整开源许可证、已完成复现是四件不同的事。** 本次没有执行第三方实现。
