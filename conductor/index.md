@@ -13,6 +13,6 @@
 - [数据契约](../docs/data/contract.md)
 - [独立竞赛需求](../docs/evaluation/requirements.md)
 - [统一评分协议](../docs/evaluation/protocol.md)
-- [对比方法簇与实验协议](../docs/experiments/baseline-clusters.md)
+- [对比方法簇与实验协议](../references/reference.md#101-对比方法簇与统一实验协议)
 - [术语表](../UBIQUITOUS_LANGUAGE.md)
 - [参考论文与方法汇总](../references/reference.md)

@@ -4,7 +4,7 @@
 
 完整的论文名称、链接、方法总结、与三项任务的关系，以及本次检索得到的其他方法，见 [reference.md](reference.md)。该汇总区分已发表文献、预印本、摘要级线索与工程适配建议。
 
-方法对比不按作者公开分数直接排序。针对本题的最小基线集合、`aligned/unaligned`适配边界、连续局部缺失矩阵和问题3解释验证，见 [对比方法簇实验协议](../docs/experiments/baseline-clusters.md)。
+方法对比不按作者公开分数直接排序。针对本题的最小基线集合、`aligned/unaligned`适配边界、连续局部缺失矩阵和问题3解释验证，见 [reference.md中的对比方法簇实验协议](reference.md#101-对比方法簇与统一实验协议)。
 
 代码可用性核验后，又新增14个源码仓库，与原有4套合计18个第三方代码目录。完整状态、许可证和来源见 [reference.md 第11节](reference.md#11-代码公开与本地保存核验2026-09-23)，提交号与文件统计见 [code_manifest.json](code_manifest.json)。CmIR、SeRIn、ProMMA目前仅有占位仓库，未当作源码下载。
 
