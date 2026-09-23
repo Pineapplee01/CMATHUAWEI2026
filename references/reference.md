@@ -2,7 +2,7 @@
 
 > 整理及核验日期：2026-09-23。面向“复杂场景下多模态情感预测的数学建模与算法设计”。
 >
-> 本文汇总本地保存的4套参考实现，以及本次论文阅读和网络检索所得方法：18篇核心文献逐篇总结，14篇补充线索作摘要级归纳，并记录2018年数据集论文中的经典基线。
+> 本文汇总最初本地保存的4套参考实现，以及本次论文阅读和网络检索所得方法：18篇核心文献逐篇总结，14篇补充线索作摘要级归纳，并记录2018年数据集论文中的经典基线。后续新增源码下载、许可与逐篇可用性见第11节。
 >
 > **来源、核验深度、性能结论分开记录。** 被赛题列为参考文献不等于被指定为必用模型，也不等于当前所有协议下的SOTA。以下方法未在本项目中完成训练复现。
 
@@ -27,8 +27,8 @@
 | [4] | CMAD | [CMAD/](CMAD/) | 官方参考文献中的缺失模态蒸馏方法 |
 | [5] | Proxy-Driven Robust Multimodal Sentiment Analysis with Incomplete Data | [P-RMF/](P-RMF/) | 官方参考文献中的不完整输入融合方法 |
 | [7] | EMOE | [EMOE/](EMOE/) | 官方参考文献中的动态模态专家方法 |
-| [6] | Learning Invariant Modality Representation…（CmIR） | 未在本次目录检查中发现 | 本次补充查阅，同时也是题面参考文献 |
-| [9] | CaReFlow | 未在本次目录检查中发现 | 本次补充查阅，同时也是题面参考文献 |
+| [6] | Learning Invariant Modality Representation…（CmIR） | 作者仓库仅占位，未下载 | 本次补充查阅，同时也是题面参考文献 |
+| [9] | CaReFlow | [CaReFlow/](CaReFlow/) | 已下载源码，同时也是题面参考文献 |
 
 本地四套实现来自用户按赛题参考索引保存的资料。论文身份与赛题对应已核对，但尚未逐一核对本地快照和上游Git提交的一致性。第三方代码目录按当前Git规则忽略；本汇总文档独立跟踪。表中的目录链接用于本地浏览，远程仓库可能不包含这些目录。
 
@@ -152,7 +152,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### R08. CmIR
 
 - **论文**：*Learning Invariant Modality Representation for Robust Multimodal Learning from a Causal Inference Perspective*，ACL 2026，题面[6]。
-- **链接**：[正式论文](https://aclanthology.org/2026.acl-long.2119/)；[作者代码](https://github.com/TmacMai/CmIR)。
+- **链接**：[正式论文](https://aclanthology.org/2026.acl-long.2119/)；[作者占位仓库](https://github.com/TmacMai/CmIR)。2026-09-23检查只有README，无模型源码，未下载为可复现实现。
 - **方法总结**：将模态表示解耦为因果不变部分和环境相关的伪相关部分，结合不变性、互信息及重构约束，尝试在分布偏移和噪声条件下保持与标签稳定相关的信息。
 - **与E题关联**：适合Q2的噪声／泛化鲁棒性对照；可启发Q3对伪相关的分析，但“采用因果建模”不等于每个解释片段都具有可识别的因果效应。
 - **证据与限制**：已核对表1：MOSEI Acc2=87.8%、F1=87.7%、MAE=0.513、Corr=0.793。分布外与噪声实验不能直接代表本题连续区间缺失。
@@ -170,7 +170,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### R10. QA-MoE
 
 - **论文**：*QA-MoE: Towards a Continuous Reliability Spectrum with Quality-Aware Mixture of Experts for Robust Multimodal Sentiment Analysis*，ACL 2026。
-- **链接**：[正式论文](https://aclanthology.org/2026.acl-long.1461/)。未核实作者代码入口；检索到的同名临床多模态仓库不能自动认定为本论文代码。
+- **链接**：[正式论文](https://aclanthology.org/2026.acl-long.1461/)；[论文对应仓库](https://github.com/U235-Aurora/QA-MoE)；[已下载源码](QA-MoE/)。README引用完整题名和arXiv编号；不是同名临床多模态仓库。许可说明见第11节。
 - **方法总结**：用连续可靠性谱统一描述模态缺失与质量下降，通过自监督的偶然不确定性估计引导专家路由，抑制不可靠信号的误差传播。论文讨论一个检查点覆盖多种退化场景的能力。
 - **与E题关联**：与Q2自适应利用残存信息的目标一致，对Q3也提供可靠性分析思路。
 - **证据与限制**：正文区分干净数据比较、固定模态缺失与其他退化协议；不能把其中某个协议的优势泛化到所有缺失场景。
@@ -188,7 +188,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### R12. CACR
 
 - **论文**：*Conflict-Aware Adaptive Cross-Reconstruction for Multimodal Sentiment Analysis*，CVPR 2026。
-- **链接**：[正式论文](https://openaccess.thecvf.com/content/CVPR2026/html/Wang_Conflict-Aware_Adaptive_Cross-Reconstruction_for_Multimodal_Sentiment_Analysis_CVPR_2026_paper.html)。未核实作者代码入口。
+- **链接**：[正式论文](https://openaccess.thecvf.com/content/CVPR2026/html/Wang_Conflict-Aware_Adaptive_Cross-Reconstruction_for_Multimodal_Sentiment_Analysis_CVPR_2026_paper.html)；[作者声明的官方代码](https://github.com/wwwwwyyyy559/Conflict-Aware-Adaptive-Cross-Reconstruction-for-Multimodal-Sentiment-Analysis)；[已下载源码](CACR/)。
 - **方法总结**：显式计算模态情感冲突分数并转换为跨重构权重；用目标模态的私有特征与其他模态的共享特征重构目标，降低冲突输入对共享语义的扭曲；再提取音视频特异的细粒度线索补充文本。
 - **与E题关联**：可检验模态相互矛盾时的预测稳定性；与Q2“信息缺失”有关但并非同一问题，对Q3错误归因也有价值。
 - **证据与限制**：正文采用BERT 768维、Facet 35维、COVAREP 74维；MOSEI表2报告Acc2=85.37%、MAE=0.532。维度接近附件2，但不能因此断言逐维语义完全一致。
@@ -197,7 +197,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### R13. MMRest
 
 - **论文**：*Multi-Metric Representation Learning Strategy Based on Clustering for Fine-Grained Multimodal Sentiment Analysis*，CVPR 2026。
-- **链接**：[正式论文](https://openaccess.thecvf.com/content/CVPR2026/html/Wang_Multi-Metric_Representation_Learning_Strategy_Based_on_Clustering_for_Fine-Grained_Multimodal_CVPR_2026_paper.html)。代码可用性未核验。
+- **链接**：[正式论文](https://openaccess.thecvf.com/content/CVPR2026/html/Wang_Multi-Metric_Representation_Learning_Strategy_Based_on_Clustering_for_Fine-Grained_Multimodal_CVPR_2026_paper.html)；[作者声明的官方代码](https://github.com/hurriedpi/MMRest)；[已下载源码](MMRest/)。
 - **方法总结**：针对不同情感类别中心重叠，利用聚类同时学习全局度量与局部度量，让相似情感接近、不同情感远离；投影与决策层融合（PDLF）将度量投影结果和单／多模态融合分数结合，得到最终预测。
 - **与E题关联**：可用于连续强度和细粒度情感边界的对照；不直接解决局部缺失或原始素材定位。
 - **证据与限制**：本次为正式摘要级核验，不以摘要中的优越性声明认定其在统一协议下排名第一。
@@ -206,7 +206,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### R14. EBMC
 
 - **论文**：*Enhance-then-Balance Modality Collaboration for Robust Multimodal Sentiment Analysis*，CVPR 2026。
-- **链接**：[正式论文](https://openaccess.thecvf.com/content/CVPR2026/html/He_Enhance-then-Balance_Modality_Collaboration_for_Robust_Multimodal_Sentiment_Analysis_CVPR_2026_paper.html)；[预印本](https://arxiv.org/abs/2604.12518)。未核实作者代码入口。
+- **链接**：[正式论文](https://openaccess.thecvf.com/content/CVPR2026/html/He_Enhance-then-Balance_Modality_Collaboration_for_Robust_Multimodal_Sentiment_Analysis_CVPR_2026_paper.html)；[预印本](https://arxiv.org/abs/2604.12518)；[代码仓库](https://github.com/kangverse/EBMC)；[已下载源码](EBMC/)。使用CC-BY-NC-4.0非商业许可。
 - **方法总结**：先通过模态语义解耦（MSD）与跨模态互补增强（CCE）强化弱模态，再用能量引导的模态协调（EMC）缓解训练竞争；实例级可信蒸馏（IMTD）估计样本级可靠性并调节融合。
 - **与E题关联**：适合Q2弱模态、噪声和缺失场景，也可与EMOE比较不同动态融合机制。
 - **证据与限制**：本次依据正式摘要归纳，缺失生成方式、损失细节和开销尚待正文／代码精读。
@@ -237,7 +237,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### R17. SeRIn
 
 - **论文**：*Segregate, Refine, Integrate: Decomposing Multimodal Fusion for Sentiment Analysis*，arXiv，2026-07。
-- **链接**：[论文](https://arxiv.org/abs/2607.12686)；[HTML全文](https://arxiv.org/html/2607.12686v1)；[作者代码](https://github.com/alexisfilippakopoulos/SeRIn-MSA)。
+- **链接**：[论文](https://arxiv.org/abs/2607.12686)；[HTML全文](https://arxiv.org/html/2607.12686v1)；[作者占位仓库](https://github.com/alexisfilippakopoulos/SeRIn-MSA)。2026-09-23检查只有README，无模型源码。
 - **方法总结**：让模态特异信息沿相互隔离的路径演化，各自对编码器上下文做精炼；独立跨模态路径收集联合信息，在最终预测阶段进行充分交互，减少过早融合造成的单模态信息污染。
 - **与E题关联**：适合完整输入融合和模态干扰的比较，可研究其门控对视觉退化的响应；仍需额外实现时间证据输出。
 - **证据与限制**：表1报告MOSEI Acc2=87.79%、F1=87.78%、MAE=0.493、Corr=0.810、Acc7=56.52，论文称五次运行平均。其MOSEI实验使用GPT2-large相关配置，不能与BERT特征方法无条件横比。
@@ -266,7 +266,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### S02. VG-TPT
 
 - **论文**：*Vision-Guided Text Prompt Tuning for Multimodal Sentiment Analysis*（2026-09）。
-- **链接**：[论文](https://arxiv.org/abs/2609.06497)。
+- **链接**：[论文](https://arxiv.org/abs/2609.06497)；[论文指向的仓库](https://github.com/ma-tubu/VG-TPT)；[已下载源码](VG-TPT/)。
 - **方法总结**：冻结BERT，通过视觉引导的逐层自适应提示校准文本表示；路由器依据文本状态和视觉信息组合提示库，减少全量微调。
 - **本题价值／限制**：可参考轻量适配和文本—视觉交互；主要是双模态路线，不能直接覆盖三模态要求。少量可训练参数不代表小的完整模型。
 
@@ -287,14 +287,14 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### S05. SentiLLM
 
 - **论文**：*Semantic-Aligned Structural Abstraction for Multimodal Sentiment Analysis*（2026-07）。
-- **链接**：[论文](https://arxiv.org/abs/2607.27790)。
+- **链接**：[论文](https://arxiv.org/abs/2607.27790)；[论文指向的仓库](https://github.com/especiallyW/SentiLLM)；[已下载源码](SentiLLM/)。
 - **方法总结**：把音视频序列分为情感显著变化的焦点流和稳定背景的环境流，通过两者校准形成语义紧凑的表示，再投射为LLM可使用的token。
 - **本题价值／限制**：可启发Q3局部变化与背景的区分；需核对其显著性输出是否能忠实地映射真实时间。
 
 ### S06. MRUF
 
 - **论文**：*MRUF: Multi-granularity Routing with Uncertainty-Aware Fusion for Robust Multimodal Sentiment Analysis*（2026-07）。
-- **链接**：[论文](https://arxiv.org/abs/2607.10599)。
+- **链接**：[论文](https://arxiv.org/abs/2607.10599)；[代码仓库](https://github.com/ICIG/MRUF)；[已下载源码](MRUF/)。
 - **方法总结**：在子空间和模态两个层级路由，利用移除模态后的误差增量监督模态重要性，再用模态不确定性的逆方差校准门控，并以对比约束稳定共享表示。
 - **本题价值／限制**：与Q2可靠性融合、Q3贡献验证相关；训练阶段的重要性监督与推理阶段可获得信息必须分开。
 
@@ -308,14 +308,14 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### S08. 可靠性置换诊断
 
 - **论文**：*When Does Quality-Aware Multimodal Fusion Matter? A Leakage-Safe Diagnostic for Decision-Level Dependence*（2026-06）。
-- **链接**：[论文](https://arxiv.org/abs/2606.26473)。
+- **链接**：[论文](https://arxiv.org/abs/2606.26473)；[对应代码仓库](https://github.com/jadenmoon27/quality-aware-fusion-diagnostic)；[已下载源码](quality-aware-fusion-diagnostic/)。
 - **方法总结**：固定训练后的模型与输入，只跨样本打乱可靠性分数，检查预测是否改变，从而测试模型是否真正使用可靠性信息。
 - **本题价值／限制**：适合验证Q3的模态贡献／可靠性展示是否有预测作用；属于诊断协议，不是新的预测SOTA。
 
 ### S09. 原生全模态LLM的判别式读出
 
 - **论文**：*Beyond Generative Decoding: Discriminative Hidden-State Readout from a Native Omni-Modal LLM for Multimodal Sentiment Analysis*（2026-06）。
-- **链接**：[论文](https://arxiv.org/abs/2606.05713)。
+- **链接**：[论文](https://arxiv.org/abs/2606.05713)；[对应代码仓库](https://github.com/GawaineXiukkie/DiscRead-MSA)；[已下载源码](DiscRead-MSA/)。
 - **方法总结**：以Qwen2.5-Omni-7B为骨干，从最后有效token的隐藏状态直接回归连续分数，使用QLoRA训练；与生成文本分数的读出方式做受控比较。
 - **本题价值／限制**：可参考连续预测头设计；使用原始音视频的大模型流程与附件2固定特征流程不同，计算及交付成本显著。
 
@@ -329,7 +329,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### S11. 双层参考对齐控制决策漂移
 
 - **论文**：*Controlling Decision Drift in Multimodal Sentiment Analysis with Missing Modalities*（2026-05）。
-- **链接**：[论文](https://arxiv.org/abs/2605.16889)。
+- **链接**：[论文](https://arxiv.org/abs/2605.16889)；[论文脚注入口重定向后的TLRA仓库](https://github.com/liuxy1005/TLRA)；[已下载源码](TLRA/)。
 - **方法总结**：在表示层用完整模态样本提供稳定参考，在决策层通过原型检索与投票压制不可靠模态，减少不同缺失组合间的预测漂移。
 - **本题价值／限制**：适合Q2表示恢复与决策一致性的对照；必须核对原型库仅来自训练集，不能包含专项测试标签或隐含真值。
 
@@ -343,7 +343,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### S13. ProMMA／Prompt-based Missing Modality Adaptation
 
 - **论文**：*Evaluation Before Generation: A Paradigm for Robust Multimodal Sentiment Analysis with Missing Modalities*（2026-04）。
-- **链接**：[论文](https://arxiv.org/abs/2604.05558)。
+- **链接**：[论文](https://arxiv.org/abs/2604.05558)；[作者占位仓库](https://github.com/rongfei-chen/ProMMA)。2026-09-23检查只有README、LICENSE与.gitignore，未发布模型源码。
 - **方法总结**：先估计缺失模态是否值得生成，再进行共享／私有提示解耦、动态提示加权和多层残差连接，降低低质量补全的干扰。ProMMA为摘要中实现仓库所使用的名称。
 - **本题价值／限制**：Q2中“是否补全”的策略参考；伪标签、预训练模型及提示机制的来源要按赛题数据边界审核。
 
@@ -402,3 +402,86 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 - 新的SOTA判断必须指定数据划分、输入特征／骨干、完整或缺失设定、指标定义和截止日期；没有统一复现实验时使用“作者报告”或“候选”。
 - 本文件是文献与方法索引，不代替逐篇精读、引用审计或本题实验结果。
 - 本次没有改动四套参考算法，也没有新增模型训练或专项测试预测。
+
+## 11. 代码公开与本地保存核验（2026-09-23）
+
+本节补充并更新前文的代码可用性信息。**公开仓库存在、存在实际源码、具有完整开源许可证、已完成复现是四件不同的事。** 本次没有执行第三方实现。
+
+- 核查R01–R18、S01–S14共32篇：16篇有对应源码或明确标注的组件／复现实现保存在本地，3篇仅有占位仓库，13篇暂未找到可靠实现。
+- 新保存14个源码仓库，加上保留的4套原有实现，共18个本地目录。仓库数不同于论文数：Graph-MFN相关组件和复现框架分开保存，另有经典MFN仓库。
+- 每个新仓库使用浅克隆与源码稀疏检出，保留提交号。只保存代码、配置、文本说明和许可文件；未检出数据集、模型权重、音视频。下载源码不代表它已适配本题或能直接运行。
+- 完整来源、提交号、Python文件数和逐篇状态见 [code_manifest.json](code_manifest.json)。原有快照的commit记为null，避免冒认其上游版本。
+
+### 11.1 已保存源码的目录与许可
+
+| 本地目录 | 来源仓库 | Python文件数 | 许可核验 | 本次操作 |
+| --- | --- | ---: | --- | --- |
+| [CMAD/](CMAD/) | [YetZzzzzz/CMAD](https://github.com/YetZzzzzz/CMAD) | 18 | MIT | 保留原有快照 |
+| [EMOE/](EMOE/) | [fuyyyyy/EMOE](https://github.com/fuyyyyy/EMOE) | 25 | 未发现独立许可证 | 保留原有快照 |
+| [HyperDiff/](HyperDiff/) | [wdqdp/HyperDiff](https://github.com/wdqdp/HyperDiff) | 34 | Apache-2.0 | 保留原有快照 |
+| [P-RMF/](P-RMF/) | [hawksilent/P-RMF](https://github.com/hawksilent/P-RMF) | 12 | MIT | 保留原有快照 |
+| [CaReFlow/](CaReFlow/) | [TmacMai/CaReFlow](https://github.com/TmacMai/CaReFlow) | 8 | 未发现独立许可证 | 新增源码检出 |
+| [QA-MoE/](QA-MoE/) | [U235-Aurora/QA-MoE](https://github.com/U235-Aurora/QA-MoE) | 37 | README声明MIT；未附完整许可文件 | 新增源码检出 |
+| [CACR/](CACR/) | [wwwwwyyyy559/Conflict-Aware-Adaptive-Cross-Reconstruction-for-Multimodal-Sentiment-Analysis](https://github.com/wwwwwyyyy559/Conflict-Aware-Adaptive-Cross-Reconstruction-for-Multimodal-Sentiment-Analysis) | 25 | MIT | 新增源码检出 |
+| [MMRest/](MMRest/) | [hurriedpi/MMRest](https://github.com/hurriedpi/MMRest) | 16 | MIT | 新增源码检出 |
+| [EBMC/](EBMC/) | [kangverse/EBMC](https://github.com/kangverse/EBMC) | 15 | CC-BY-NC-4.0（非商业） | 新增源码检出 |
+| [MRUF/](MRUF/) | [ICIG/MRUF](https://github.com/ICIG/MRUF) | 28 | GPL-3.0 | 新增源码检出 |
+| [quality-aware-fusion-diagnostic/](quality-aware-fusion-diagnostic/) | [jadenmoon27/quality-aware-fusion-diagnostic](https://github.com/jadenmoon27/quality-aware-fusion-diagnostic) | 34 | MIT | 新增源码检出 |
+| [VG-TPT/](VG-TPT/) | [ma-tubu/VG-TPT](https://github.com/ma-tubu/VG-TPT) | 12 | 未发现独立许可证 | 新增源码检出 |
+| [SentiLLM/](SentiLLM/) | [especiallyW/SentiLLM](https://github.com/especiallyW/SentiLLM) | 13 | 未发现独立许可证 | 新增源码检出 |
+| [DiscRead-MSA/](DiscRead-MSA/) | [GawaineXiukkie/DiscRead-MSA](https://github.com/GawaineXiukkie/DiscRead-MSA) | 25 | Apache-2.0 | 新增源码检出 |
+| [CMU-MultimodalSDK/](CMU-MultimodalSDK/) | [CMU-MultiComp-Lab/CMU-MultimodalSDK](https://github.com/CMU-MultiComp-Lab/CMU-MultimodalSDK) | 50 | MIT；另含历史LICENSE.txt使用说明 | 新增源码检出 |
+| [MMSA/](MMSA/) | [thuiar/MMSA](https://github.com/thuiar/MMSA) | 70 | MIT | 新增源码检出 |
+| [MFN/](MFN/) | [pliang279/MFN](https://github.com/pliang279/MFN) | 3 | MIT | 新增源码检出 |
+| [TLRA/](TLRA/) | [liuxy1005/TLRA](https://github.com/liuxy1005/TLRA) | 21 | 未发现独立许可证 | 新增源码检出 |
+
+说明：未发现独立许可证的仓库只能标为“源码公开、许可未明确”。QA-MoE的README写明MIT，但未附完整许可文本。EBMC的CC-BY-NC-4.0带非商业限制。下载资料用于本地查阅不代表已确认可自由修改、分发或用于所有用途。
+
+### 11.2 每篇论文的代码状态
+
+| 编号／方法 | 状态 | 本地路径或判断依据 |
+| --- | --- | --- |
+| R01 CMAD | 已有源码 | [CMAD/](CMAD/)；本地已保存，保留原快照。 |
+| R02 P-RMF | 已有源码 | [P-RMF/](P-RMF/)；保留原快照；论文原aoqzhu/P-RMF入口失效，记录可访问hawksilent仓库，不认定迁移关系。 |
+| R03 EMOE | 已有源码 | [EMOE/](EMOE/)；本地已保存，未发现独立许可证。 |
+| R04 HyperEF / HyperDiff | 已有源码 | [HyperDiff/](HyperDiff/)；本地已保存，目录名与论文框架名不同。 |
+| R05 Graph-MFN / DFG | 已下载源码／组件 | [CMU-MultimodalSDK/](CMU-MultimodalSDK/)、[MMSA/](MMSA/)；SDK提供作者DFG融合组件；MMSA提供完整Graph-MFN的第三方实现，非原论文同一训练脚本。 |
+| R06 CICA | 未找到可靠实现 | 正式页面、PDF源码链接扫描、GitHub检索后未找到可确认的作者代码。 |
+| R07 CaReFlow | 已下载源码／组件 | [CaReFlow/](CaReFlow/)；作者仓库有实际源码，尚无独立许可证。 |
+| R08 CmIR | 占位仓库，无源码 | [仓库](https://github.com/TmacMai/CmIR)；TmacMai/CmIR只有README，无模型源码，未下载为实现。 |
+| R09 TSD | 未找到可靠实现 | 未找到可确认仓库；QFSD为不同论文，未替代下载。 |
+| R10 QA-MoE | 已下载源码／组件 | [QA-MoE/](QA-MoE/)；U235-Aurora仓库引用完整论文题名及arXiv 2604.05704；排除同名临床仓库。 |
+| R11 DNRNet | 未找到可靠实现 | 论文与GitHub检索均未定位可靠代码入口。 |
+| R12 CACR | 已下载源码／组件 | [CACR/](CACR/)；README完整题名和CVPR 2026引用对应；选择非fork的声明官方实现。 |
+| R13 MMRest | 已下载源码／组件 | [MMRest/](MMRest/)；README完整题名对应，模型位于MMRest/src/。 |
+| R14 EBMC | 已下载源码／组件 | [EBMC/](EBMC/)；标题、模块与论文对应；CC-BY-NC-4.0为受限许可，不等同宽松开源许可。 |
+| R15 PaP | 未找到可靠实现 | 未定位可确认的对应论文实现。 |
+| R16 MoB | 未找到可靠实现 | 未定位可确认的对应论文实现；搜索到的其他Bottleneck专家仓库不是本论文。 |
+| R17 SeRIn | 占位仓库，无源码 | [仓库](https://github.com/alexisfilippakopoulos/SeRIn-MSA)；作者链接可达，但只有README，无模型源码。 |
+| R18 MAESTRO | 未找到可靠实现 | 未找到与该有序原型论文对应的实现。 |
+| S01 语义完整度重构 | 未找到可靠实现 | PDF给出的LNLN、P-RMF、TF-Mamba链接为比较方法，不能当作本论文源码。 |
+| S02 VG-TPT | 已下载源码／组件 | [VG-TPT/](VG-TPT/)；论文摘要直接链接仓库，已下载，未发现独立许可证。 |
+| S03 迭代代理校正 | 未找到可靠实现 | 未定位作者实现。 |
+| S04 MRCF | 未找到可靠实现 | 未定位作者实现。 |
+| S05 SentiLLM | 已下载源码／组件 | [SentiLLM/](SentiLLM/)；论文摘要直接链接仓库；仓库标题有不同版本表述，身份按原文链接确认。 |
+| S06 MRUF | 已下载源码／组件 | [MRUF/](MRUF/)；仓库名称与README方法对应，GPL-3.0。 |
+| S07 SHAP加权跨模态专家 | 未找到可靠实现 | 未找到与该论文对应的源码；排除其他SHAP加权项目。 |
+| S08 可靠性置换诊断 | 已下载源码／组件 | [quality-aware-fusion-diagnostic/](quality-aware-fusion-diagnostic/)；README引用完整论文题名，包含MOSEI相关诊断代码。 |
+| S09 DiscRead-MSA | 已下载源码／组件 | [DiscRead-MSA/](DiscRead-MSA/)；README引用完整论文题名，Apache-2.0。 |
+| S10 MCAF | 未找到可靠实现 | 未定位对应源码；本轮PDF入口返回404，不据此推断论文撤回。 |
+| S11 TLRA | 已下载源码／组件 | [TLRA/](TLRA/)；PDF明确给出LiuXY3366/TLRA，GitHub跳转到liuxy1005/TLRA；不以另一个RACA仓库替代。 |
+| S12 DBR | 未找到可靠实现 | 检索命中HDER仅在README引用DBR；不同方法，未下载为DBR。 |
+| S13 ProMMA | 占位仓库，无源码 | [仓库](https://github.com/rongfei-chen/ProMMA)；README、LICENSE、.gitignore，无模型实现。 |
+| S14 模态平衡受控评估 | 未找到可靠实现 | 正文及仓库检索未找到可确认的实现。 |
+
+### 11.3 经典基线代码入口与来源边界
+
+- **DFG作者组件**：[CMU-MultimodalSDK的dynamic_fusion_graph/model.py](CMU-MultimodalSDK/mmsdk/mmmodelsdk/fusion/dynamic_fusion_graph/model.py)。SDK同时提供tensor_fusion、multiple_attention等融合组件；它们不能自动等同完整TFN／MARN训练流程。
+- **Graph-MFN第三方复现**：[MMSA的Graph_MFN.py](MMSA/src/MMSA/models/singleTask/Graph_MFN.py)。SDK README指向的原始Theano完整代码位于Google Drive，本次未下载；使用MMSA时按复现版本引用。
+- **TFN、MFN、EF-LSTM统一框架实现**：见[MMSA的singleTask目录](MMSA/src/MMSA/models/singleTask/)。MMSA是第三方统一框架，不冒称每个方法的原作者代码。
+- **MFN原作者仓库**：[MFN/test_mosi.py](MFN/test_mosi.py)，也包含EF-LSTM。原仓库附带的MOSI数据与预训练检查点未检出，旧Python/PyTorch依赖尚未适配。
+- **TLRA真实入口**：论文PDF脚注提供的LiuXY3366/TLRA重定向至[liuxy1005/TLRA](https://github.com/liuxy1005/TLRA)，本次按该来源保存；不把同作者的RACA项目当作同一实现。
+
+### 11.4 校验范围
+
+已验证新增14个目录有Python源码、Git工作树干净、来源与提交可追溯，且检出的文件不含PKL/HDF5/NumPy数据、模型权重或音视频。原有四套目录保留不变。未运行模型、未验证训练效果或跨平台依赖兼容性；没有将任何新数据引入data/。源码子目录仅本地保存，主Git仓库只同步文档和来源清单。

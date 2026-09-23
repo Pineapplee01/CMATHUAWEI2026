@@ -1,0 +1,649 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-09-23",
+  "scope": "references/reference.md 的R01–R18与S01–S14；另保存经典MFN及组件/复现框架",
+  "counts": {
+    "papers_checked": 32,
+    "methods_with_local_code": 16,
+    "placeholder_repositories": 3,
+    "not_found": 13,
+    "new_source_repositories": 14,
+    "existing_repositories": 4,
+    "total_repositories": 18
+  },
+  "download_policy": {
+    "shallow": true,
+    "partial_clone_filter": "blob:none",
+    "sparse_source_checkout": true,
+    "excluded": "数据集、权重、音视频、编译缓存；部分图示和日志也未检出。现有四目录不应用此过滤。",
+    "execution": "未运行第三方源码、安装脚本、数据下载脚本或训练任务",
+    "version_control": "仅索引文档和manifest进入主仓库；下载源码子目录被忽略"
+  },
+  "repositories": [
+    {
+      "directory": "CMAD",
+      "local_path": "references/CMAD",
+      "python_files": 18,
+      "materialized_files": 28,
+      "bytes": 600847,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": false,
+      "commit": null,
+      "branch": null,
+      "origin": null,
+      "upstream_repository": "YetZzzzzz/CMAD",
+      "repository_url": "https://github.com/YetZzzzzz/CMAD",
+      "license_assessment": "MIT",
+      "status": "existing_preserved",
+      "executed": false,
+      "provenance_note": "用户已有快照，未修改；上游提交一致性未核验"
+    },
+    {
+      "directory": "EMOE",
+      "local_path": "references/EMOE",
+      "python_files": 25,
+      "materialized_files": 30,
+      "bytes": 520547,
+      "license_files": [],
+      "new_checkout": false,
+      "commit": null,
+      "branch": null,
+      "origin": null,
+      "upstream_repository": "fuyyyyy/EMOE",
+      "repository_url": "https://github.com/fuyyyyy/EMOE",
+      "license_assessment": "未发现独立许可证",
+      "status": "existing_preserved",
+      "executed": false,
+      "provenance_note": "用户已有快照，未修改；上游提交一致性未核验"
+    },
+    {
+      "directory": "HyperDiff",
+      "local_path": "references/HyperDiff",
+      "python_files": 34,
+      "materialized_files": 130,
+      "bytes": 1999283,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": false,
+      "commit": null,
+      "branch": null,
+      "origin": null,
+      "upstream_repository": "wdqdp/HyperDiff",
+      "repository_url": "https://github.com/wdqdp/HyperDiff",
+      "license_assessment": "Apache-2.0",
+      "status": "existing_preserved",
+      "executed": false,
+      "provenance_note": "用户已有快照，未修改；上游提交一致性未核验"
+    },
+    {
+      "directory": "P-RMF",
+      "local_path": "references/P-RMF",
+      "python_files": 12,
+      "materialized_files": 28,
+      "bytes": 2240848,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": false,
+      "commit": null,
+      "branch": null,
+      "origin": null,
+      "upstream_repository": "hawksilent/P-RMF",
+      "repository_url": "https://github.com/hawksilent/P-RMF",
+      "license_assessment": "MIT",
+      "status": "existing_preserved",
+      "executed": false,
+      "provenance_note": "用户已有快照，未修改；上游提交一致性未核验"
+    },
+    {
+      "directory": "CaReFlow",
+      "local_path": "references/CaReFlow",
+      "python_files": 8,
+      "materialized_files": 12,
+      "bytes": 58564,
+      "license_files": [],
+      "new_checkout": true,
+      "commit": "5c9f9c7a0bb3f1202ebb3258052da2b99710c565",
+      "branch": "main",
+      "origin": "https://github.com/TmacMai/CaReFlow.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "TmacMai/CaReFlow",
+      "repository_url": "https://github.com/TmacMai/CaReFlow",
+      "license_assessment": "未发现独立许可证",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "QA-MoE",
+      "local_path": "references/QA-MoE",
+      "python_files": 37,
+      "materialized_files": 42,
+      "bytes": 145637,
+      "license_files": [],
+      "new_checkout": true,
+      "commit": "36abacb80a28725ae3e4b17c4f9bcefce5ea6dd4",
+      "branch": "master",
+      "origin": "https://github.com/U235-Aurora/QA-MoE.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "U235-Aurora/QA-MoE",
+      "repository_url": "https://github.com/U235-Aurora/QA-MoE",
+      "license_assessment": "README声明MIT；未附完整许可文件",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "CACR",
+      "local_path": "references/CACR",
+      "python_files": 25,
+      "materialized_files": 35,
+      "bytes": 112488,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "ff1815976cd2f2b7786f0840a860e15558042f11",
+      "branch": "main",
+      "origin": "https://github.com/wwwwwyyyy559/Conflict-Aware-Adaptive-Cross-Reconstruction-for-Multimodal-Sentiment-Analysis.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "wwwwwyyyy559/Conflict-Aware-Adaptive-Cross-Reconstruction-for-Multimodal-Sentiment-Analysis",
+      "repository_url": "https://github.com/wwwwwyyyy559/Conflict-Aware-Adaptive-Cross-Reconstruction-for-Multimodal-Sentiment-Analysis",
+      "license_assessment": "MIT",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "MMRest",
+      "local_path": "references/MMRest",
+      "python_files": 16,
+      "materialized_files": 19,
+      "bytes": 139180,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "f83742052509769d488b5a204003a53cf1e60967",
+      "branch": "main",
+      "origin": "https://github.com/hurriedpi/MMRest.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "hurriedpi/MMRest",
+      "repository_url": "https://github.com/hurriedpi/MMRest",
+      "license_assessment": "MIT",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "EBMC",
+      "local_path": "references/EBMC",
+      "python_files": 15,
+      "materialized_files": 22,
+      "bytes": 145395,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "18ee1f2e1993d87748c0033b496eeba983c2ce81",
+      "branch": "main",
+      "origin": "https://github.com/kangverse/EBMC.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "kangverse/EBMC",
+      "repository_url": "https://github.com/kangverse/EBMC",
+      "license_assessment": "CC-BY-NC-4.0（非商业）",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "MRUF",
+      "local_path": "references/MRUF",
+      "python_files": 28,
+      "materialized_files": 32,
+      "bytes": 184012,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "c43c621fdfa05a7db351c949d2e2b0741e85bc4a",
+      "branch": "main",
+      "origin": "https://github.com/ICIG/MRUF.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "ICIG/MRUF",
+      "repository_url": "https://github.com/ICIG/MRUF",
+      "license_assessment": "GPL-3.0",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "quality-aware-fusion-diagnostic",
+      "local_path": "references/quality-aware-fusion-diagnostic",
+      "python_files": 34,
+      "materialized_files": 46,
+      "bytes": 485921,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "37bd773ab7f87106fa048379a8293cb6f95d41cc",
+      "branch": "main",
+      "origin": "https://github.com/jadenmoon27/quality-aware-fusion-diagnostic.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "jadenmoon27/quality-aware-fusion-diagnostic",
+      "repository_url": "https://github.com/jadenmoon27/quality-aware-fusion-diagnostic",
+      "license_assessment": "MIT",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "VG-TPT",
+      "local_path": "references/VG-TPT",
+      "python_files": 12,
+      "materialized_files": 20,
+      "bytes": 846298,
+      "license_files": [],
+      "new_checkout": true,
+      "commit": "87df82e59350d9052c1444b421395e442dd4b6af",
+      "branch": "main",
+      "origin": "https://github.com/ma-tubu/VG-TPT.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "ma-tubu/VG-TPT",
+      "repository_url": "https://github.com/ma-tubu/VG-TPT",
+      "license_assessment": "未发现独立许可证",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "SentiLLM",
+      "local_path": "references/SentiLLM",
+      "python_files": 13,
+      "materialized_files": 21,
+      "bytes": 116274,
+      "license_files": [],
+      "new_checkout": true,
+      "commit": "9042843409e165a28c2374ad0148215dd0928e74",
+      "branch": "main",
+      "origin": "https://github.com/especiallyW/SentiLLM.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "especiallyW/SentiLLM",
+      "repository_url": "https://github.com/especiallyW/SentiLLM",
+      "license_assessment": "未发现独立许可证",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "DiscRead-MSA",
+      "local_path": "references/DiscRead-MSA",
+      "python_files": 25,
+      "materialized_files": 29,
+      "bytes": 207069,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "b71c53100d0f0bc0508cb228b9ccf4a53b5d9089",
+      "branch": "main",
+      "origin": "https://github.com/GawaineXiukkie/DiscRead-MSA.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "GawaineXiukkie/DiscRead-MSA",
+      "repository_url": "https://github.com/GawaineXiukkie/DiscRead-MSA",
+      "license_assessment": "Apache-2.0",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "CMU-MultimodalSDK",
+      "local_path": "references/CMU-MultimodalSDK",
+      "python_files": 50,
+      "materialized_files": 65,
+      "bytes": 175331,
+      "license_files": [
+        "LICENSE",
+        "LICENSE.txt"
+      ],
+      "new_checkout": true,
+      "commit": "4f2eadcd7e7b9e20e83b868cdad385b41830285c",
+      "branch": "main",
+      "origin": "https://github.com/CMU-MultiComp-Lab/CMU-MultimodalSDK.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "CMU-MultiComp-Lab/CMU-MultimodalSDK",
+      "repository_url": "https://github.com/CMU-MultiComp-Lab/CMU-MultimodalSDK",
+      "license_assessment": "MIT；另含历史LICENSE.txt使用说明",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "MMSA",
+      "local_path": "references/MMSA",
+      "python_files": 70,
+      "materialized_files": 80,
+      "bytes": 564860,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "a94e65d07fa1ae0d44e552390074b29b0898edfd",
+      "branch": "master",
+      "origin": "https://github.com/thuiar/MMSA.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "thuiar/MMSA",
+      "repository_url": "https://github.com/thuiar/MMSA",
+      "license_assessment": "MIT",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "MFN",
+      "local_path": "references/MFN",
+      "python_files": 3,
+      "materialized_files": 13,
+      "bytes": 51529,
+      "license_files": [
+        "LICENSE"
+      ],
+      "new_checkout": true,
+      "commit": "b0453fb6e21b581c796246a0c32a6551f2028c1b",
+      "branch": "master",
+      "origin": "https://github.com/pliang279/MFN.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "pliang279/MFN",
+      "repository_url": "https://github.com/pliang279/MFN",
+      "license_assessment": "MIT",
+      "status": "downloaded_source_only",
+      "executed": false
+    },
+    {
+      "directory": "TLRA",
+      "local_path": "references/TLRA",
+      "python_files": 21,
+      "materialized_files": 24,
+      "bytes": 85781,
+      "license_files": [],
+      "new_checkout": true,
+      "commit": "b9dc9294ce4a682039fc9efae35d5ea2a19913a2",
+      "branch": "master",
+      "origin": "https://github.com/liuxy1005/TLRA.git",
+      "clean": true,
+      "sparse_checkout": true,
+      "upstream_repository": "liuxy1005/TLRA",
+      "repository_url": "https://github.com/liuxy1005/TLRA",
+      "license_assessment": "未发现独立许可证",
+      "status": "downloaded_source_only",
+      "executed": false
+    }
+  ],
+  "papers": [
+    {
+      "id": "R01",
+      "method": "CMAD",
+      "status": "existing",
+      "local_directories": [
+        "references/CMAD"
+      ],
+      "note": "本地已保存，保留原快照。"
+    },
+    {
+      "id": "R02",
+      "method": "P-RMF",
+      "status": "existing",
+      "local_directories": [
+        "references/P-RMF"
+      ],
+      "note": "保留原快照；论文原aoqzhu/P-RMF入口失效，记录可访问hawksilent仓库，不认定迁移关系。"
+    },
+    {
+      "id": "R03",
+      "method": "EMOE",
+      "status": "existing",
+      "local_directories": [
+        "references/EMOE"
+      ],
+      "note": "本地已保存，未发现独立许可证。"
+    },
+    {
+      "id": "R04",
+      "method": "HyperEF / HyperDiff",
+      "status": "existing",
+      "local_directories": [
+        "references/HyperDiff"
+      ],
+      "note": "本地已保存，目录名与论文框架名不同。"
+    },
+    {
+      "id": "R05",
+      "method": "Graph-MFN / DFG",
+      "status": "downloaded",
+      "local_directories": [
+        "references/CMU-MultimodalSDK",
+        "references/MMSA"
+      ],
+      "note": "SDK提供作者DFG融合组件；MMSA提供完整Graph-MFN的第三方实现，非原论文同一训练脚本。"
+    },
+    {
+      "id": "R06",
+      "method": "CICA",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "正式页面、PDF源码链接扫描、GitHub检索后未找到可确认的作者代码。"
+    },
+    {
+      "id": "R07",
+      "method": "CaReFlow",
+      "status": "downloaded",
+      "local_directories": [
+        "references/CaReFlow"
+      ],
+      "note": "作者仓库有实际源码，尚无独立许可证。"
+    },
+    {
+      "id": "R08",
+      "method": "CmIR",
+      "status": "placeholder",
+      "local_directories": [],
+      "note": "TmacMai/CmIR只有README，无模型源码，未下载为实现。",
+      "repository_url": "https://github.com/TmacMai/CmIR"
+    },
+    {
+      "id": "R09",
+      "method": "TSD",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未找到可确认仓库；QFSD为不同论文，未替代下载。"
+    },
+    {
+      "id": "R10",
+      "method": "QA-MoE",
+      "status": "downloaded",
+      "local_directories": [
+        "references/QA-MoE"
+      ],
+      "note": "U235-Aurora仓库引用完整论文题名及arXiv 2604.05704；排除同名临床仓库。"
+    },
+    {
+      "id": "R11",
+      "method": "DNRNet",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "论文与GitHub检索均未定位可靠代码入口。"
+    },
+    {
+      "id": "R12",
+      "method": "CACR",
+      "status": "downloaded",
+      "local_directories": [
+        "references/CACR"
+      ],
+      "note": "README完整题名和CVPR 2026引用对应；选择非fork的声明官方实现。"
+    },
+    {
+      "id": "R13",
+      "method": "MMRest",
+      "status": "downloaded",
+      "local_directories": [
+        "references/MMRest"
+      ],
+      "note": "README完整题名对应，模型位于MMRest/src/。"
+    },
+    {
+      "id": "R14",
+      "method": "EBMC",
+      "status": "downloaded",
+      "local_directories": [
+        "references/EBMC"
+      ],
+      "note": "标题、模块与论文对应；CC-BY-NC-4.0为受限许可，不等同宽松开源许可。"
+    },
+    {
+      "id": "R15",
+      "method": "PaP",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未定位可确认的对应论文实现。"
+    },
+    {
+      "id": "R16",
+      "method": "MoB",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未定位可确认的对应论文实现；搜索到的其他Bottleneck专家仓库不是本论文。"
+    },
+    {
+      "id": "R17",
+      "method": "SeRIn",
+      "status": "placeholder",
+      "local_directories": [],
+      "note": "作者链接可达，但只有README，无模型源码。",
+      "repository_url": "https://github.com/alexisfilippakopoulos/SeRIn-MSA"
+    },
+    {
+      "id": "R18",
+      "method": "MAESTRO",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未找到与该有序原型论文对应的实现。"
+    },
+    {
+      "id": "S01",
+      "method": "语义完整度重构",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "PDF给出的LNLN、P-RMF、TF-Mamba链接为比较方法，不能当作本论文源码。"
+    },
+    {
+      "id": "S02",
+      "method": "VG-TPT",
+      "status": "downloaded",
+      "local_directories": [
+        "references/VG-TPT"
+      ],
+      "note": "论文摘要直接链接仓库，已下载，未发现独立许可证。"
+    },
+    {
+      "id": "S03",
+      "method": "迭代代理校正",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未定位作者实现。"
+    },
+    {
+      "id": "S04",
+      "method": "MRCF",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未定位作者实现。"
+    },
+    {
+      "id": "S05",
+      "method": "SentiLLM",
+      "status": "downloaded",
+      "local_directories": [
+        "references/SentiLLM"
+      ],
+      "note": "论文摘要直接链接仓库；仓库标题有不同版本表述，身份按原文链接确认。"
+    },
+    {
+      "id": "S06",
+      "method": "MRUF",
+      "status": "downloaded",
+      "local_directories": [
+        "references/MRUF"
+      ],
+      "note": "仓库名称与README方法对应，GPL-3.0。"
+    },
+    {
+      "id": "S07",
+      "method": "SHAP加权跨模态专家",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未找到与该论文对应的源码；排除其他SHAP加权项目。"
+    },
+    {
+      "id": "S08",
+      "method": "可靠性置换诊断",
+      "status": "downloaded",
+      "local_directories": [
+        "references/quality-aware-fusion-diagnostic"
+      ],
+      "note": "README引用完整论文题名，包含MOSEI相关诊断代码。"
+    },
+    {
+      "id": "S09",
+      "method": "DiscRead-MSA",
+      "status": "downloaded",
+      "local_directories": [
+        "references/DiscRead-MSA"
+      ],
+      "note": "README引用完整论文题名，Apache-2.0。"
+    },
+    {
+      "id": "S10",
+      "method": "MCAF",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "未定位对应源码；本轮PDF入口返回404，不据此推断论文撤回。"
+    },
+    {
+      "id": "S11",
+      "method": "TLRA",
+      "status": "downloaded",
+      "local_directories": [
+        "references/TLRA"
+      ],
+      "note": "PDF明确给出LiuXY3366/TLRA，GitHub跳转到liuxy1005/TLRA；不以另一个RACA仓库替代。"
+    },
+    {
+      "id": "S12",
+      "method": "DBR",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "检索命中HDER仅在README引用DBR；不同方法，未下载为DBR。"
+    },
+    {
+      "id": "S13",
+      "method": "ProMMA",
+      "status": "placeholder",
+      "local_directories": [],
+      "note": "README、LICENSE、.gitignore，无模型实现。",
+      "repository_url": "https://github.com/rongfei-chen/ProMMA"
+    },
+    {
+      "id": "S14",
+      "method": "模态平衡受控评估",
+      "status": "not_found",
+      "local_directories": [],
+      "note": "正文及仓库检索未找到可确认的实现。"
+    }
+  ]
+}
