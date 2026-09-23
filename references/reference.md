@@ -411,7 +411,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 
 | 簇 | 方法 | 核心问题 | 输入版本 | 本地状态 | 首轮优先级 |
 | --- | --- | --- | --- | --- | --- |
-| L0 下界 | Majority/Mean、单模态 Text/Audio/Vision | 多模态收益是否真实存在 | aligned；单模态不受对齐限制 | 需要在共享训练器中实现 | 必做 |
+| L0 下界 | Majority/Mean、单模态 Text/Audio/Vision | 多模态收益是否真实存在 | aligned；单模态不受对齐限制 | 暂不实现 | 延后 |
 | L1 直接融合 | Concat-MLP、Early Fusion + GRU、EF-LSTM | 仅靠拼接与时序编码能达到什么水平 | aligned；Concat-MLP也可做 pooled-unaligned | EF-LSTM在 `MMSA`；Concat-MLP/GRU待写 | 必做 |
 | L2 经典交互 | TFN、MFN、Graph-MFN/DFG | 高阶交互、记忆和动态融合是否带来收益 | TFN/MFN/Graph-MFN按各自可兼容版本；首轮固定aligned | TFN/MFN/Graph-MFN在 `MMSA`；DFG组件在SDK | 建议 |
 | L3 非对齐跨模态注意 | MulT | 跨模态注意能否替代显式时序对齐 | unaligned | MMSA `MULT.py`，作者仓库公开 | 必做至少一个 |
@@ -423,14 +423,14 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 
 ### 10.1.2 最小可交付对比集合
 
-若计算资源有限，保留以下六个模型即可形成完整证据链：
+L0下界暂不实现；若计算资源有限，保留以下L1-L6方法即可形成当前阶段的对比证据链：
 
-1. `Text-only`：文本单模态下界。
-2. `Concat-MLP`：三模态时间池化后拼接的最低复杂度基线。
-3. `EF-LSTM`：每个对齐位置拼接三模态，再用单个LSTM编码。
+1. `Concat-MLP`：三模态时间池化后拼接的最低复杂度基线。
+2. `EF-LSTM` 或 `Early Fusion + GRU`：对齐时序早期融合。
+3. `TFN/MFN/Graph-MFN`：经典交互方法，问题3优先保留Graph-MFN/DFG。
 4. `MulT`：非对齐跨模态注意力基线。
-5. `CMAD` 或 `P-RMF`：选择一个公开缺失模态方法；若能复现两个则同时保留。
-6. `AUMDF/Ours`：当前项目已完成的赛题数据适配基线或最终模型。
+5. `P-RMF`、`CMAD` 或 `Masked-Train`：缺失鲁棒性对照。
+6. `AUMDF/Ours`、EMOE/QA-MoE和归因诊断：鲁棒、动态专家与可解释性扩展。
 
 问题3至少在 `Concat-MLP`、`EF-LSTM`、`Graph-MFN/DFG` 和主模型上统一做归因；只展示主模型的注意力热图不构成方法对比。
 
@@ -503,6 +503,10 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 - 所有方法通过共享 `e-competition-v1` 评分层，最终强度先固定反归一化和clip，再评分；评分层不替方法选择阈值。
 - 公开代码、论文原生实现、本题适配实现、完整复现四种状态分开标记。
 - 主结论应写成“在本题附件2、指定特征版本和连续区间协议下，本方法优于哪些对照”，不能写成无条件SOTA。
+
+### 10.1.7 当前同步范围
+
+L0下界已明确延后，不进入当前实现与首轮实验。L1-L6的项目配置、方法来源、输入版本和实现状态统一登记在 [`configs/baselines.yaml`](../configs/baselines.yaml)，并随主仓库同步到远程 `main`。第三方源码快照仍按第11节的下载策略保存在本地，不直接复制进主仓库；远程仓库同步的是项目自有适配代码、配置、文档和来源清单。
 
 ## 11. 代码公开与本地保存核验（2026-09-23）
 
