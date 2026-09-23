@@ -21,3 +21,5 @@
 | Git/GitHub | 版本控制和远程同步 |
 
 依赖声明位于 `environment.yml` 与 `pyproject.toml`；大模型权重、视频和 PKL 不进入仓库。
+
+独立基线AUMDF的依赖另见 `references/AUMDF/requirements.txt`：已在现有Conda base的Python 3.12.3、PyTorch 2.5.1、CUDA 11.8上验证。项目cmath-e2026环境仍未安装PyTorch，不能将该次验证视为共享Python 3.11环境的训练验证。

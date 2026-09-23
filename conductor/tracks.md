@@ -19,3 +19,4 @@
 | ID | Title | Completed |
 | --- | --- | --- |
 | INIT-001 | 项目初始化与数据契约 | 2026-09-23 |
+| AUMDF-001 | [AUMDF独立赛题适配基线](../references/AUMDF/README.md)：单种子20+20轮与固定测试评估；不代表Q2整体完成 | 2026-09-23 |

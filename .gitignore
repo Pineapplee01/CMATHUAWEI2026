@@ -24,6 +24,7 @@ __pycache__/
 
 # Existing third-party research snapshots kept outside this project
 /references/*/
+!/references/AUMDF/
 CMAD/
 EMOE/
 HyperDiff/

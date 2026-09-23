@@ -1,0 +1,91 @@
+{
+  "paper": {
+    "title": "基于知识蒸馏与动态调整机制的多模态情感分析模型",
+    "authors": [
+      "王楠",
+      "王淇",
+      "欧阳丹彤"
+    ],
+    "venue": "计算机学报",
+    "year": 2025,
+    "doi": "10.11897/SP.J.1016.2025.01923",
+    "source_filename": "2025 - 基于知识蒸馏与动态调整机制的多模态情感分析模型.pdf",
+    "sha256": "b059c680a1b5f69b011f6e62cf417c7aecc9f9523bdf58ced8f332f51e640a1c",
+    "page_convention": "1-based PDF pages; PDF p.6 = printed p.1928"
+  },
+  "scope": "targeted method reconstruction for competition data; not a full-paper visual-review report",
+  "user_decision": "Use E题 dataset adaptation rather than reproducing original datasets/scores.",
+  "source_status": "Independent implementation; no confirmed author repository located.",
+  "visual_checks": [
+    {
+      "page": 6,
+      "objects": [
+        "Figure 1",
+        "Eqs.1-6"
+      ],
+      "status": "directly_inspected"
+    },
+    {
+      "page": 7,
+      "objects": [
+        "Eqs.7-16"
+      ],
+      "status": "directly_inspected"
+    },
+    {
+      "page": 8,
+      "objects": [
+        "Figure 2",
+        "Figure 3",
+        "Eqs.17-22"
+      ],
+      "status": "directly_inspected"
+    },
+    {
+      "page": 9,
+      "objects": [
+        "Eqs.23-34"
+      ],
+      "status": "directly_inspected"
+    },
+    {
+      "page": 10,
+      "objects": [
+        "Eqs.35-40"
+      ],
+      "status": "directly_inspected"
+    },
+    {
+      "page": 11,
+      "objects": [
+        "Eqs.41-42",
+        "feature descriptions"
+      ],
+      "status": "directly_inspected"
+    }
+  ],
+  "implementation_map": [
+    {
+      "file": "aumdf/model.py",
+      "source": "Sections 3.4-3.8; Eqs.1-34",
+      "caveat": "Dimension, time-bias, masking and readout choices documented in REPRODUCTION.md."
+    },
+    {
+      "file": "aumdf/losses.py",
+      "source": "Sections 3.9-3.11; Eqs.35-42",
+      "caveat": "CSD indexing and SRD scalar reduction require explicit interpretations."
+    },
+    {
+      "file": "aumdf/missingness.py",
+      "source": "Section 3.3; random frame missingness",
+      "caveat": "block and whole are separately labeled evaluation/extensions."
+    },
+    {
+      "file": "configs/adapted.yaml",
+      "source": "Section 4.2/Table 2, PDF p.12",
+      "caveat": "50-step organizer features used instead of conflicting original sequence lengths; unknowns disclosed."
+    }
+  ],
+  "training_engine_sha256_at_full_run_start": "042BE74DD9D9D30FA6683321ADEAF197F17D2A537D92615980A5101555CA2176",
+  "training_engine_note": "After this run started, only smoke/full evaluation provenance metadata was patched; model and loss mathematics were not changed."
+}

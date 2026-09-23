@@ -485,3 +485,11 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 ### 11.4 校验范围
 
 已验证新增14个目录有Python源码、Git工作树干净、来源与提交可追溯，且检出的文件不含PKL/HDF5/NumPy数据、模型权重或音视频。原有四套目录保留不变。未运行模型、未验证训练效果或跨平台依赖兼容性；没有将任何新数据引入data/。源码子目录仅本地保存，主Git仓库只同步文档和来源清单。
+
+## 12. 新增独立赛题适配实现：AUMDF
+
+- **论文**：王楠、王淇、欧阳丹彤，《基于知识蒸馏与动态调整机制的多模态情感分析模型》，计算机学报，2025，48(8)：1923–1942；DOI：10.11897/SP.J.1016.2025.01923，对应题面参考文献[10]。
+- **方法**：Attention-based Uncertain Missing Modality Distillation Framework。采用REM特征增强、RPM卷积与位置编码、DWAM动态门控、MMT跨模态注意力，以及CSD对比样本蒸馏和SRD相似性表示蒸馏。
+- **本地实现**：[AUMDF/README.md](AUMDF/README.md)。这是依据用户提供PDF编写的独立实现，不是下载的作者源码，不计入前述32篇公开源码核验或18个第三方仓库统计。
+- **适配边界**：用户确认使用赛题附件2的768/74/35维、50步对齐特征与既有划分；原论文使用300/74/1024维特征，且序列长度、回归/分类公式存在歧义。完整实现选择见[AUMDF/REPRODUCTION.md](AUMDF/REPRODUCTION.md)。
+- **训练证据**：见[AUMDF/VALIDATION.md](AUMDF/VALIDATION.md)。代码测试、真实数据流程验证、训练结果和严格原论文成绩复现分开陈述。检查点与日志只保存于项目artifacts/aumdf/，不上传数据或权重。
