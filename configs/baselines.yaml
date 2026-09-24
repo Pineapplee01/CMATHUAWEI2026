@@ -2,6 +2,20 @@
 # Third-party snapshots remain local and are referenced by references/code_manifest.json.
 schema_version: 1
 protocol_version: e-competition-v1
+data_contract:
+  feature_version: aligned_50
+  source_format: npz
+  processed_root: /user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed
+  split_files:
+    train: train.npz
+    valid: valid.npz
+    test: test.npz
+  feature_keys: {text: XT, audio: XA, vision: XV}
+  valid_mask_keys: {text: mT, audio: mA, vision: mV}
+  id_key: ids
+  regression_label_key: y_regression
+  classification_label_key: y_classification
+  normalization: organizer_processed_train_fitted
 deferred_clusters:
   - id: L0
     name: lower_bound
@@ -31,9 +45,10 @@ clusters:
     methods:
       - id: mult
         display_name: MulT
-        status: local_reference
+        status: source_downloaded_unadapted
         source: references/MMSA/src/MMSA/models/singleTask/MULT.py
         upstream: https://github.com/yaohungt/Multimodal-Transformer
+        author_source: references/Multimodal-Transformer
   L4:
     name: missing_modality_robustness
     task: [Q2]

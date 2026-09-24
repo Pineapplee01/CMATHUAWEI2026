@@ -1,6 +1,6 @@
 # E题参考方法与论文汇总
 
-> 整理及核验日期：2026-09-23。面向“复杂场景下多模态情感预测的数学建模与算法设计”。
+> 整理及核验日期：2026-09-24。面向“复杂场景下多模态情感预测的数学建模与算法设计”。
 >
 > 本文汇总最初本地保存的4套参考实现，以及本次论文阅读和网络检索所得方法：18篇核心文献逐篇总结，14篇补充线索作摘要级归纳，并记录2018年数据集论文中的经典基线。后续新增源码下载、许可与逐篇可用性见第11节。
 >
@@ -508,12 +508,12 @@ L0下界暂不实现；若计算资源有限，保留以下L1-L6方法即可形�
 
 L0下界已明确延后，不进入当前实现与首轮实验。L1-L6的项目配置、方法来源、输入版本和实现状态统一登记在 [`configs/baselines.yaml`](../configs/baselines.yaml)，并随主仓库同步到远程 `main`。第三方源码快照仍按第11节的下载策略保存在本地，不直接复制进主仓库；远程仓库同步的是项目自有适配代码、配置、文档和来源清单。
 
-## 11. 代码公开与本地保存核验（2026-09-23）
+## 11. 代码公开与本地保存核验（2026-09-24）
 
 本节补充并更新前文的代码可用性信息。**公开仓库存在、存在实际源码、具有完整开源许可证、已完成复现是四件不同的事。** 本次没有执行第三方实现。
 
 - 核查R01–R18、S01–S14共32篇：16篇有对应源码或明确标注的组件／复现实现保存在本地，3篇仅有占位仓库，13篇暂未找到可靠实现。
-- 新保存14个源码仓库，加上保留的4套原有实现，共18个本地目录。仓库数不同于论文数：Graph-MFN相关组件和复现框架分开保存，另有经典MFN仓库。
+- 新保存15个源码仓库，加上保留的4套原有实现，共19个本地目录。仓库数不同于论文数：Graph-MFN相关组件和复现框架分开保存，另有经典MFN仓库和MulT作者仓库。
 - 每个新仓库使用浅克隆与源码稀疏检出，保留提交号。只保存代码、配置、文本说明和许可文件；未检出数据集、模型权重、音视频。下载源码不代表它已适配本题或能直接运行。
 - 完整来源、提交号、Python文件数和逐篇状态见 [code_manifest.json](code_manifest.json)。原有快照的commit记为null，避免冒认其上游版本。
 
@@ -537,6 +537,7 @@ L0下界已明确延后，不进入当前实现与首轮实验。L1-L6的项目�
 | [DiscRead-MSA/](DiscRead-MSA/) | [GawaineXiukkie/DiscRead-MSA](https://github.com/GawaineXiukkie/DiscRead-MSA) | 25 | Apache-2.0 | 新增源码检出 |
 | [CMU-MultimodalSDK/](CMU-MultimodalSDK/) | [CMU-MultiComp-Lab/CMU-MultimodalSDK](https://github.com/CMU-MultiComp-Lab/CMU-MultimodalSDK) | 50 | MIT；另含历史LICENSE.txt使用说明 | 新增源码检出 |
 | [MMSA/](MMSA/) | [thuiar/MMSA](https://github.com/thuiar/MMSA) | 70 | MIT | 新增源码检出 |
+| [Multimodal-Transformer/](Multimodal-Transformer/) | [yaohungt/Multimodal-Transformer](https://github.com/yaohungt/Multimodal-Transformer) | 10 | MIT | 新增MulT作者源码检出 |
 | [MFN/](MFN/) | [pliang279/MFN](https://github.com/pliang279/MFN) | 3 | MIT | 新增源码检出 |
 | [TLRA/](TLRA/) | [liuxy1005/TLRA](https://github.com/liuxy1005/TLRA) | 21 | 未发现独立许可证 | 新增源码检出 |
 
@@ -585,16 +586,17 @@ L0下界已明确延后，不进入当前实现与首轮实验。L1-L6的项目�
 - **Graph-MFN第三方复现**：[MMSA的Graph_MFN.py](MMSA/src/MMSA/models/singleTask/Graph_MFN.py)。SDK README指向的原始Theano完整代码位于Google Drive，本次未下载；使用MMSA时按复现版本引用。
 - **TFN、MFN、EF-LSTM统一框架实现**：见[MMSA的singleTask目录](MMSA/src/MMSA/models/singleTask/)。MMSA是第三方统一框架，不冒称每个方法的原作者代码。
 - **MFN原作者仓库**：[MFN/test_mosi.py](MFN/test_mosi.py)，也包含EF-LSTM。原仓库附带的MOSI数据与预训练检查点未检出，旧Python/PyTorch依赖尚未适配。
+- **MulT作者仓库**：[Multimodal-Transformer/](Multimodal-Transformer/)。本次按作者公开仓库固定提交检出；MMSA中的`MULT.py`仍作为统一框架实现，二者不混称为同一训练脚本。
 - **TLRA真实入口**：论文PDF脚注提供的LiuXY3366/TLRA重定向至[liuxy1005/TLRA](https://github.com/liuxy1005/TLRA)，本次按该来源保存；不把同作者的RACA项目当作同一实现。
 
 ### 11.4 校验范围
 
-已验证新增14个目录有Python源码、Git工作树干净、来源与提交可追溯，且检出的文件不含PKL/HDF5/NumPy数据、模型权重或音视频。原有四套目录保留不变。未运行模型、未验证训练效果或跨平台依赖兼容性；没有将任何新数据引入data/。源码子目录仅本地保存，主Git仓库只同步文档和来源清单。
+已验证新增15个目录有Python源码、Git工作树干净、来源与提交可追溯，且检出的文件不含PKL/HDF5/NumPy数据、模型权重或音视频。原有四套目录保留不变。未把源码存在等同于赛题适配或完整训练结果；没有将任何新数据引入data/。第三方源码不进入GitHub主仓库，但已将缺失的MFN和MulT作者仓库同步到`gaojianan2:/user_home/gaojianan/CPMCM/Baseline/reference`；主GitHub仓库同步文档和来源清单。L1–L6的逐方法准备度见[baseline-readiness.md](baseline-readiness.md)。
 
 ## 12. 新增独立赛题适配实现：AUMDF
 
 - **论文**：王楠、王淇、欧阳丹彤，《基于知识蒸馏与动态调整机制的多模态情感分析模型》，计算机学报，2025，48(8)：1923–1942；DOI：10.11897/SP.J.1016.2025.01923，对应题面参考文献[10]。
 - **方法**：Attention-based Uncertain Missing Modality Distillation Framework。采用REM特征增强、RPM卷积与位置编码、DWAM动态门控、MMT跨模态注意力，以及CSD对比样本蒸馏和SRD相似性表示蒸馏。
-- **本地实现**：[AUMDF/README.md](AUMDF/README.md)。这是依据用户提供PDF编写的独立实现，不是下载的作者源码，不计入前述32篇公开源码核验或18个第三方仓库统计。
+- **本地实现**：[AUMDF/README.md](AUMDF/README.md)。这是依据用户提供PDF编写的独立实现，不是下载的作者源码，不计入前述32篇公开源码核验或19个第三方仓库统计。
 - **适配边界**：用户确认使用赛题附件2的768/74/35维、50步对齐特征与既有划分；原论文使用300/74/1024维特征，且序列长度、回归/分类公式存在歧义。完整实现选择见[AUMDF/REPRODUCTION.md](AUMDF/REPRODUCTION.md)。
 - **训练证据**：见[AUMDF/VALIDATION.md](AUMDF/VALIDATION.md)。代码测试、真实数据流程验证、训练结果和严格原论文成绩复现分开陈述。检查点与日志只保存于项目artifacts/aumdf/，不上传数据或权重。
