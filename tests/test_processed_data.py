@@ -20,6 +20,13 @@ def _write_split(path, ids):
     m_t[:, -2:] = False
     m_a[:, 10] = False
     m_v[:, 20:22] = False
+    q = np.stack([m_t.any(1), m_a.any(1), m_v.any(1)], axis=1)
+    Q = m_t.copy()
+    P = ~Q
+    text_lengths = m_t.sum(axis=1).astype(np.float32)
+    rho_content = np.zeros((n, 3), dtype=np.float32)
+    rho_content[:, 1] = (text_lengths - (m_t & m_a).sum(axis=1)) / text_lengths
+    rho_content[:, 2] = (text_lengths - (m_t & m_v).sum(axis=1)) / text_lengths
     y = np.linspace(-1, 1, n, dtype=np.float32)
     np.savez(
         path,
@@ -29,8 +36,10 @@ def _write_split(path, ids):
         mT=m_t,
         mA=m_a,
         mV=m_v,
-        q=np.stack([m_t.any(1), m_a.any(1), m_v.any(1)], axis=1),
-        P=~m_t,
+        Q=Q,
+        P=P,
+        q=q,
+        rho_content=rho_content,
         ids=np.asarray(ids),
         y_regression=y,
         y_classification=np.where(y < 0, 0, np.where(y > 0, 2, 1)),
@@ -116,3 +125,62 @@ def test_loader_rejects_nonfinite_feature_and_regression(tmp_path):
     np.savez(path, **values)
     with pytest.raises(ValueError, match="y_regression"):
         load_processed_split(path)
+
+
+@pytest.mark.parametrize("field", ["Q", "P", "q", "rho_content"])
+def test_loader_requires_canonical_metadata_fields(tmp_path, field):
+    path = tmp_path / "train.npz"
+    _write_split(path, ["a"])
+    with np.load(path, allow_pickle=False) as payload:
+        values = {key: payload[key] for key in payload.files if key != field}
+    np.savez(path, **values)
+    with pytest.raises(ValueError, match=field):
+        load_processed_split(path)
+
+
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    [
+        ("XT", np.zeros((1, 50, 767), dtype=np.float32)),
+        ("XA", np.zeros((1, 50, 73), dtype=np.float32)),
+        ("XV", np.zeros((1, 50, 34), dtype=np.float32)),
+    ],
+)
+def test_loader_rejects_noncanonical_feature_dimensions(tmp_path, field, replacement):
+    path = tmp_path / "train.npz"
+    _write_split(path, ["a"])
+    with np.load(path, allow_pickle=False) as payload:
+        values = {key: payload[key] for key in payload.files}
+    values[field] = replacement
+    np.savez(path, **values)
+    with pytest.raises(ValueError, match="shape"):
+        load_processed_split(path)
+
+
+def test_loader_rejects_nonboolean_masks(tmp_path):
+    path = tmp_path / "train.npz"
+    _write_split(path, ["a"])
+    with np.load(path, allow_pickle=False) as payload:
+        values = {key: payload[key] for key in payload.files}
+    values["mA"] = values["mA"].astype(np.int8)
+    np.savez(path, **values)
+    with pytest.raises(ValueError, match="boolean dtype"):
+        load_processed_split(path)
+
+
+def test_with_observed_mask_rejects_nonboolean_masks(tmp_path):
+    path = tmp_path / "train.npz"
+    _write_split(path, ["a"])
+    split = load_processed_split(path)
+    with pytest.raises(ValueError, match="boolean dtype"):
+        split.with_observed_mask({modality: split.native_valid_mask[modality].astype(np.int8) for modality in ("text", "audio", "vision")})
+
+
+def test_manifest_contains_field_schema_and_explicit_id_coverage(tmp_path):
+    for split_name, ids in (("train", ["tr1", "tr2"]), ("valid", ["va"]), ("test", ["te"])):
+        _write_split(tmp_path / f"{split_name}.npz", ids)
+    manifest = build_processed_manifest(load_processed_dataset(tmp_path))
+    assert manifest["field_schema"]["XT"] == {"dtype": "float32", "dims": ["N", 50, 768]}
+    assert manifest["field_schema"]["Q"] == {"dtype": "bool", "dims": ["N", 50]}
+    assert manifest["sample_id_coverage"] == {"train": ["tr1", "tr2"], "valid": ["va"], "test": ["te"]}
+    json.dumps(manifest)

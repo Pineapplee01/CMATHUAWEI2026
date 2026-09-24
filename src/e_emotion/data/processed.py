@@ -34,6 +34,38 @@ class ProcessedSplit:
     classification: np.ndarray
     source_path: Path
     synthetic_missing_mask: Mapping[str, np.ndarray] = field(default_factory=dict)
+    token_attention_mask: np.ndarray | None = None
+    token_padding_mask: np.ndarray | None = None
+    sample_modality_available: np.ndarray | None = None
+    content_missing_rate: np.ndarray | None = None
+
+    @property
+    def Q(self) -> np.ndarray:
+        """Organizer token attention mask (not a native modality mask)."""
+        if self.token_attention_mask is None:
+            raise AttributeError("token attention mask Q is unavailable")
+        return self.token_attention_mask
+
+    @property
+    def P(self) -> np.ndarray:
+        """Organizer token padding mask, exactly ``~Q``."""
+        if self.token_padding_mask is None:
+            raise AttributeError("token padding mask P is unavailable")
+        return self.token_padding_mask
+
+    @property
+    def q(self) -> np.ndarray:
+        """Sample-level modality availability vector."""
+        if self.sample_modality_available is None:
+            raise AttributeError("sample modality availability q is unavailable")
+        return self.sample_modality_available
+
+    @property
+    def rho_content(self) -> np.ndarray:
+        """Content-relative native missing rates for text/audio/vision."""
+        if self.content_missing_rate is None:
+            raise AttributeError("content missing rate rho_content is unavailable")
+        return self.content_missing_rate
 
     @property
     def size(self) -> int:
@@ -48,10 +80,8 @@ class ProcessedSplit:
         current: dict[str, np.ndarray] = {}
         updated: dict[str, np.ndarray] = {}
         for modality in MODALITIES:
-            candidate = np.asarray(observed_mask[modality], dtype=bool)
             native = self.native_valid_mask[modality]
-            if candidate.shape != native.shape:
-                raise ValueError(f"{modality} observed mask shape mismatch")
+            candidate = _as_bool_mask(observed_mask[modality], f"{modality} observed mask", native.shape)
             current[modality] = candidate & native
             values = self.features[modality].copy()
             values[~current[modality]] = 0
@@ -68,6 +98,10 @@ class ProcessedSplit:
                 modality: native & ~current[modality]
                 for modality, native in self.native_valid_mask.items()
             },
+            token_attention_mask=self.token_attention_mask,
+            token_padding_mask=self.token_padding_mask,
+            sample_modality_available=self.sample_modality_available,
+            content_missing_rate=self.content_missing_rate,
         )
 
 
@@ -85,8 +119,11 @@ class ProcessedDataset:
             raise KeyError(f"unknown split {split!r}; expected train, valid or test") from exc
 
 
-def _as_bool_mask(value: np.ndarray, name: str, shape: tuple[int, int]) -> np.ndarray:
-    mask = np.asarray(value, dtype=bool)
+def _as_bool_mask(value: np.ndarray, name: str, shape: tuple[int, ...]) -> np.ndarray:
+    raw = np.asarray(value)
+    if raw.dtype != np.dtype(bool):
+        raise ValueError(f"{name} must have boolean dtype, got {raw.dtype}")
+    mask = raw
     if mask.shape != shape:
         raise ValueError(f"{name} must have shape {shape}, got {mask.shape}")
     return mask
@@ -98,8 +135,8 @@ def load_processed_split(path: str | Path) -> ProcessedSplit:
     if not source.is_file():
         raise FileNotFoundError(source)
     with np.load(source, allow_pickle=False) as payload:
-        required = (*_FEATURE_KEYS.values(), *_MASK_KEYS.values(), "ids",
-                    "y_regression", "y_classification")
+        required = (*_FEATURE_KEYS.values(), *_MASK_KEYS.values(), "Q", "P", "q",
+                    "rho_content", "ids", "y_regression", "y_classification")
         missing = [key for key in required if key not in payload]
         if missing:
             raise ValueError(f"{source}: missing required fields {missing}")
@@ -107,18 +144,50 @@ def load_processed_split(path: str | Path) -> ProcessedSplit:
         native: dict[str, np.ndarray] = {}
         size: int | None = None
         for modality in MODALITIES:
-            values = np.asarray(payload[_FEATURE_KEYS[modality]], dtype=np.float32)
+            values = np.asarray(payload[_FEATURE_KEYS[modality]])
             if values.ndim != 3:
                 raise ValueError(f"{modality} features must be rank-3, got {values.shape}")
+            expected_dim = {"text": 768, "audio": 74, "vision": 35}[modality]
             if size is None:
                 size = int(values.shape[0])
-            if values.shape[0] != size or values.shape[1] != 50:
-                raise ValueError(f"{modality} features must have shape (N, 50, D), got {values.shape}")
+            if values.shape != (size, 50, expected_dim):
+                raise ValueError(
+                    f"aligned_50 {modality} features must have shape (N, 50, {expected_dim}), got {values.shape}"
+                )
+            if values.dtype != np.dtype(np.float32):
+                raise ValueError(f"{modality} features must have float32 dtype, got {values.dtype}")
             if not np.isfinite(values).all():
                 raise ValueError(f"{modality} features contain non-finite values")
             features[modality] = values
             native[modality] = _as_bool_mask(payload[_MASK_KEYS[modality]], modality, values.shape[:2])
         assert size is not None
+        q = _as_bool_mask(payload["q"], "q", (size, 3))
+        Q = _as_bool_mask(payload["Q"], "Q", (size, 50))
+        P = _as_bool_mask(payload["P"], "P", (size, 50))
+        if not np.array_equal(P, ~Q):
+            raise ValueError("P must equal ~Q")
+        if np.any(native["text"] & ~Q):
+            raise ValueError("mT must be a subset of Q")
+        expected_q = np.stack([native[modality].any(axis=1) for modality in MODALITIES], axis=1)
+        if not np.array_equal(q, expected_q):
+            raise ValueError("q must match sample-level native modality availability")
+        rho_content = np.asarray(payload["rho_content"])
+        if rho_content.shape != (size, 3):
+            raise ValueError(f"rho_content must have shape {(size, 3)}, got {rho_content.shape}")
+        if rho_content.dtype.kind not in "fc" or not np.isfinite(rho_content).all():
+            raise ValueError("rho_content must contain finite floating-point values")
+        text_lengths = native["text"].sum(axis=1).astype(np.float32)
+        expected_rho = np.zeros((size, 3), dtype=np.float32)
+        for index, modality in enumerate(("audio", "vision"), start=1):
+            overlap = (native["text"] & native[modality]).sum(axis=1)
+            expected_rho[:, index] = np.divide(
+                text_lengths - overlap,
+                text_lengths,
+                out=np.zeros(size, dtype=np.float32),
+                where=text_lengths > 0,
+            )
+        if np.any(rho_content < 0) or np.any(rho_content > 1) or not np.allclose(rho_content, expected_rho):
+            raise ValueError("rho_content must be [0,1] content-relative native missing rates")
         ids = np.asarray(payload["ids"])
         regression = np.asarray(payload["y_regression"], dtype=np.float32)
         classification = np.asarray(payload["y_classification"], dtype=np.int64)
@@ -141,6 +210,10 @@ def load_processed_split(path: str | Path) -> ProcessedSplit:
             modality: np.zeros_like(mask, dtype=bool)
             for modality, mask in native.items()
         },
+        token_attention_mask=Q,
+        token_padding_mask=P,
+        sample_modality_available=q,
+        content_missing_rate=rho_content.astype(np.float32, copy=False),
     )
 
 
@@ -229,6 +302,9 @@ def build_processed_manifest(
     loaded = load_processed_dataset(dataset) if isinstance(dataset, (str, Path)) else dataset
     resolved_mask_hash = mask_sha256 if mask_sha256 is not None else mask_manifest_hash
     split_records: dict[str, Any] = {}
+    field_schema_by_split: dict[str, Any] = {}
+    sample_coverage: dict[str, Any] = {}
+    sample_id_coverage: dict[str, list[str]] = {}
     for name in ("train", "valid", "test"):
         split = loaded[name]
         split_records[name] = {
@@ -237,6 +313,50 @@ def build_processed_manifest(
             "size": split.size,
             "id_count": split.size,
         }
+        arrays: dict[str, np.ndarray] = {
+            "XT": split.features["text"],
+            "XA": split.features["audio"],
+            "XV": split.features["vision"],
+            "mT": split.native_valid_mask["text"],
+            "mA": split.native_valid_mask["audio"],
+            "mV": split.native_valid_mask["vision"],
+            "Q": split.Q,
+            "P": split.P,
+            "q": split.q,
+            "rho_content": split.rho_content,
+            "ids": split.ids,
+            "y_regression": split.regression,
+            "y_classification": split.classification,
+        }
+        field_schema_by_split[name] = {
+            key: {"dtype": str(value.dtype), "shape": list(value.shape)}
+            for key, value in arrays.items()
+        }
+        ids = [str(item) for item in split.ids.tolist()]
+        sample_id_coverage[name] = ids
+        sample_coverage[name] = {
+            "size": split.size,
+            "ids": ids,
+            "first_id": ids[0] if ids else None,
+            "last_id": ids[-1] if ids else None,
+        }
+    field_schema = {
+        "XT": {"dtype": "float32", "dims": ["N", 50, 768]},
+        "XA": {"dtype": "float32", "dims": ["N", 50, 74]},
+        "XV": {"dtype": "float32", "dims": ["N", 50, 35]},
+        "mT": {"dtype": "bool", "dims": ["N", 50]},
+        "mA": {"dtype": "bool", "dims": ["N", 50]},
+        "mV": {"dtype": "bool", "dims": ["N", 50]},
+        "Q": {"dtype": "bool", "dims": ["N", 50]},
+        "P": {"dtype": "bool", "dims": ["N", 50]},
+        "q": {"dtype": "bool", "dims": ["N", 3]},
+        "rho_content": {"dtype": "float32", "dims": ["N", 3]},
+        "ids": {"dtype": "string", "dims": ["N"]},
+        "y_regression": {"dtype": "float32", "dims": ["N"]},
+        "y_classification": {"dtype": "int64", "dims": ["N"]},
+    }
+    # Keep split-specific observed shapes alongside the canonical contract.
+    field_schema.update(field_schema_by_split)
     return {
         "protocol_version": PROTOCOL_VERSION,
         "feature_version": FEATURE_VERSION,
@@ -244,6 +364,10 @@ def build_processed_manifest(
         "split_sizes": {name: loaded[name].size for name in ("train", "valid", "test")},
         "source_paths": {name: record["source_path"] for name, record in split_records.items()},
         "data_hashes": {name: record["sha256"] for name, record in split_records.items()},
+        "field_schema": field_schema,
+        "field_schema_by_split": field_schema_by_split,
+        "sample_id_coverage": sample_id_coverage,
+        "sample_coverage": sample_coverage,
         "experiment_seed": int(experiment_seed),
         "mask_seed": int(mask_seed),
         "normalization_source": normalization_source,
