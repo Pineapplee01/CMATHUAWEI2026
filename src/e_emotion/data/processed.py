@@ -223,9 +223,11 @@ def build_processed_manifest(
     checkpoint: str | None = None,
     threshold_source: str | None = None,
     mask_manifest_hash: str | None = None,
+    mask_sha256: str | None = None,
 ) -> dict[str, Any]:
     """Build a JSON-serializable audit manifest without writing artifacts."""
     loaded = load_processed_dataset(dataset) if isinstance(dataset, (str, Path)) else dataset
+    resolved_mask_hash = mask_sha256 if mask_sha256 is not None else mask_manifest_hash
     split_records: dict[str, Any] = {}
     for name in ("train", "valid", "test"):
         split = loaded[name]
@@ -240,12 +242,15 @@ def build_processed_manifest(
         "feature_version": FEATURE_VERSION,
         "splits": split_records,
         "split_sizes": {name: loaded[name].size for name in ("train", "valid", "test")},
+        "source_paths": {name: record["source_path"] for name, record in split_records.items()},
+        "data_hashes": {name: record["sha256"] for name, record in split_records.items()},
         "experiment_seed": int(experiment_seed),
         "mask_seed": int(mask_seed),
         "normalization_source": normalization_source,
         "checkpoint": checkpoint,
         "threshold_source": threshold_source,
-        "mask_manifest_hash": mask_manifest_hash,
+        "mask_manifest_hash": resolved_mask_hash,
+        "mask_sha256": resolved_mask_hash,
         "mask_semantics": {
             "native_valid_mask": {"text": "mT", "audio": "mA", "vision": "mV"},
             "synthetic_missing_mask": "independent artificial Q2 deletions",

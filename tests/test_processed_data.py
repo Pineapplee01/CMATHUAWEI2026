@@ -89,10 +89,12 @@ def test_manifest_contains_hashes_protocol_and_is_json_serializable(tmp_path):
     for split_name, ids in (("train", ["tr"]), ("valid", ["va"]), ("test", ["te"])):
         _write_split(tmp_path / f"{split_name}.npz", ids)
     dataset = load_processed_dataset(tmp_path)
-    manifest = build_processed_manifest(dataset)
+    manifest = build_processed_manifest(dataset, mask_sha256="a" * 64)
     assert manifest["protocol_version"] == "e-competition-v1"
     assert manifest["feature_version"] == "aligned_50"
     assert manifest["split_sizes"] == {"train": 1, "valid": 1, "test": 1}
+    assert manifest["mask_sha256"] == "a" * 64
+    assert set(manifest["data_hashes"]) == {"train", "valid", "test"}
     for record in manifest["splits"].values():
         assert len(record["sha256"]) == 64
         assert record["source_path"].endswith(".npz")
