@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader, Subset
 from e_emotion.evaluation import adapt_output, prediction_rows, score_records
 from e_emotion.evaluation.outputs import PROTOCOL_VERSION
 
-from aumdf.data import PROJECT_ROOT, load_attachment2, resolve_data_path
+from aumdf.data import CANONICAL_PROCESSED_ROOT, PROJECT_ROOT, load_attachment2, resolve_source_path
 from aumdf.losses import DistillationLoss, freeze_teacher
 from aumdf.metrics import metrics, select_neutral_threshold
 from aumdf.missingness import corrupt
@@ -33,6 +33,14 @@ def sha256(path):
         for chunk in iter(lambda: source.read(1024*1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def source_sha256(path):
+    """Hash each immutable split when the source is a processed directory."""
+    source = Path(path)
+    if source.is_file():
+        return {source.name: sha256(source)}
+    return {item.name: sha256(item) for item in sorted(source.glob("*.npz"))}
 
 
 def seed_everything(seed):
@@ -120,10 +128,12 @@ def training_provenance(checkpoint, path):
 
 
 def train_run(config, output_dir, device="auto", project_root=PROJECT_ROOT,
-              train_limit=None, valid_limit=None):
+              train_limit=None, valid_limit=None, *, strict_data=True,
+              canonical_root=CANONICAL_PROCESSED_ROOT):
     output = artifact_path(project_root, output_dir)
     if output.exists():
         raise FileExistsError(f"refusing to overwrite an existing run: {output}")
+    strict_data = bool(strict_data)
     training = config["training"]
     seed = int(training.get("seed",2026))
     for name in ("teacher_epochs", "student_epochs", "batch_size", "patience"):
@@ -133,8 +143,10 @@ def train_run(config, output_dir, device="auto", project_root=PROJECT_ROOT,
     torch.set_num_threads(2)
     device = choose_device(device)
     model_config = ModelConfig(**config.get("model",{}))
-    datasets, scaler, audit = load_attachment2(config["data_file"], project_root=project_root,
-                                              expected_dims=model_config.input_dims)
+    datasets, scaler, audit = load_attachment2(
+        config["data_file"], project_root=project_root, expected_dims=model_config.input_dims,
+        strict=strict_data, canonical_root=canonical_root,
+    )
     selected = {}
     for split, limit in (("train",train_limit),("valid",valid_limit)):
         if limit is not None and limit < 2:
@@ -154,9 +166,12 @@ def train_run(config, output_dir, device="auto", project_root=PROJECT_ROOT,
                    "numpy":np.__version__, "cuda":torch.version.cuda, "device":str(device),
                    "gpu":torch.cuda.get_device_name(device) if device.type=="cuda" else None}
     write_json(output / "config.json", config)
+    source = resolve_source_path(project_root, config["data_file"], strict=strict_data,
+                                 canonical_root=canonical_root)
     write_json(output / "data_audit.json", {**audit,"used_train":len(selected["train"]),
-                                          "used_valid":len(selected["valid"]),
-                                          "sha256":sha256(resolve_data_path(project_root,config["data_file"]))})
+                                      "used_valid":len(selected["valid"]),
+                                      "data_source":str(source),
+                                      "data_sha256":source_sha256(source)})
     write_json(output / "environment.json", environment)
     write_json(output / "status.json", {"state":"running","scope":scope})
     missing = config.get("missingness",{})
@@ -259,7 +274,8 @@ def train_run(config, output_dir, device="auto", project_root=PROJECT_ROOT,
 
 
 def evaluate_checkpoint(checkpoint_path, split="valid", device="auto", project_root=PROJECT_ROOT,
-                        rates=(0,.1,.3,.5,.7), modes=("random","block"), whole_modalities=False):
+                        rates=(0,.1,.3,.5,.7), modes=("random","block"), whole_modalities=False,
+                        *, strict_data=True, canonical_root=CANONICAL_PROCESSED_ROOT):
     if split not in {"train","valid","test"}:
         raise ValueError("split must be train, valid or test")
     device = choose_device(device)
@@ -267,8 +283,10 @@ def evaluate_checkpoint(checkpoint_path, split="valid", device="auto", project_r
     model,checkpoint = restore(path,device)
     provenance = training_provenance(checkpoint,path)
     config=checkpoint["config"]
+    strict_data = bool(strict_data)
     datasets,_,audit=load_attachment2(config["data_file"],project_root=project_root,
-                                     expected_dims=model.config.input_dims,scaler=checkpoint["scaler"])
+                                     expected_dims=model.config.input_dims,scaler=checkpoint["scaler"],
+                                     strict=strict_data, canonical_root=canonical_root)
     loader=DataLoader(datasets[split],batch_size=int(config["training"].get("batch_size",32)),shuffle=False)
     threshold=float(checkpoint["neutral_threshold"])
     seed=int(config["training"].get("seed",2026))+1000

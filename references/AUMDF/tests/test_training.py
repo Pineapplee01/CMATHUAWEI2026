@@ -34,14 +34,16 @@ def test_two_stage_training_checkpoint_and_evaluation(tmp_path, smoke):
     }
     output = tmp_path / "artifacts" / "run"
     result = train_run(config, output, device="cpu", project_root=tmp_path,
-                       train_limit=6 if smoke else None, valid_limit=3 if smoke else None)
+                       train_limit=6 if smoke else None, valid_limit=3 if smoke else None,
+                       strict_data=False)
     assert result["teacher"]["epochs_completed"] == 1
     assert result["student"]["epochs_completed"] == 1
     assert (output / "teacher.pt").is_file()
     assert (output / "student.pt").is_file()
     assert result["scope"] == ("smoke_only" if smoke else "competition_subset_reproduction")
     evaluation = evaluate_checkpoint(output / "student.pt", split="test", device="cpu",
-                                     project_root=tmp_path, rates=(0,.5), modes=("random","block"))
+                                     project_root=tmp_path, rates=(0,.5), modes=("random","block"),
+                                     strict_data=False)
     assert evaluation["split"] == "test"
     assert evaluation["scope"] == ("smoke_evaluation" if smoke else "competition_subset_evaluation")
     assert evaluation["training_provenance"]["used_train"] == (6 if smoke else 8)
@@ -58,4 +60,4 @@ def test_two_stage_training_checkpoint_and_evaluation(tmp_path, smoke):
         truth = [{"id": row["id"], "intensity": row["target"]} for row in condition["predictions"]]
         assert score_records(truth, condition["predictions"]) == condition["metrics"]["competition"]
     with pytest.raises(FileExistsError):
-        train_run(config, output, device="cpu", project_root=tmp_path)
+        train_run(config, output, device="cpu", project_root=tmp_path, strict_data=False)

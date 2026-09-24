@@ -41,7 +41,8 @@ def main():
         stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         output=args.output or PROJECT_ROOT/"artifacts/aumdf"/(("smoke-" if args.smoke else "run-")+stamp)
         result=train_run(config,output,args.device,
-                         train_limit=64 if args.smoke else None,valid_limit=32 if args.smoke else None)
+                         train_limit=64 if args.smoke else None,valid_limit=32 if args.smoke else None,
+                         strict_data=True)
     else:
         output=artifact_path(PROJECT_ROOT,args.output)
         if output.exists():
@@ -49,7 +50,8 @@ def main():
         csv_dir = output.with_suffix("")
         if csv_dir == output or csv_dir.exists():
             raise FileExistsError("use a new .json output name with a new sibling CSV directory")
-        result=evaluate_checkpoint(args.checkpoint,args.split,args.device,whole_modalities=args.whole_modalities)
+        result=evaluate_checkpoint(args.checkpoint,args.split,args.device,whole_modalities=args.whole_modalities,
+                                   strict_data=True)
         output.parent.mkdir(parents=True,exist_ok=True)
         write_json(output,result)
         for condition in result["conditions"]:
