@@ -10,15 +10,15 @@
 - 本次新增本地源码：MulT作者仓库 `references/Multimodal-Transformer`，提交 `a670936824ee722c8494fd98d204977a1d663c7a`。
 - 只有论文、没有可靠公开源码：CICA。
 - 项目自有控制组，不需要寻找第三方论文源码：Concat-MLP、Early Fusion + GRU、Masked-Train、Permutation/Occlusion。
-- 远程目标为 SSH 主机 `gaojianan2`，项目目录为 `/user_home/gaojianan/CPMCM/Baseline/reference`；本轮已补同步缺失的 `MFN` 和 MulT作者仓库，并完成文件哈希核对。
+- 远程目标为 SSH 主机 `gaojianan2`，项目目录为 `/user_home/gaojianan/CPMCM/Baseline/reference`；本轮已补同步缺失的 `MFN` 和 MulT作者仓库，并完成文件哈希核对。项目自有控制组按方法名维护：`Concat-MLP/` 与 `Early-Fusion-GRU/`，不使用日期临时目录。
 
 ## 逐方法状态
 
 | 簇 | 方法 | 论文/源码准备 | 本地位置 | 赛题适配或训练证据 | 尚未完成 |
 |---|---|---|---|---|---|
-| L1 | Concat-MLP | 项目自有基线，无需第三方源码 | `src/e_emotion/baselines` | 模型、掩码适配器和契约测试已完成 | 训练、验证选优、统一评分产物 |
+| L1 | Concat-MLP | 项目自有基线，无需第三方源码 | `src/e_emotion/baselines`；远程 `reference/Concat-MLP/` | 模型、掩码适配器和契约测试已完成 | 训练、验证选优、统一评分产物 |
 | L1 | EF-LSTM | MMSA有实现；MFN仓库也包含早期融合参考 | `references/MMSA/.../EF_LSTM.py` | 仅源码就绪 | 附件2适配、统一缺失实验、训练结果 |
-| L1 | Early Fusion + GRU | 项目自有控制组 | `src/e_emotion/baselines` | 模型、掩码适配器和契约测试已完成 | 训练、验证选优、统一评分产物 |
+| L1 | Early Fusion + GRU | 项目自有控制组 | `src/e_emotion/baselines`；远程 `reference/Early-Fusion-GRU/` | 模型、掩码适配器和契约测试已完成 | 训练、验证选优、统一评分产物 |
 | L2 | TFN | MMSA有实现 | `references/MMSA/.../TFN.py` | 仅源码就绪 | 附件2适配和参数量受控训练 |
 | L2 | MFN | MMSA及原作者仓库均有实现 | `references/MMSA/.../MFN.py`、`references/MFN/` | 仅源码就绪 | 附件2适配和统一评分 |
 | L2 | Graph-MFN/DFG | SDK有DFG组件，MMSA有第三方Graph-MFN实现；不是原作者完整训练脚本 | `references/CMU-MultimodalSDK/`、`references/MMSA/` | 已有训练/检查点烟测记录；不等于完整主实验 | 统一连续缺失矩阵、Q3删除/置换归因 |
@@ -69,7 +69,7 @@ Concat-MLP、Early Fusion + GRU、Masked-Train 和 Permutation/Occlusion不是�
 | 目标 | 状态 | 说明 |
 |---|---|---|
 | GitHub `main` | 可同步项目元数据 | 公开源码目录按既有策略不进入主仓库；manifest、配置和本报告可推送 |
-| SSH `gaojianan2` | 已同步 | `/user_home/gaojianan/CPMCM/Baseline/reference`；新增 `MFN`、`Multimodal-Transformer`，来源清单和准备度报告已写入 |
+| SSH `gaojianan2` | 已同步 | `/user_home/gaojianan/CPMCM/Baseline/reference`；新增 `MFN`、`Multimodal-Transformer`，并将控制组分别同步到 `Concat-MLP/`、`Early-Fusion-GRU/`；来源清单和准备度报告已写入 |
 | SSH `GPU` | 未使用 | 不是本轮指定服务器，不影响 `gaojianan2` 同步结果 |
 
 后续在 `gaojianan2` 上继续适配时，应该按以下顺序执行：
