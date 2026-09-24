@@ -245,6 +245,7 @@ def build_downstream_manifest(
     threshold_source: str | Path | None = None,
     mask_manifest_hash: str | None = None,
     mask_manifest_path: str | Path | None = None,
+    legacy_compatibility: bool = False,
     expected_split_sizes: Mapping[str, int] | None = None,
     expected_hashes: Mapping[str, str] | None = None,
     artifact_paths: Mapping[str, str | Path] | None = None,
@@ -256,6 +257,8 @@ def build_downstream_manifest(
     _required_seed(experiment_seed, "experiment_seed")
     _required_seed(mask_seed, "mask_seed")
     mask_hash = _required_sha(mask_manifest_hash, "mask manifest hash")
+    if mask_manifest_path is None and not legacy_compatibility:
+        raise ValueError("strict downstream manifests require mask_manifest_path")
     loaded = _load_npz_dataset(dataset, canonical_root=canonical_root)
     _check_dataset(loaded, expected_split_sizes=expected_split_sizes, expected_hashes=expected_hashes)
     bound_mask: dict[str, Any] | None = None
@@ -284,6 +287,7 @@ def build_downstream_manifest(
         mask_manifest_hash=mask_hash,
     )
     manifest.update(context)
+    manifest["mask_binding_mode"] = "legacy_hash_only" if mask_manifest_path is None else "strict"
     if bound_mask is not None:
         manifest["mask_manifest_path"] = str(mask_path)
         manifest["mask_manifest"] = {
@@ -330,6 +334,7 @@ def validate_downstream_manifest(
     expected_split_sizes: Mapping[str, int] | None = None,
     expected_hashes: Mapping[str, str] | None = None,
     canonical_root: str | Path = CANONICAL_PROCESSED_ROOT,
+    legacy_compatibility: bool = False,
 ) -> dict[str, Any]:
     """Validate the serialized manifest before accepting a downstream result."""
     try:
@@ -454,6 +459,12 @@ def validate_downstream_manifest(
         raise ValueError("mask manifest hash provenance is inconsistent")
     mask_manifest_path = manifest.get("mask_manifest_path")
     mask_summary = manifest.get("mask_manifest")
+    binding_mode = manifest.get("mask_binding_mode", "strict")
+    if mask_manifest_path is None:
+        if binding_mode != "legacy_hash_only" or not legacy_compatibility:
+            raise ValueError("strict downstream manifests require mask_manifest_path")
+    elif binding_mode != "strict":
+        raise ValueError("manifest with mask_manifest_path must use strict mask binding")
     if mask_manifest_path is not None:
         mask_path = _canonical_existing_file(mask_manifest_path, "mask manifest path")
         if not _inside(mask_path, artifact_root):

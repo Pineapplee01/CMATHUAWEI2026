@@ -27,6 +27,12 @@
 
 ## Compatibility note
 
-The existing hash-only `build_downstream_manifest` arguments remain accepted;
-strict content binding is activated by supplying `mask_manifest_path`, which is
-the path recorded and verified in the downstream manifest.
+Strict downstream manifests now require `mask_manifest_path` and reject a
+hash-only claim.  Historical callers may explicitly pass
+`legacy_compatibility=True`; such manifests are marked `mask_binding_mode` as
+`legacy_hash_only` and cannot validate in strict mode.
+
+`normalization_source` remains a provenance label for compatibility.  A
+normalization parameter file hash is not required by the current builder, so
+the report does not claim scaler-content verification; this remains a separate
+follow-up contract item.

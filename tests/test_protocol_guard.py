@@ -36,12 +36,13 @@ def _valid_kwargs(tmp_path):
         "checkpoint": artifact_root / "checkpoint.pt",
         "threshold_source": artifact_root / "threshold.json",
         "mask_manifest_hash": "a" * 64,
+        "legacy_compatibility": True,
         "canonical_root": tmp_path / "processed",
     }
 
 
 def _validate(manifest, tmp_path):
-    return validate_downstream_manifest(manifest, canonical_root=tmp_path / "processed")
+    return validate_downstream_manifest(manifest, canonical_root=tmp_path / "processed", legacy_compatibility=True)
 
 
 def test_valid_downstream_manifest_is_json_serializable_and_complete(tmp_path):
@@ -59,6 +60,14 @@ def test_valid_downstream_manifest_is_json_serializable_and_complete(tmp_path):
     assert manifest["mask_semantics"]["synthetic"]
     assert manifest["mask_semantics"]["observed"]
     json.dumps(manifest)
+
+
+def test_strict_manifest_requires_q2_manifest_path(tmp_path):
+    dataset = _dataset(tmp_path / "processed")
+    kwargs = _valid_kwargs(tmp_path)
+    kwargs.pop("legacy_compatibility")
+    with pytest.raises(ValueError, match="mask_manifest_path"):
+        build_downstream_manifest(dataset, **kwargs)
 
 
 def test_rejects_legacy_pkl_input(tmp_path):
