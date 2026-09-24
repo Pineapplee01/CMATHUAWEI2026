@@ -11,11 +11,21 @@ data_contract:
     valid: valid.npz
     test: test.npz
   feature_keys: {text: XT, audio: XA, vision: XV}
-  valid_mask_keys: {text: mT, audio: mA, vision: mV}
+  text_token_mask_key: Q
+  text_content_observed_mask_key: mT
+  audio_observed_mask_key: mA
+  vision_observed_mask_key: mV
+  sample_modality_available_key: q
+  content_missing_rate_key: rho_content
   id_key: ids
   regression_label_key: y_regression
   classification_label_key: y_classification
   normalization: organizer_processed_train_fitted
+strict_npz_comparison:
+  status: enforced
+  guard: e_emotion.evaluation.protocol_guard
+  historical_runs_unchanged: true
+  not_ready_reason: "Existing reference entrypoints either read historical PKL inputs or do not emit complete mask provenance; each must pass the guard before strict NPZ comparison."
 deferred_clusters:
   - id: L0
     name: lower_bound
@@ -27,17 +37,17 @@ clusters:
     task: [Q2, Q3]
     variant: aligned
     methods:
-      - {id: concat_mlp, display_name: Concat-MLP, status: planned, source: project_owned}
-      - {id: ef_lstm, display_name: EF-LSTM, status: local_reference, source: references/MMSA/src/MMSA/models/singleTask/EF_LSTM.py}
-      - {id: early_fusion_gru, display_name: Early Fusion + GRU, status: planned, source: project_owned}
+      - {id: concat_mlp, display_name: Concat-MLP, status: planned, strict_npz_status: not_ready, source: project_owned}
+      - {id: ef_lstm, display_name: EF-LSTM, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/EF_LSTM.py}
+      - {id: early_fusion_gru, display_name: Early Fusion + GRU, status: planned, strict_npz_status: not_ready, source: project_owned}
   L2:
     name: classical_interaction
     task: [Q2, Q3]
     variant: aligned
     methods:
-      - {id: tfn, display_name: TFN, status: local_reference, source: references/MMSA/src/MMSA/models/singleTask/TFN.py}
-      - {id: mfn, display_name: MFN, status: local_reference, source: references/MMSA/src/MMSA/models/singleTask/MFN.py}
-      - {id: graph_mfn_dfg, display_name: Graph-MFN/DFG, status: local_reference, source: references/MMSA/src/MMSA/models/singleTask/Graph_MFN.py}
+      - {id: tfn, display_name: TFN, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/TFN.py}
+      - {id: mfn, display_name: MFN, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/MFN.py}
+      - {id: graph_mfn_dfg, display_name: Graph-MFN/DFG, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/Graph_MFN.py}
   L3:
     name: unaligned_cross_modal_attention
     task: [Q2, Q3]
@@ -46,6 +56,7 @@ clusters:
       - id: mult
         display_name: MulT
         status: source_downloaded_unadapted
+        strict_npz_status: not_ready
         source: references/MMSA/src/MMSA/models/singleTask/MULT.py
         upstream: https://github.com/yaohungt/Multimodal-Transformer
         author_source: references/Multimodal-Transformer
@@ -53,23 +64,23 @@ clusters:
     name: missing_modality_robustness
     task: [Q2]
     methods:
-      - {id: masked_train, display_name: Masked-Train control, status: planned, source: project_owned}
-      - {id: p_rmf, display_name: P-RMF, status: local_reference, variant: unaligned, source: references/P-RMF}
-      - {id: cmad, display_name: CMAD, status: local_reference, variant: aligned, source: references/CMAD}
-      - {id: aumdf, display_name: AUMDF, status: adapted_baseline, variant: aligned, source: references/AUMDF}
+      - {id: masked_train, display_name: Masked-Train control, status: planned, strict_npz_status: not_ready, source: project_owned}
+      - {id: p_rmf, display_name: P-RMF, status: local_reference, strict_npz_status: not_ready, variant: unaligned, source: references/P-RMF}
+      - {id: cmad, display_name: CMAD, status: local_reference, strict_npz_status: not_ready, variant: aligned, source: references/CMAD}
+      - {id: aumdf, display_name: AUMDF, status: adapted_baseline, strict_npz_status: not_ready, variant: aligned, source: references/AUMDF}
   L5:
     name: reliability_dynamic_experts
     task: [Q2, Q3]
     variant: aligned
     methods:
-      - {id: emoe, display_name: EMOE, status: local_reference, source: references/EMOE}
-      - {id: qa_moe, display_name: QA-MoE, status: local_reference, source: references/QA-MoE}
-      - {id: cica, display_name: CICA, status: paper_only, source: references/reference.md}
+      - {id: emoe, display_name: EMOE, status: local_reference, strict_npz_status: not_ready, source: references/EMOE}
+      - {id: qa_moe, display_name: QA-MoE, status: local_reference, strict_npz_status: not_ready, source: references/QA-MoE}
+      - {id: cica, display_name: CICA, status: paper_only, strict_npz_status: not_ready, source: references/reference.md}
   L6:
     name: explainable_interaction
     task: [Q3]
     variant: aligned
     methods:
-      - {id: graph_mfn_dfg_attribution, display_name: Graph-MFN/DFG + attribution, status: local_reference_plus_project_diagnostics, source: references/MMSA/src/MMSA/models/singleTask/Graph_MFN.py}
-      - {id: emoe_attribution, display_name: EMOE + attribution, status: local_reference_plus_project_diagnostics, source: references/EMOE}
-      - {id: permutation_occlusion, display_name: Permutation/Occlusion attribution, status: planned, source: project_owned}
+      - {id: graph_mfn_dfg_attribution, display_name: Graph-MFN/DFG + attribution, status: local_reference_plus_project_diagnostics, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/Graph_MFN.py}
+      - {id: emoe_attribution, display_name: EMOE + attribution, status: local_reference_plus_project_diagnostics, strict_npz_status: not_ready, source: references/EMOE}
+      - {id: permutation_occlusion, display_name: Permutation/Occlusion attribution, status: planned, strict_npz_status: not_ready, source: project_owned}
