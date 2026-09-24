@@ -23,6 +23,7 @@ from e_emotion.data import (
 )
 
 _SPLITS = ("train", "valid", "test")
+CANONICAL_PROCESSED_ROOT = "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed"
 _SHA256 = re.compile(r"^[0-9a-fA-F]{64}$")
 _REQUIRED_FIELDS = (
     "XT",
@@ -65,17 +66,28 @@ _EXPECTED_MASK_SEMANTICS = {
 }
 
 
-def _load_npz_dataset(dataset: ProcessedDataset | str | Path) -> ProcessedDataset:
+def _load_npz_dataset(
+    dataset: ProcessedDataset | str | Path,
+    *,
+    canonical_root: str | Path = CANONICAL_PROCESSED_ROOT,
+) -> ProcessedDataset:
     if isinstance(dataset, ProcessedDataset):
-        return dataset
-    source = Path(dataset).expanduser()
+        raise ValueError("strict protocol rejects preloaded/fabricated ProcessedDataset; pass the canonical NPZ root")
+    source = Path(dataset).expanduser().resolve()
     if source.suffix.lower() == ".pkl" or source.name.lower().endswith(".pkl"):
         raise ValueError("legacy .pkl inputs are rejected; use the processed NPZ directory")
     if source.is_file():
         if source.suffix.lower() != ".npz":
             raise ValueError("dataset input must be a directory containing train/valid/test .npz files")
         raise ValueError("dataset input must be the processed NPZ directory, not a single split")
-    return load_processed_dataset(source)
+    root = _canonical_existing_dir(str(canonical_root), "canonical processed root")
+    if source != root:
+        raise ValueError(f"dataset root must be the canonical processed root {root}")
+    expected_files = {f"{name}.npz" for name in _SPLITS}
+    actual_files = {item.name for item in root.iterdir() if item.is_file()}
+    if actual_files != expected_files:
+        raise ValueError("canonical processed root must contain exactly train.npz, valid.npz and test.npz")
+    return load_processed_dataset(root)
 
 
 def _resolve_path(value: str | Path, *, base: Path | None = None) -> Path:
@@ -220,6 +232,7 @@ def build_downstream_manifest(
     expected_split_sizes: Mapping[str, int] | None = None,
     expected_hashes: Mapping[str, str] | None = None,
     artifact_paths: Mapping[str, str | Path] | None = None,
+    canonical_root: str | Path = CANONICAL_PROCESSED_ROOT,
 ) -> dict[str, Any]:
     """Validate a strict run boundary and return a JSON-serializable manifest."""
     if not isinstance(normalization_source, str) or not normalization_source.strip():
@@ -227,7 +240,7 @@ def build_downstream_manifest(
     _required_seed(experiment_seed, "experiment_seed")
     _required_seed(mask_seed, "mask_seed")
     mask_hash = _required_sha(mask_manifest_hash, "mask manifest hash")
-    loaded = _load_npz_dataset(dataset)
+    loaded = _load_npz_dataset(dataset, canonical_root=canonical_root)
     _check_dataset(loaded, expected_split_sizes=expected_split_sizes, expected_hashes=expected_hashes)
     context = _artifact_context(
         method=method,
@@ -279,6 +292,7 @@ def validate_downstream_manifest(
     *,
     expected_split_sizes: Mapping[str, int] | None = None,
     expected_hashes: Mapping[str, str] | None = None,
+    canonical_root: str | Path = CANONICAL_PROCESSED_ROOT,
 ) -> dict[str, Any]:
     """Validate the serialized manifest before accepting a downstream result."""
     try:
@@ -327,11 +341,16 @@ def validate_downstream_manifest(
     if provenance.get("threshold_source") != str(threshold_source):
         raise ValueError("provenance threshold_source does not match threshold_source")
 
+    canonical_root_path = _canonical_existing_dir(str(canonical_root), "canonical processed root")
+    expected_files = {f"{name}.npz" for name in _SPLITS}
+    if {item.name for item in canonical_root_path.iterdir() if item.is_file()} != expected_files:
+        raise ValueError("canonical processed root must contain exactly train.npz, valid.npz and test.npz")
     splits = manifest.get("splits")
     hashes = manifest.get("data_hashes")
     sizes = manifest.get("split_sizes")
-    if not isinstance(splits, Mapping) or not isinstance(hashes, Mapping) or not isinstance(sizes, Mapping):
-        raise ValueError("manifest must include splits, data_hashes and split_sizes")
+    source_paths = manifest.get("source_paths")
+    if not isinstance(splits, Mapping) or not isinstance(hashes, Mapping) or not isinstance(sizes, Mapping) or not isinstance(source_paths, Mapping):
+        raise ValueError("manifest must include splits, source_paths, data_hashes and split_sizes")
     for split in _SPLITS:
         if split not in splits or split not in hashes or split not in sizes:
             raise ValueError(f"manifest missing {split} split hash or size")
@@ -341,10 +360,16 @@ def validate_downstream_manifest(
         source_path = _canonical_existing_file(record.get("source_path"), f"{split} source_path")
         if source_path.suffix.lower() != ".npz":
             raise ValueError(f"{split} source_path must point to an NPZ file")
+        expected_source = (canonical_root_path / f"{split}.npz").resolve(strict=True)
+        if source_path != expected_source:
+            raise ValueError(f"{split} source_path must be the canonical {split}.npz")
+        if source_paths.get(split) != str(source_path):
+            raise ValueError(f"{split} source_paths record does not match split source_path")
         _required_sha(hashes[split], f"{split} data hash")
-        if sha256_file(source_path) != str(hashes[split]).lower():
+        actual_sha = sha256_file(source_path)
+        if actual_sha != str(hashes[split]).lower() or record.get("sha256") != actual_sha:
             raise ValueError(f"hash mismatch for {split}: source file does not match manifest")
-        if int(record.get("size", -1)) != int(sizes[split]):
+        if int(record.get("size", -1)) != int(sizes[split]) or int(record.get("id_count", -1)) != int(sizes[split]):
             raise ValueError(f"manifest split size mismatch for {split}")
         if expected_split_sizes is not None and int(sizes[split]) != int(expected_split_sizes[split]):
             raise ValueError(f"split size mismatch for {split}")
@@ -357,8 +382,41 @@ def validate_downstream_manifest(
     }
     if schema != expected_schema:
         raise ValueError("manifest field schema is not the exact canonical schema")
-    if not manifest.get("mask_manifest_hash") or not _SHA256.fullmatch(str(manifest["mask_manifest_hash"])):
+    # Reload the canonical files through the strict loader and cross-check the
+    # recorded schema, sizes, source paths, hashes, and complete sample coverage.
+    loaded = load_processed_dataset(canonical_root_path)
+    field_schema_by_split = manifest.get("field_schema_by_split")
+    sample_coverage = manifest.get("sample_coverage")
+    sample_id_coverage = manifest.get("sample_id_coverage")
+    if not isinstance(field_schema_by_split, Mapping) or not isinstance(sample_coverage, Mapping) or not isinstance(sample_id_coverage, Mapping):
+        raise ValueError("manifest must include split field schema and sample coverage")
+    for split in _SPLITS:
+        actual = loaded[split]
+        if int(sizes[split]) != actual.size:
+            raise ValueError(f"manifest size does not match canonical {split} file")
+        if source_path := Path(str(splits[split]["source_path"])).resolve():
+            if source_path != actual.source_path.resolve():
+                raise ValueError(f"manifest source path does not match canonical {split} file")
+        arrays = {
+            "XT": actual.features["text"], "XA": actual.features["audio"], "XV": actual.features["vision"],
+            "mT": actual.native_valid_mask["text"], "mA": actual.native_valid_mask["audio"], "mV": actual.native_valid_mask["vision"],
+            "Q": actual.Q, "P": actual.P, "q": actual.q, "rho_content": actual.rho_content,
+            "ids": actual.ids, "y_regression": actual.regression, "y_classification": actual.classification,
+        }
+        expected_split_schema = {key: {"dtype": str(value.dtype), "shape": list(value.shape)} for key, value in arrays.items()}
+        if field_schema_by_split.get(split) != expected_split_schema:
+            raise ValueError(f"field schema mismatch for canonical {split} file")
+        ids = [str(item) for item in actual.ids.tolist()]
+        if sample_id_coverage.get(split) != ids:
+            raise ValueError(f"sample ID coverage mismatch for {split}")
+        record_coverage = sample_coverage.get(split)
+        if not isinstance(record_coverage, Mapping) or record_coverage.get("size") != actual.size or record_coverage.get("ids") != ids:
+            raise ValueError(f"sample coverage mismatch for {split}")
+    top_mask_hash = manifest.get("mask_manifest_hash")
+    if not isinstance(top_mask_hash, str) or not _SHA256.fullmatch(top_mask_hash):
         raise ValueError("mask manifest hash provenance is required")
+    if manifest.get("mask_sha256") != top_mask_hash or provenance.get("mask_manifest_hash") != top_mask_hash:
+        raise ValueError("mask manifest hash provenance is inconsistent")
     semantics = manifest.get("mask_semantics")
     if semantics != _EXPECTED_MASK_SEMANTICS:
         raise ValueError("mask provenance semantics are not canonical")
@@ -377,9 +435,10 @@ def validate_processed_dataset(
     *,
     expected_split_sizes: Mapping[str, int] | None = None,
     expected_hashes: Mapping[str, str] | None = None,
+    canonical_root: str | Path = CANONICAL_PROCESSED_ROOT,
 ) -> ProcessedDataset:
     """Load and validate the strict processed NPZ dataset boundary."""
-    loaded = _load_npz_dataset(dataset)
+    loaded = _load_npz_dataset(dataset, canonical_root=canonical_root)
     _check_dataset(loaded, expected_split_sizes=expected_split_sizes, expected_hashes=expected_hashes)
     return loaded
 
@@ -391,6 +450,7 @@ build_run_manifest = build_downstream_manifest
 
 
 __all__ = [
+    "CANONICAL_PROCESSED_ROOT",
     "build_downstream_manifest",
     "build_protocol_manifest",
     "build_run_manifest",

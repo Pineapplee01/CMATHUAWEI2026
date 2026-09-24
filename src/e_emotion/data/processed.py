@@ -174,8 +174,8 @@ def load_processed_split(path: str | Path) -> ProcessedSplit:
         rho_content = np.asarray(payload["rho_content"])
         if rho_content.shape != (size, 3):
             raise ValueError(f"rho_content must have shape {(size, 3)}, got {rho_content.shape}")
-        if rho_content.dtype.kind not in "fc" or not np.isfinite(rho_content).all():
-            raise ValueError("rho_content must contain finite floating-point values")
+        if rho_content.dtype != np.dtype(np.float32) or not np.isfinite(rho_content).all():
+            raise ValueError("rho_content must have float32 dtype and contain finite values")
         text_lengths = native["text"].sum(axis=1).astype(np.float32)
         expected_rho = np.zeros((size, 3), dtype=np.float32)
         for index, modality in enumerate(("audio", "vision"), start=1):
@@ -189,10 +189,29 @@ def load_processed_split(path: str | Path) -> ProcessedSplit:
         if np.any(rho_content < 0) or np.any(rho_content > 1) or not np.allclose(rho_content, expected_rho):
             raise ValueError("rho_content must be [0,1] content-relative native missing rates")
         ids = np.asarray(payload["ids"])
-        regression = np.asarray(payload["y_regression"], dtype=np.float32)
-        classification = np.asarray(payload["y_classification"], dtype=np.int64)
-        if ids.shape != (size,) or len({str(item) for item in ids.tolist()}) != size:
-            raise ValueError("ids must be one-dimensional and unique within a split")
+        if ids.dtype.kind != "U":
+            raise ValueError(f"ids must have Unicode string dtype, got {ids.dtype}")
+        regression = np.asarray(payload["y_regression"])
+        classification = np.asarray(payload["y_classification"])
+        if ids.shape != (size,) or len(set(ids.tolist())) != size or any(not item for item in ids.tolist()):
+            raise ValueError("ids must be one-dimensional, non-empty strings and unique within a split")
+        # Organizer exports have appeared as float64, while local protocol
+        # fixtures use float32/int64.  Accept only these source-compatible
+        # numeric encodings; never coerce fractional class labels.
+        if regression.dtype not in (np.dtype(np.float32), np.dtype(np.float64)):
+            raise ValueError(f"y_regression must have float32 or float64 dtype, got {regression.dtype}")
+        if classification.dtype not in (np.dtype(np.int32), np.dtype(np.int64), np.dtype(np.float32), np.dtype(np.float64)):
+            raise ValueError(f"y_classification must have int32/int64 or float dtype, got {classification.dtype}")
+        if not np.isfinite(regression).all():
+            raise ValueError("y_regression must contain finite values")
+        if not np.isfinite(classification).all():
+            raise ValueError("y_classification must contain finite values")
+        if not np.equal(classification, np.floor(classification)).all():
+            raise ValueError("y_classification values must be integral; fractional labels are rejected")
+        if np.any(classification < 0) or np.any(classification > 2):
+            raise ValueError("y_classification values must lie in {0,1,2}")
+        regression = regression.astype(np.float32, copy=False)
+        classification = classification.astype(np.int64, copy=False)
         if regression.shape != (size,) or not np.isfinite(regression).all() or np.any(np.abs(regression) > 3):
             raise ValueError("y_regression must be finite and within [-3, 3]")
         expected_classes = np.where(regression < 0, 0, np.where(regression > 0, 2, 1))

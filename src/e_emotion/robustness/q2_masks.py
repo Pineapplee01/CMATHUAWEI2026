@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -51,6 +52,21 @@ def _manifest_hash(manifest_without_hash: Mapping[str, Any]) -> str:
 
 def _dataset(value: ProcessedDataset | str | Path) -> ProcessedDataset:
     return load_processed_dataset(value) if isinstance(value, (str, Path)) else value
+
+
+def _strict_int(value: Any, label: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ValueError(f"{label} must be an integer")
+    return value
+
+
+def _strict_float(value: Any, label: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (float, int)):
+        raise ValueError(f"{label} must be numeric")
+    result = float(value)
+    if not math.isfinite(result):
+        raise ValueError(f"{label} must be finite")
+    return result
 
 
 def _positions_for_mask(mask: np.ndarray) -> tuple[int | None, int | None, int]:
@@ -122,11 +138,13 @@ def build_q2_mask_manifest(
     native_mask_version: str = NATIVE_MASK_VERSION,
 ) -> dict[str, Any]:
     """Build the complete Q2 mask matrix without writing any files."""
-    if not isinstance(experiment_seed, int) or not isinstance(mask_seed, int):
-        raise TypeError("experiment_seed and mask_seed must be integers")
-    if not native_mask_version:
-        raise ValueError("native_mask_version must be non-empty")
+    _strict_int(experiment_seed, "experiment_seed")
+    _strict_int(mask_seed, "mask_seed")
+    if native_mask_version != NATIVE_MASK_VERSION:
+        raise ValueError("native_mask_version must be the canonical native mask version")
     loaded = _dataset(dataset)
+    if loaded.feature_version != "aligned_50":
+        raise ValueError("Q2 requires feature_version=aligned_50")
     entries: list[dict[str, Any]] = []
     for split_name in ("train", "valid", "test"):
         split = loaded[split_name]
@@ -203,13 +221,21 @@ def validate_q2_mask_manifest(
         raise ValueError(f"Q2 mask manifest missing fields: {missing}")
     if manifest["protocol_version"] != Q2_PROTOCOL_VERSION:
         raise ValueError("unsupported Q2 mask protocol version")
-    if not isinstance(manifest["experiment_seed"], int) or not isinstance(manifest["mask_seed"], int):
-        raise ValueError("manifest seeds must be integers")
+    _strict_int(manifest["experiment_seed"], "manifest experiment_seed")
+    _strict_int(manifest["mask_seed"], "manifest mask_seed")
+    if manifest["feature_version"] != "aligned_50":
+        raise ValueError("Q2 requires feature_version=aligned_50")
+    if manifest["native_mask_version"] != NATIVE_MASK_VERSION:
+        raise ValueError("Q2 native_mask_version is not canonical")
     if list(manifest["combinations"]) != list(Q2_COMBINATIONS):
         raise ValueError("Q2 combination matrix is not canonical")
     if list(manifest["positions"]) != list(Q2_POSITIONS):
         raise ValueError("Q2 position matrix is not canonical")
-    if [float(value) for value in manifest["fractions"]] != list(Q2_FRACTIONS):
+    if (
+        not isinstance(manifest["fractions"], list)
+        or any(type(value) is not float for value in manifest["fractions"])
+        or manifest["fractions"] != list(Q2_FRACTIONS)
+    ):
         raise ValueError("Q2 fraction matrix is not canonical")
     if manifest["coordinate_domains"] != {"text": "mT", "audio": "mT & mA", "vision": "mT & mV"}:
         raise ValueError("Q2 coordinate domains are not canonical")
@@ -250,7 +276,11 @@ def validate_q2_mask_manifest(
                 raise ValueError(f"Q2 entry missing field {field!r}")
         combination = entry["combination"]
         position = entry["position"]
-        fraction = float(entry["requested_fraction"])
+        if type(entry["sample_id"]) is not str or type(entry["split"]) is not str:
+            raise ValueError("Q2 split and sample_id must be strings")
+        if type(entry["requested_fraction"]) is not float:
+            raise ValueError("Q2 requested_fraction must be a canonical float")
+        fraction = entry["requested_fraction"]
         key = (str(entry["split"]), str(entry["sample_id"]), str(combination), str(position), fraction)
         if key in seen:
             raise ValueError(f"duplicate Q2 entry {key}")
@@ -267,21 +297,44 @@ def validate_q2_mask_manifest(
         ends = entry["synthetic_end_positions"]
         counts = entry["synthetic_missing_counts"]
         lengths = entry["coordinate_lengths"]
-        if not all(modality in starts and modality in ends and modality in counts and modality in lengths for modality in MODALITIES):
+        native_lengths = entry["native_valid_lengths"]
+        effective_by_modality = entry.get("effective_fractions")
+        if not isinstance(starts, Mapping) or not isinstance(ends, Mapping) or not isinstance(counts, Mapping) or not isinstance(lengths, Mapping) or not isinstance(native_lengths, Mapping) or not isinstance(effective_by_modality, Mapping):
+            raise ValueError("Q2 entry position/count maps must be mappings")
+        if not all(modality in starts and modality in ends and modality in counts and modality in lengths and modality in native_lengths and modality in effective_by_modality for modality in MODALITIES):
             raise ValueError("Q2 entry position/count maps must cover all modalities")
         selected = _COMBINATION_MODALITIES[combination]
         for modality in MODALITIES:
-            count = int(counts[modality])
+            count = _strict_int(counts[modality], f"{modality} synthetic count")
             start, end = starts[modality], ends[modality]
-            domain_length = int(lengths[modality])
+            domain_length = _strict_int(lengths[modality], f"{modality} coordinate length")
+            native_length = _strict_int(native_lengths[modality], f"{modality} native length")
+            if domain_length < 0 or native_length < 0 or native_length > 50 or domain_length > native_length:
+                raise ValueError("coordinate domain length must be non-negative")
             if modality not in selected and (count != 0 or start is not None or end is not None):
                 raise ValueError("synthetic deletion found outside the requested combination")
             if count == 0 and (start is not None or end is not None):
                 raise ValueError("empty synthetic deletion must have null positions")
-            if count > 0 and (start is None or end is None or end <= start):
-                raise ValueError("invalid synthetic deletion positions")
+            if count < 0:
+                raise ValueError("synthetic deletion count must be non-negative")
+            if count > 0:
+                if isinstance(start, bool) or not isinstance(start, int) or isinstance(end, bool) or not isinstance(end, int):
+                    raise ValueError("synthetic deletion positions must be integers")
+                if start < 0 or end <= start or end > 50:
+                    raise ValueError("invalid synthetic deletion positions")
+                if end - start < count:
+                    raise ValueError("synthetic deletion interval is shorter than its count")
             if count > domain_length:
                 raise ValueError("synthetic deletion exceeds coordinate domain")
+            effective = _strict_float(effective_by_modality[modality], f"{modality} effective fraction")
+            expected_effective = count / domain_length if domain_length else 0.0
+            if effective != expected_effective:
+                raise ValueError("effective fraction does not equal count/domain")
+        total_count = sum(_strict_int(counts[m], f"{m} synthetic count") for m in selected)
+        total_domain = sum(_strict_int(lengths[m], f"{m} coordinate length") for m in selected)
+        expected_total_effective = total_count / total_domain if total_domain else 0.0
+        if _strict_float(entry["effective_fraction"], "effective_fraction") != expected_total_effective:
+            raise ValueError("effective_fraction does not equal count/domain")
         if combination == "complete" and (float(entry["effective_fraction"]) != 0.0 or any(int(v) for v in counts.values())):
             raise ValueError("complete condition must preserve native masks")
     for sample_key, count in sample_counts.items():
