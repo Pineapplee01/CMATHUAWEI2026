@@ -69,6 +69,23 @@ def test_loader_rejects_classification_mismatch(tmp_path):
         load_processed_split(path)
 
 
+@pytest.mark.parametrize("mutation", ["fractional_class", "wrong_rho_dtype", "non_string_ids"])
+def test_loader_rejects_malformed_label_and_id_encodings(tmp_path, mutation):
+    path = tmp_path / "train.npz"
+    _write_split(path, ["a"])
+    with np.load(path, allow_pickle=False) as payload:
+        values = {key: payload[key] for key in payload.files}
+    if mutation == "fractional_class":
+        values["y_classification"] = np.asarray([1.5], dtype=np.float64)
+    elif mutation == "wrong_rho_dtype":
+        values["rho_content"] = values["rho_content"].astype(np.float64)
+    else:
+        values["ids"] = np.asarray([b"a"])
+    np.savez(path, **values)
+    with pytest.raises(ValueError):
+        load_processed_split(path)
+
+
 def test_dataset_checks_cross_split_ids(tmp_path):
     for split in ("train", "valid", "test"):
         _write_split(tmp_path / f"{split}.npz", ["same"])

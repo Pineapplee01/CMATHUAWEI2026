@@ -415,7 +415,7 @@ def validate_downstream_manifest(
     top_mask_hash = manifest.get("mask_manifest_hash")
     if not isinstance(top_mask_hash, str) or not _SHA256.fullmatch(top_mask_hash):
         raise ValueError("mask manifest hash provenance is required")
-    if manifest.get("mask_sha256") != top_mask_hash or provenance.get("mask_manifest_hash") != top_mask_hash:
+    if ("mask_sha256" in manifest and manifest.get("mask_sha256") != top_mask_hash) or provenance.get("mask_manifest_hash") != top_mask_hash:
         raise ValueError("mask manifest hash provenance is inconsistent")
     semantics = manifest.get("mask_semantics")
     if semantics != _EXPECTED_MASK_SEMANTICS:

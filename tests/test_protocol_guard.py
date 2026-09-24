@@ -6,7 +6,7 @@ from e_emotion.evaluation.protocol_guard import (
     build_downstream_manifest,
     validate_downstream_manifest,
 )
-from e_emotion.data import load_processed_dataset, sha256_file
+from e_emotion.data import sha256_file
 
 from tests.test_processed_data import _write_split
 
@@ -15,7 +15,7 @@ def _dataset(tmp_path):
     tmp_path.mkdir(parents=True, exist_ok=True)
     for split_name, ids in (("train", ["tr1", "tr2"]), ("valid", ["va"]), ("test", ["te"])):
         _write_split(tmp_path / f"{split_name}.npz", ids)
-    return load_processed_dataset(tmp_path)
+    return tmp_path
 
 
 def _valid_kwargs(tmp_path):
@@ -34,7 +34,12 @@ def _valid_kwargs(tmp_path):
         "checkpoint": artifact_root / "checkpoint.pt",
         "threshold_source": artifact_root / "threshold.json",
         "mask_manifest_hash": "a" * 64,
+        "canonical_root": tmp_path / "processed",
     }
+
+
+def _validate(manifest, tmp_path):
+    return validate_downstream_manifest(manifest, canonical_root=tmp_path / "processed")
 
 
 def test_valid_downstream_manifest_is_json_serializable_and_complete(tmp_path):
@@ -110,7 +115,7 @@ def test_manifest_validator_rejects_removed_hash(tmp_path):
     manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
     manifest["data_hashes"].pop("test")
     with pytest.raises(ValueError, match="hash"):
-        validate_downstream_manifest(manifest)
+        _validate(manifest, tmp_path)
 
 
 @pytest.mark.parametrize(
@@ -135,7 +140,7 @@ def test_manifest_validator_rejects_missing_or_malformed_provenance(tmp_path, fi
     else:
         manifest[field] = value
     with pytest.raises(ValueError, match=message):
-        validate_downstream_manifest(manifest)
+        _validate(manifest, tmp_path)
 
 
 def test_manifest_validator_rejects_noncanonical_mask_semantics(tmp_path):
@@ -143,7 +148,7 @@ def test_manifest_validator_rejects_noncanonical_mask_semantics(tmp_path):
     manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
     manifest["mask_semantics"]["observed_mask"] = "native only"
     with pytest.raises(ValueError, match="semantics"):
-        validate_downstream_manifest(manifest)
+        _validate(manifest, tmp_path)
 
 
 def test_manifest_validator_rejects_missing_or_noncanonical_split_file(tmp_path):
@@ -151,11 +156,11 @@ def test_manifest_validator_rejects_missing_or_noncanonical_split_file(tmp_path)
     manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
     manifest["splits"]["test"]["source_path"] = "relative/test.npz"
     with pytest.raises(ValueError, match="source_path"):
-        validate_downstream_manifest(manifest)
+        _validate(manifest, tmp_path)
     manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
     manifest["splits"]["test"]["source_path"] = str(tmp_path / "processed" / "missing.npz")
     with pytest.raises(ValueError, match="source_path|exist"):
-        validate_downstream_manifest(manifest)
+        _validate(manifest, tmp_path)
 
 
 @pytest.mark.parametrize(
@@ -179,7 +184,7 @@ def test_manifest_validator_rejects_removed_required_field(tmp_path, field, mess
     manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
     manifest.pop(field)
     with pytest.raises(ValueError, match=message):
-        validate_downstream_manifest(manifest)
+        _validate(manifest, tmp_path)
 
 
 def test_manifest_validator_rejects_nonexistent_artifact_and_provenance_paths(tmp_path):
@@ -189,7 +194,7 @@ def test_manifest_validator_rejects_nonexistent_artifact_and_provenance_paths(tm
         broken = dict(manifest)
         broken[field] = str(tmp_path / "missing")
         with pytest.raises(ValueError):
-            validate_downstream_manifest(broken)
+            _validate(broken, tmp_path)
 
 
 def test_manifest_validator_rejects_relative_method_and_artifact_paths(tmp_path):
@@ -199,4 +204,26 @@ def test_manifest_validator_rejects_relative_method_and_artifact_paths(tmp_path)
         broken = dict(manifest)
         broken[field] = "relative/path"
         with pytest.raises(ValueError, match="absolute|path|root"):
-            validate_downstream_manifest(broken)
+            _validate(broken, tmp_path)
+
+
+def test_manifest_validator_rejects_tampered_provenance_hash(tmp_path):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    manifest["provenance"]["mask_manifest_hash"] = "b" * 64
+    with pytest.raises(ValueError, match="mask manifest hash"):
+        _validate(manifest, tmp_path)
+
+
+@pytest.mark.parametrize("field", ["field_schema_by_split", "sample_coverage", "sample_id_coverage"])
+def test_manifest_validator_rejects_tampered_schema_or_coverage(tmp_path, field):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    if field == "field_schema_by_split":
+        manifest[field]["train"]["XT"]["shape"][0] = 999
+    elif field == "sample_coverage":
+        manifest[field]["train"]["ids"] = ["tampered"]
+    else:
+        manifest[field]["train"] = ["tampered"]
+    with pytest.raises(ValueError, match="schema|coverage|ID"):
+        _validate(manifest, tmp_path)

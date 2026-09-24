@@ -2,6 +2,7 @@ import json
 import copy
 
 import numpy as np
+import pytest
 
 from e_emotion.data.processed import ProcessedDataset, ProcessedSplit
 from e_emotion.robustness.q2_masks import (
@@ -81,3 +82,19 @@ def test_q2_manifest_rejects_incomplete_matrix_without_dataset():
         assert "coverage" in str(exc)
     else:
         raise AssertionError("incomplete Q2 matrix was accepted")
+
+
+def test_q2_manifest_rejects_rehashed_tampered_interval_without_dataset():
+    manifest = build_q2_mask_manifest(_dataset())
+    tampered = copy.deepcopy(manifest)
+    entry = next(item for item in tampered["entries"] if item["combination"] == "T" and item["synthetic_missing_counts"]["text"] > 0)
+    entry["effective_fractions"]["text"] += 0.1
+    payload = dict(tampered)
+    payload.pop("mask_sha256")
+    import hashlib
+
+    tampered["mask_sha256"] = hashlib.sha256(
+        json.dumps(payload, ensure_ascii=True, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    with pytest.raises(ValueError, match="effective"):
+        validate_q2_mask_manifest(tampered)
