@@ -98,3 +98,18 @@ def test_q2_manifest_rejects_rehashed_tampered_interval_without_dataset():
     ).hexdigest()
     with pytest.raises(ValueError, match="effective"):
         validate_q2_mask_manifest(tampered)
+
+
+def test_q2_manifest_rejects_tampered_data_source_hash():
+    manifest = build_q2_mask_manifest(_dataset())
+    tampered = copy.deepcopy(manifest)
+    tampered["data_hashes"]["train"] = "0" * 64
+    payload = dict(tampered)
+    payload.pop("mask_sha256")
+    import hashlib
+
+    tampered["mask_sha256"] = hashlib.sha256(
+        json.dumps(payload, ensure_ascii=True, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    with pytest.raises(ValueError, match="data hash"):
+        validate_q2_mask_manifest(tampered, dataset=_dataset())

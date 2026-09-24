@@ -21,6 +21,7 @@ from e_emotion.data.processed import (
     contiguous_missing_mask,
     load_processed_dataset,
     native_coordinate_mask,
+    sha256_file,
 )
 
 Q2_PROTOCOL_VERSION = "q2-continuous-local-v1"
@@ -52,6 +53,29 @@ def _manifest_hash(manifest_without_hash: Mapping[str, Any]) -> str:
 
 def _dataset(value: ProcessedDataset | str | Path) -> ProcessedDataset:
     return load_processed_dataset(value) if isinstance(value, (str, Path)) else value
+
+
+def _split_data_hash(split: Any) -> str:
+    """Hash the source NPZ, with a deterministic fallback for in-memory fixtures."""
+    source = Path(split.source_path).expanduser()
+    if source.exists() and source.is_file():
+        return sha256_file(source)
+    digest = hashlib.sha256()
+    values = [
+        split.features["text"], split.features["audio"], split.features["vision"],
+        split.native_valid_mask["text"], split.native_valid_mask["audio"], split.native_valid_mask["vision"],
+        split.ids, split.regression, split.classification,
+    ]
+    for attribute in ("token_attention_mask", "token_padding_mask", "q", "rho_content"):
+        value = getattr(split, attribute, None)
+        if value is not None:
+            values.append(value)
+    for value in values:
+        array = np.asarray(value)
+        digest.update(str(array.dtype).encode("ascii"))
+        digest.update(json.dumps(list(array.shape), separators=(",", ":")).encode("ascii"))
+        digest.update(np.ascontiguousarray(array).tobytes())
+    return digest.hexdigest()
 
 
 def _strict_int(value: Any, label: str) -> int:
@@ -87,6 +111,7 @@ def _entry(
     experiment_seed: int,
     mask_seed: int,
     native_mask_version: str,
+    missing_cache: Mapping[tuple[str, float, str], np.ndarray] | None = None,
 ) -> dict[str, Any]:
     selected = _COMBINATION_MODALITIES[combination]
     native_lengths = {
@@ -103,7 +128,11 @@ def _entry(
     effective_by_modality: dict[str, float] = {modality: 0.0 for modality in MODALITIES}
     if combination != "complete":
         for modality in selected:
-            missing, _ = contiguous_missing_mask(split, modality, requested_fraction, position)
+            key = (modality, float(requested_fraction), position)
+            if missing_cache is None:
+                missing, _ = contiguous_missing_mask(split, modality, requested_fraction, position)
+            else:
+                missing = missing_cache[key]
             start, end, count = _positions_for_mask(missing[sample_index])
             starts[modality], ends[modality], counts[modality] = start, end, count
             domain_length = coordinate_lengths[modality]
@@ -148,6 +177,13 @@ def build_q2_mask_manifest(
     entries: list[dict[str, Any]] = []
     for split_name in ("train", "valid", "test"):
         split = loaded[split_name]
+        missing_cache: dict[tuple[str, float, str], np.ndarray] = {}
+        for modality in MODALITIES:
+            for position in Q2_POSITIONS:
+                for fraction in Q2_FRACTIONS:
+                    missing_cache[(modality, fraction, position)] = contiguous_missing_mask(
+                        split, modality, fraction, position
+                    )[0]
         for sample_index in range(split.size):
             for combination in Q2_COMBINATIONS:
                 for position in Q2_POSITIONS:
@@ -163,6 +199,7 @@ def build_q2_mask_manifest(
                                 experiment_seed,
                                 mask_seed,
                                 native_mask_version,
+                                missing_cache,
                             )
                         )
     manifest: dict[str, Any] = {
@@ -175,6 +212,8 @@ def build_q2_mask_manifest(
         "combinations": list(Q2_COMBINATIONS),
         "positions": list(Q2_POSITIONS),
         "fractions": list(Q2_FRACTIONS),
+        "source_paths": {name: str(Path(loaded[name].source_path).expanduser().resolve()) for name in ("train", "valid", "test")},
+        "data_hashes": {name: _split_data_hash(loaded[name]) for name in ("train", "valid", "test")},
         "entries": entries,
     }
     manifest["mask_sha256"] = _manifest_hash(manifest)
@@ -215,6 +254,7 @@ def validate_q2_mask_manifest(
         "protocol_version", "feature_version", "experiment_seed", "mask_seed",
         "native_mask_version", "coordinate_domains", "combinations", "positions",
         "fractions", "entries", "mask_sha256",
+        "source_paths", "data_hashes",
     }
     missing = sorted(required.difference(manifest))
     if missing:
@@ -239,6 +279,21 @@ def validate_q2_mask_manifest(
         raise ValueError("Q2 fraction matrix is not canonical")
     if manifest["coordinate_domains"] != {"text": "mT", "audio": "mT & mA", "vision": "mT & mV"}:
         raise ValueError("Q2 coordinate domains are not canonical")
+    source_paths = manifest["source_paths"]
+    data_hashes = manifest["data_hashes"]
+    if not isinstance(source_paths, Mapping) or not isinstance(data_hashes, Mapping):
+        raise ValueError("Q2 source_paths and data_hashes must be mappings")
+    for split_name in ("train", "valid", "test"):
+        if split_name not in source_paths or split_name not in data_hashes:
+            raise ValueError(f"Q2 manifest missing {split_name} data source hash")
+        if not isinstance(source_paths[split_name], str) or not source_paths[split_name]:
+            raise ValueError(f"Q2 {split_name} source_path must be a non-empty string")
+        if not isinstance(data_hashes[split_name], str) or len(data_hashes[split_name]) != _SHA256_LENGTH:
+            raise ValueError(f"Q2 {split_name} data hash must be a SHA-256 hex digest")
+        try:
+            int(data_hashes[split_name], 16)
+        except ValueError as exc:
+            raise ValueError(f"Q2 {split_name} data hash must be a SHA-256 hex digest") from exc
     supplied_hash = manifest["mask_sha256"]
     if not isinstance(supplied_hash, str) or len(supplied_hash) != _SHA256_LENGTH:
         raise ValueError("mask_sha256 must be a SHA-256 hex digest")
@@ -258,6 +313,12 @@ def validate_q2_mask_manifest(
     expected_per_sample = len(Q2_COMBINATIONS) * len(Q2_POSITIONS) * len(Q2_FRACTIONS)
     if dataset is not None:
         loaded = _dataset(dataset)
+        for split_name in ("train", "valid", "test"):
+            expected_source = str(Path(loaded[split_name].source_path).expanduser().resolve())
+            if source_paths[split_name] != expected_source:
+                raise ValueError(f"Q2 {split_name} source_path does not match dataset")
+            if data_hashes[split_name].lower() != _split_data_hash(loaded[split_name]):
+                raise ValueError(f"Q2 data hash mismatch for {split_name}")
         expected_total = sum(loaded[name].size for name in ("train", "valid", "test")) * expected_per_sample
         if len(entries) != expected_total:
             raise ValueError(f"expected {expected_total} Q2 entries, got {len(entries)}")

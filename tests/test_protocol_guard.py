@@ -7,6 +7,8 @@ from e_emotion.evaluation.protocol_guard import (
     validate_downstream_manifest,
 )
 from e_emotion.data import sha256_file
+from e_emotion.data import load_processed_dataset
+from e_emotion.robustness.q2_masks import build_q2_mask_manifest, save_q2_mask_manifest
 
 from tests.test_processed_data import _write_split
 
@@ -212,6 +214,23 @@ def test_manifest_validator_rejects_tampered_provenance_hash(tmp_path):
     manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
     manifest["provenance"]["mask_manifest_hash"] = "b" * 64
     with pytest.raises(ValueError, match="mask manifest hash"):
+        _validate(manifest, tmp_path)
+
+
+def test_manifest_binds_q2_path_content_and_data_hashes(tmp_path):
+    processed = tmp_path / "processed"
+    dataset = _dataset(processed)
+    kwargs = _valid_kwargs(tmp_path)
+    q2_path = kwargs["artifact_root"] / "q2_masks.json"
+    q2 = build_q2_mask_manifest(load_processed_dataset(processed))
+    save_q2_mask_manifest(q2, q2_path)
+    kwargs["mask_manifest_hash"] = q2["mask_sha256"]
+    kwargs["mask_manifest_path"] = q2_path
+    manifest = build_downstream_manifest(dataset, **kwargs)
+    assert _validate(manifest, tmp_path)["mask_manifest_path"] == str(q2_path.resolve())
+
+    q2_path.write_text(q2_path.read_text(encoding="utf-8").replace(q2["mask_sha256"], "0" * 64), encoding="utf-8")
+    with pytest.raises(ValueError, match="hash|mask"):
         _validate(manifest, tmp_path)
 
 

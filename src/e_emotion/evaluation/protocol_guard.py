@@ -21,8 +21,15 @@ from e_emotion.data import (
     load_processed_dataset,
     sha256_file,
 )
+from e_emotion.robustness.q2_masks import load_q2_mask_manifest
 
 _SPLITS = ("train", "valid", "test")
+_ALLOWED_CANONICAL_METADATA = {
+    "scaler_params.npz",
+    "preprocess_report.json",
+    "model_input_contract.json",
+    "bert_encode_report.json",
+}
 CANONICAL_PROCESSED_ROOT = "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed"
 _SHA256 = re.compile(r"^[0-9a-fA-F]{64}$")
 _REQUIRED_FIELDS = (
@@ -83,10 +90,7 @@ def _load_npz_dataset(
     root = _canonical_existing_dir(str(canonical_root), "canonical processed root")
     if source != root:
         raise ValueError(f"dataset root must be the canonical processed root {root}")
-    expected_files = {f"{name}.npz" for name in _SPLITS}
-    actual_files = {item.name for item in root.iterdir() if item.is_file()}
-    if actual_files != expected_files:
-        raise ValueError("canonical processed root must contain exactly train.npz, valid.npz and test.npz")
+    _validate_canonical_root(root)
     return load_processed_dataset(root)
 
 
@@ -127,6 +131,17 @@ def _canonical_existing_file(value: Any, label: str, *, base: Path | None = None
     if not resolved.is_file() or os.path.normcase(str(raw)) != os.path.normcase(str(resolved)):
         raise ValueError(f"{label} must be an existing canonical file")
     return resolved
+
+
+def _validate_canonical_root(root: Path) -> None:
+    """Require the three split NPZs while permitting known metadata files."""
+    names = {item.name for item in root.iterdir() if item.is_file()}
+    required = {f"{name}.npz" for name in _SPLITS}
+    if not required.issubset(names):
+        raise ValueError("canonical processed root must contain train.npz, valid.npz and test.npz")
+    unknown = names - required - _ALLOWED_CANONICAL_METADATA
+    if unknown:
+        raise ValueError(f"canonical processed root contains unsupported files: {sorted(unknown)}")
 
 
 def _required_seed(value: Any, label: str) -> int:
@@ -229,6 +244,7 @@ def build_downstream_manifest(
     checkpoint: str | Path,
     threshold_source: str | Path | None = None,
     mask_manifest_hash: str | None = None,
+    mask_manifest_path: str | Path | None = None,
     expected_split_sizes: Mapping[str, int] | None = None,
     expected_hashes: Mapping[str, str] | None = None,
     artifact_paths: Mapping[str, str | Path] | None = None,
@@ -242,6 +258,12 @@ def build_downstream_manifest(
     mask_hash = _required_sha(mask_manifest_hash, "mask manifest hash")
     loaded = _load_npz_dataset(dataset, canonical_root=canonical_root)
     _check_dataset(loaded, expected_split_sizes=expected_split_sizes, expected_hashes=expected_hashes)
+    bound_mask: dict[str, Any] | None = None
+    if mask_manifest_path is not None:
+        mask_path = _canonical_existing_file(str(mask_manifest_path), "mask manifest path")
+        bound_mask = load_q2_mask_manifest(mask_path, dataset=loaded)
+        if bound_mask["mask_sha256"].lower() != mask_hash:
+            raise ValueError("mask manifest path content does not match mask manifest hash")
     context = _artifact_context(
         method=method,
         method_root=method_root,
@@ -250,6 +272,8 @@ def build_downstream_manifest(
         threshold_source=threshold_source,
         artifact_paths=artifact_paths,
     )
+    if bound_mask is not None and not _inside(mask_path, Path(context["artifact_root"])):
+        raise ValueError("mask manifest path must be inside artifact root")
     manifest = build_processed_manifest(
         loaded,
         experiment_seed=experiment_seed,
@@ -260,6 +284,17 @@ def build_downstream_manifest(
         mask_manifest_hash=mask_hash,
     )
     manifest.update(context)
+    if bound_mask is not None:
+        manifest["mask_manifest_path"] = str(mask_path)
+        manifest["mask_manifest"] = {
+            "protocol_version": bound_mask["protocol_version"],
+            "native_mask_version": bound_mask["native_mask_version"],
+            "mask_sha256": bound_mask["mask_sha256"],
+            "data_hashes": dict(bound_mask["data_hashes"]),
+            "combinations": list(bound_mask["combinations"]),
+            "positions": list(bound_mask["positions"]),
+            "fractions": list(bound_mask["fractions"]),
+        }
     # Keep the top-level schema at the exact public contract.  The shared data
     # builder also includes split-specific shape records for diagnostics, but
     # those belong in ``field_schema_by_split`` rather than the canonical map.
@@ -274,6 +309,8 @@ def build_downstream_manifest(
         "threshold_source": context["threshold_source"],
         "mask_manifest_hash": mask_hash,
     }
+    if bound_mask is not None:
+        manifest["provenance"]["mask_manifest_path"] = str(mask_path)
     manifest["mask_semantics"] = {
         "native": "mT/mA/mV",
         "synthetic": "independent artificial Q2 deletions",
@@ -342,9 +379,7 @@ def validate_downstream_manifest(
         raise ValueError("provenance threshold_source does not match threshold_source")
 
     canonical_root_path = _canonical_existing_dir(str(canonical_root), "canonical processed root")
-    expected_files = {f"{name}.npz" for name in _SPLITS}
-    if {item.name for item in canonical_root_path.iterdir() if item.is_file()} != expected_files:
-        raise ValueError("canonical processed root must contain exactly train.npz, valid.npz and test.npz")
+    _validate_canonical_root(canonical_root_path)
     splits = manifest.get("splits")
     hashes = manifest.get("data_hashes")
     sizes = manifest.get("split_sizes")
@@ -417,6 +452,22 @@ def validate_downstream_manifest(
         raise ValueError("mask manifest hash provenance is required")
     if ("mask_sha256" in manifest and manifest.get("mask_sha256") != top_mask_hash) or provenance.get("mask_manifest_hash") != top_mask_hash:
         raise ValueError("mask manifest hash provenance is inconsistent")
+    mask_manifest_path = manifest.get("mask_manifest_path")
+    mask_summary = manifest.get("mask_manifest")
+    if mask_manifest_path is not None:
+        mask_path = _canonical_existing_file(mask_manifest_path, "mask manifest path")
+        if not _inside(mask_path, artifact_root):
+            raise ValueError("mask manifest path must be inside artifact root")
+        if not isinstance(mask_summary, Mapping):
+            raise ValueError("mask_manifest content binding is required with mask_manifest_path")
+        bound_mask = load_q2_mask_manifest(mask_path, dataset=loaded)
+        if bound_mask["mask_sha256"].lower() != top_mask_hash.lower():
+            raise ValueError("mask manifest path content does not match mask manifest hash")
+        for field in ("protocol_version", "native_mask_version", "mask_sha256", "data_hashes", "combinations", "positions", "fractions"):
+            if mask_summary.get(field) != bound_mask[field]:
+                raise ValueError(f"mask manifest content binding mismatch for {field}")
+        if provenance.get("mask_manifest_path") != str(mask_path):
+            raise ValueError("provenance mask_manifest_path does not match mask_manifest_path")
     semantics = manifest.get("mask_semantics")
     if semantics != _EXPECTED_MASK_SEMANTICS:
         raise ValueError("mask provenance semantics are not canonical")
