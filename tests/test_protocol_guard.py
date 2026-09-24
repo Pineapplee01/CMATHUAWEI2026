@@ -70,6 +70,14 @@ def test_strict_manifest_requires_q2_manifest_path(tmp_path):
         build_downstream_manifest(dataset, **kwargs)
 
 
+def test_canonical_root_allows_raw_before_zscore_backup(tmp_path):
+    processed = tmp_path / "processed"
+    dataset = _dataset(processed)
+    (processed / "XT_raw_before_zscore_train.npz").write_bytes(b"raw backup")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    assert _validate(manifest, tmp_path)["feature_version"] == "aligned_50"
+
+
 def test_rejects_legacy_pkl_input(tmp_path):
     legacy = tmp_path / "aligned_50.pkl"
     legacy.write_bytes(b"legacy")

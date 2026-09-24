@@ -13,6 +13,7 @@
   cross-checked against the claimed hash and canonical dataset.
 - The processed root validator requires all three split NPZ files, permits the
   known preprocessing metadata files (`scaler_params.npz`,
+  `XT_raw_before_zscore_train.npz`,
   `preprocess_report.json`, `model_input_contract.json`, and
   `bert_encode_report.json`), and rejects unknown files.
 - Continuous-mask computation is cached per split/modality/position/fraction,

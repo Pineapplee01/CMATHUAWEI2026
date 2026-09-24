@@ -26,6 +26,7 @@ from e_emotion.robustness.q2_masks import load_q2_mask_manifest
 _SPLITS = ("train", "valid", "test")
 _ALLOWED_CANONICAL_METADATA = {
     "scaler_params.npz",
+    "XT_raw_before_zscore_train.npz",
     "preprocess_report.json",
     "model_input_contract.json",
     "bert_encode_report.json",
