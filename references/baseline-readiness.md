@@ -16,9 +16,9 @@
 
 | 簇 | 方法 | 论文/源码准备 | 本地位置 | 赛题适配或训练证据 | 尚未完成 |
 |---|---|---|---|---|---|
-| L1 | Concat-MLP | 项目自有基线，无需第三方源码 | 待实现 | planned | 公共适配器、训练和统一评分 |
+| L1 | Concat-MLP | 项目自有基线，无需第三方源码 | `src/e_emotion/baselines` | 模型、掩码适配器和契约测试已完成 | 训练、验证选优、统一评分产物 |
 | L1 | EF-LSTM | MMSA有实现；MFN仓库也包含早期融合参考 | `references/MMSA/.../EF_LSTM.py` | 仅源码就绪 | 附件2适配、统一缺失实验、训练结果 |
-| L1 | Early Fusion + GRU | 项目自有控制组 | 待实现 | planned | 模型与训练入口 |
+| L1 | Early Fusion + GRU | 项目自有控制组 | `src/e_emotion/baselines` | 模型、掩码适配器和契约测试已完成 | 训练、验证选优、统一评分产物 |
 | L2 | TFN | MMSA有实现 | `references/MMSA/.../TFN.py` | 仅源码就绪 | 附件2适配和参数量受控训练 |
 | L2 | MFN | MMSA及原作者仓库均有实现 | `references/MMSA/.../MFN.py`、`references/MFN/` | 仅源码就绪 | 附件2适配和统一评分 |
 | L2 | Graph-MFN/DFG | SDK有DFG组件，MMSA有第三方Graph-MFN实现；不是原作者完整训练脚本 | `references/CMU-MultimodalSDK/`、`references/MMSA/` | 已有训练/检查点烟测记录；不等于完整主实验 | 统一连续缺失矩阵、Q3删除/置换归因 |

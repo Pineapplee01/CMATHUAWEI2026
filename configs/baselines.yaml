@@ -37,9 +37,9 @@ clusters:
     task: [Q2, Q3]
     variant: aligned
     methods:
-      - {id: concat_mlp, display_name: Concat-MLP, status: planned, strict_npz_status: not_ready, source: project_owned}
+      - {id: concat_mlp, display_name: Concat-MLP, status: implemented_model_not_trained, strict_npz_status: model_ready_not_trained, source: src/e_emotion/baselines}
       - {id: ef_lstm, display_name: EF-LSTM, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/EF_LSTM.py}
-      - {id: early_fusion_gru, display_name: Early Fusion + GRU, status: planned, strict_npz_status: not_ready, source: project_owned}
+      - {id: early_fusion_gru, display_name: Early Fusion + GRU, status: implemented_model_not_trained, strict_npz_status: model_ready_not_trained, source: src/e_emotion/baselines}
   L2:
     name: classical_interaction
     task: [Q2, Q3]

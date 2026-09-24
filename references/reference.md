@@ -412,7 +412,7 @@ R05还列出BC-LSTM、C-MKL、DF、SVM、RF、THMM、SAL-CNN、3D-CNN，以及�
 | 簇 | 方法 | 核心问题 | 输入版本 | 本地状态 | 首轮优先级 |
 | --- | --- | --- | --- | --- | --- |
 | L0 下界 | Majority/Mean、单模态 Text/Audio/Vision | 多模态收益是否真实存在 | aligned；单模态不受对齐限制 | 暂不实现 | 延后 |
-| L1 直接融合 | Concat-MLP、Early Fusion + GRU、EF-LSTM | 仅靠拼接与时序编码能达到什么水平 | aligned；Concat-MLP也可做 pooled-unaligned | EF-LSTM在 `MMSA`；Concat-MLP/GRU待写 | 必做 |
+| L1 直接融合 | Concat-MLP、Early Fusion + GRU、EF-LSTM | 仅靠拼接与时序编码能达到什么水平 | aligned；Concat-MLP也可做 pooled-unaligned | Concat-MLP/GRU模型与公共掩码适配器已实现；EF-LSTM在 `MMSA` | 必做 |
 | L2 经典交互 | TFN、MFN、Graph-MFN/DFG | 高阶交互、记忆和动态融合是否带来收益 | TFN/MFN/Graph-MFN按各自可兼容版本；首轮固定aligned | TFN/MFN/Graph-MFN在 `MMSA`；DFG组件在SDK | 建议 |
 | L3 非对齐跨模态注意 | MulT | 跨模态注意能否替代显式时序对齐 | unaligned | MMSA `MULT.py`，作者仓库公开 | 必做至少一个 |
 | L4 缺失鲁棒 | P-RMF、CMAD、AUMDF、Masked-Train控制组 | 收益来自代理恢复、教师—学生蒸馏还是缺失增强 | P-RMF首选unaligned；CMAD/AUMDF首选aligned | P-RMF/CMAD本地快照；AUMDF已适配并验证 | 必做 |
