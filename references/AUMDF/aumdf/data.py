@@ -17,6 +17,7 @@ _ALLOWED_CANONICAL_METADATA = {
     "preprocess_report.json",
     "model_input_contract.json",
     "bert_encode_report.json",
+    "XT_raw_before_zscore_train.npz",
 }
 
 

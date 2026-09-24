@@ -9,8 +9,9 @@ Date: 2026-09-24
   `/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed`.
 - The root must contain `train.npz`, `valid.npz`, and `test.npz`.
 - The known metadata files `scaler_params.npz`, `preprocess_report.json`,
-  `model_input_contract.json`, and `bert_encode_report.json` are explicitly
-  allowed alongside the three split files.
+  `model_input_contract.json`, `bert_encode_report.json`, and the upstream
+  backup `XT_raw_before_zscore_train.npz` are explicitly allowed alongside the
+  three split files.
 - Strict loading rejects legacy `.pkl`, arbitrary processed directories, and a
   single split `.npz` path before attempting to deserialize or train.
 - Historical test fixtures retain compatibility only through explicit
@@ -20,7 +21,8 @@ Date: 2026-09-24
 
 `references/AUMDF/tests/test_data_metrics.py` covers legacy pickle rejection,
 arbitrary processed-root rejection (including a complete set of split files),
-single-split rejection, strict default behavior, and canonical metadata acceptance.
+single-split rejection, strict default behavior, and canonical metadata/
+upstream-backup acceptance.
 
 ## Verification
 
@@ -31,4 +33,4 @@ single-split rejection, strict default behavior, and canonical metadata acceptan
 
 The real canonical data root was not available in this workspace, so the
 acceptance test uses a schema-valid temporary canonical root containing all
-listed metadata files.
+listed metadata files and the upstream backup filename.

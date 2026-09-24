@@ -108,6 +108,7 @@ def test_strict_source_resolves_and_loads_canonical_npz_root(tmp_path):
     np.savez(root / "scaler_params.npz", mean=np.zeros(1, dtype=np.float32))
     for name in ("preprocess_report.json", "model_input_contract.json", "bert_encode_report.json"):
         (root / name).write_text("{}", encoding="utf-8")
+    np.savez(root / "XT_raw_before_zscore_train.npz", raw=np.zeros((1, 50, 768), dtype=np.float32))
     resolved = resolve_source_path(tmp_path, root, strict=True, canonical_root=root)
     assert resolved == root.resolve()
     datasets, _, audit = load_attachment2(root, expected_dims=(768, 74, 35), strict=True, canonical_root=root)
