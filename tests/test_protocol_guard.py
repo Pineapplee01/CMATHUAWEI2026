@@ -21,7 +21,9 @@ def _dataset(tmp_path):
 def _valid_kwargs(tmp_path):
     method_root = tmp_path / "artifacts" / "demo"
     artifact_root = method_root / "run-1"
-    artifact_root.mkdir(parents=True)
+    artifact_root.mkdir(parents=True, exist_ok=True)
+    (artifact_root / "checkpoint.pt").write_bytes(b"checkpoint")
+    (artifact_root / "threshold.json").write_text("{}", encoding="utf-8")
     return {
         "method": "demo",
         "method_root": method_root,
@@ -87,6 +89,14 @@ def test_rejects_missing_mask_provenance(tmp_path):
         build_downstream_manifest(dataset, **kwargs)
 
 
+def test_rejects_missing_threshold_provenance(tmp_path):
+    dataset = _dataset(tmp_path / "processed")
+    kwargs = _valid_kwargs(tmp_path)
+    kwargs.pop("threshold_source")
+    with pytest.raises(ValueError, match="threshold"):
+        build_downstream_manifest(dataset, **kwargs)
+
+
 def test_rejects_artifact_root_outside_method_root(tmp_path):
     dataset = _dataset(tmp_path / "processed")
     kwargs = _valid_kwargs(tmp_path)
@@ -101,3 +111,92 @@ def test_manifest_validator_rejects_removed_hash(tmp_path):
     manifest["data_hashes"].pop("test")
     with pytest.raises(ValueError, match="hash"):
         validate_downstream_manifest(manifest)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("method", "", "method"),
+        ("method_root", "", "method root"),
+        ("artifact_root", "", "artifact root"),
+        ("normalization_source", "", "normalization"),
+        ("experiment_seed", "2026", "seed"),
+        ("mask_seed", True, "seed"),
+        ("mask_manifest_hash", "bad", "mask"),
+        ("checkpoint", "", "checkpoint"),
+        ("threshold_source", "", "threshold"),
+    ],
+)
+def test_manifest_validator_rejects_missing_or_malformed_provenance(tmp_path, field, value, message):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    if field in {"method_root", "artifact_root"}:
+        manifest[field] = value
+    else:
+        manifest[field] = value
+    with pytest.raises(ValueError, match=message):
+        validate_downstream_manifest(manifest)
+
+
+def test_manifest_validator_rejects_noncanonical_mask_semantics(tmp_path):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    manifest["mask_semantics"]["observed_mask"] = "native only"
+    with pytest.raises(ValueError, match="semantics"):
+        validate_downstream_manifest(manifest)
+
+
+def test_manifest_validator_rejects_missing_or_noncanonical_split_file(tmp_path):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    manifest["splits"]["test"]["source_path"] = "relative/test.npz"
+    with pytest.raises(ValueError, match="source_path"):
+        validate_downstream_manifest(manifest)
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    manifest["splits"]["test"]["source_path"] = str(tmp_path / "processed" / "missing.npz")
+    with pytest.raises(ValueError, match="source_path|exist"):
+        validate_downstream_manifest(manifest)
+
+
+@pytest.mark.parametrize(
+    ("field", "message"),
+    [
+        ("method", "method"),
+        ("method_root", "method root"),
+        ("artifact_root", "artifact root"),
+        ("checkpoint", "checkpoint"),
+        ("threshold_source", "threshold"),
+        ("normalization_source", "normalization"),
+        ("experiment_seed", "seed"),
+        ("mask_seed", "seed"),
+        ("provenance", "provenance"),
+        ("mask_manifest_hash", "mask"),
+        ("mask_semantics", "semantics"),
+    ],
+)
+def test_manifest_validator_rejects_removed_required_field(tmp_path, field, message):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    manifest.pop(field)
+    with pytest.raises(ValueError, match=message):
+        validate_downstream_manifest(manifest)
+
+
+def test_manifest_validator_rejects_nonexistent_artifact_and_provenance_paths(tmp_path):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    for field in ("method_root", "artifact_root", "checkpoint", "threshold_source"):
+        broken = dict(manifest)
+        broken[field] = str(tmp_path / "missing")
+        with pytest.raises(ValueError):
+            validate_downstream_manifest(broken)
+
+
+def test_manifest_validator_rejects_relative_method_and_artifact_paths(tmp_path):
+    dataset = _dataset(tmp_path / "processed")
+    manifest = build_downstream_manifest(dataset, **_valid_kwargs(tmp_path))
+    for field in ("method_root", "artifact_root", "checkpoint", "threshold_source"):
+        broken = dict(manifest)
+        broken[field] = "relative/path"
+        with pytest.raises(ValueError, match="absolute|path|root"):
+            validate_downstream_manifest(broken)

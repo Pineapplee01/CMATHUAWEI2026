@@ -20,6 +20,12 @@ their method-owned directory.
   native/synthetic/observed mask semantics.
 - Requires checkpoint, threshold, and arbitrary artifact paths to remain below the
   method's artifact root, with the artifact root itself below the method root.
+- Validates method/artifact roots and all provenance files as existing canonical
+  absolute paths, requiring checkpoint and threshold provenance to be present.
+- Requires integer experiment and mask seeds, matching normalization/provenance
+  records, exact canonical mask semantics, and the exact 13-field schema.
+- Requires every split source path to be an existing canonical `.npz` regular file
+  and always recomputes its SHA-256 before accepting the manifest.
 - Provides `build_downstream_manifest` and `validate_downstream_manifest` plus the
   compatibility aliases exported from `e_emotion.evaluation`.
 
@@ -33,11 +39,12 @@ Historical run directories and labels are not renamed or overwritten.
 
 ## Tests
 
-- `python -m pytest tests/test_protocol_guard.py -q` -> **7 passed**
-- `python -m pytest -q` -> **66 passed**
+- `python -m pytest tests/test_protocol_guard.py -q` -> **32 passed**
+- `python -m pytest -q` -> **91 passed**
 
 Focused rejection coverage includes legacy PKL input, mismatched hashes, wrong split
-sizes, missing mask provenance, external artifact roots, and incomplete manifests.
+sizes, missing/invalid provenance fields, malformed mask semantics, relative or
+nonexistent roots/files, external artifact roots, and incomplete manifests.
 
 ## Concerns / follow-up
 

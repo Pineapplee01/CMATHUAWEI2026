@@ -8,6 +8,7 @@ and method-local artifact paths).
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 from typing import Any, Mapping
@@ -53,6 +54,15 @@ _EXPECTED_SCHEMA = {
     "y_regression": ("float32", ["N"]),
     "y_classification": ("int64", ["N"]),
 }
+_EXPECTED_MASK_SEMANTICS = {
+    "native": "mT/mA/mV",
+    "synthetic": "independent artificial Q2 deletions",
+    "observed": "native_valid_mask & ~synthetic_missing_mask",
+    "native_valid_mask": {"text": "mT", "audio": "mA", "vision": "mV"},
+    "synthetic_missing_mask": "independent artificial Q2 deletions",
+    "observed_mask": "native_valid_mask & ~synthetic_missing_mask",
+    "q2_coordinate_mask": {"text": "mT", "audio": "mT & mA", "vision": "mT & mV"},
+}
 
 
 def _load_npz_dataset(dataset: ProcessedDataset | str | Path) -> ProcessedDataset:
@@ -75,12 +85,54 @@ def _resolve_path(value: str | Path, *, base: Path | None = None) -> Path:
     return path.resolve()
 
 
+def _canonical_existing_dir(value: Any, label: str) -> Path:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{label} must be a non-empty absolute path")
+    raw = Path(value).expanduser()
+    if not raw.is_absolute():
+        raise ValueError(f"{label} must be absolute")
+    try:
+        resolved = raw.resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise ValueError(f"{label} must exist") from exc
+    if not resolved.is_dir() or os.path.normcase(str(raw)) != os.path.normcase(str(resolved)):
+        raise ValueError(f"{label} must be an existing canonical directory")
+    return resolved
+
+
+def _canonical_existing_file(value: Any, label: str, *, base: Path | None = None) -> Path:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{label} must be a non-empty path")
+    raw = Path(value).expanduser()
+    if not raw.is_absolute():
+        if base is None:
+            raise ValueError(f"{label} must be absolute")
+        raw = base / raw
+    try:
+        resolved = raw.resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise ValueError(f"{label} must exist") from exc
+    if not resolved.is_file() or os.path.normcase(str(raw)) != os.path.normcase(str(resolved)):
+        raise ValueError(f"{label} must be an existing canonical file")
+    return resolved
+
+
+def _required_seed(value: Any, label: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ValueError(f"{label} must be an integer")
+    return value
+
+
 def _inside(candidate: Path, parent: Path) -> bool:
     try:
         candidate.relative_to(parent)
     except ValueError:
         return False
     return True
+
+
+def _strictly_inside(candidate: Path, parent: Path) -> bool:
+    return candidate != parent and _inside(candidate, parent)
 
 
 def _required_sha(value: Any, label: str) -> str:
@@ -126,19 +178,19 @@ def _artifact_context(
 ) -> dict[str, Any]:
     if not isinstance(method, str) or not method.strip():
         raise ValueError("method must be a non-empty name")
-    root = _resolve_path(method_root)
-    artifacts = _resolve_path(artifact_root)
-    if not _inside(artifacts, root):
+    root = _canonical_existing_dir(str(method_root), "method root")
+    artifacts = _canonical_existing_dir(str(artifact_root), "artifact root")
+    if not _strictly_inside(artifacts, root):
         raise ValueError(f"artifact root {artifacts} must be inside method root {root}")
 
     def artifact_path(value: str | Path, label: str) -> Path:
-        path = _resolve_path(value, base=artifacts)
+        path = _canonical_existing_file(str(value), label, base=artifacts)
         if not _inside(path, artifacts):
             raise ValueError(f"{label} must be inside artifact root {artifacts}")
         return path
 
     checkpoint_path = artifact_path(checkpoint, "checkpoint")
-    threshold_path = artifact_path(threshold_source, "threshold source") if threshold_source is not None else None
+    threshold_path = artifact_path(threshold_source, "threshold source")
     paths = {
         name: str(artifact_path(value, f"artifact path {name}"))
         for name, value in (artifact_paths or {}).items()
@@ -172,6 +224,8 @@ def build_downstream_manifest(
     """Validate a strict run boundary and return a JSON-serializable manifest."""
     if not isinstance(normalization_source, str) or not normalization_source.strip():
         raise ValueError("normalization source provenance is required")
+    _required_seed(experiment_seed, "experiment_seed")
+    _required_seed(mask_seed, "mask_seed")
     mask_hash = _required_sha(mask_manifest_hash, "mask manifest hash")
     loaded = _load_npz_dataset(dataset)
     _check_dataset(loaded, expected_split_sizes=expected_split_sizes, expected_hashes=expected_hashes)
@@ -193,6 +247,13 @@ def build_downstream_manifest(
         mask_manifest_hash=mask_hash,
     )
     manifest.update(context)
+    # Keep the top-level schema at the exact public contract.  The shared data
+    # builder also includes split-specific shape records for diagnostics, but
+    # those belong in ``field_schema_by_split`` rather than the canonical map.
+    manifest["field_schema"] = {
+        field: {"dtype": dtype, "dims": list(dims)}
+        for field, (dtype, dims) in _EXPECTED_SCHEMA.items()
+    }
     manifest["normalization"] = {"source": normalization_source}
     manifest["provenance"] = {
         "normalization_source": normalization_source,
@@ -228,6 +289,44 @@ def validate_downstream_manifest(
         raise ValueError("manifest protocol_version does not match the shared protocol")
     if manifest.get("feature_version") != FEATURE_VERSION:
         raise ValueError("manifest feature_version does not match aligned_50")
+    method = manifest.get("method")
+    if not isinstance(method, str) or not method.strip():
+        raise ValueError("method must be a non-empty name")
+    method_root = _canonical_existing_dir(manifest.get("method_root"), "method root")
+    artifact_root = _canonical_existing_dir(manifest.get("artifact_root"), "artifact root")
+    if not _strictly_inside(artifact_root, method_root):
+        raise ValueError("artifact root must be inside method root")
+
+    experiment_seed = manifest.get("experiment_seed")
+    mask_seed = manifest.get("mask_seed")
+    _required_seed(experiment_seed, "experiment_seed")
+    _required_seed(mask_seed, "mask_seed")
+
+    normalization_source = manifest.get("normalization_source")
+    if not isinstance(normalization_source, str) or not normalization_source.strip():
+        raise ValueError("normalization source provenance is required")
+    normalization = manifest.get("normalization")
+    provenance = manifest.get("provenance")
+    if not isinstance(normalization, Mapping) or normalization.get("source") != normalization_source:
+        raise ValueError("normalization provenance does not match normalization_source")
+    if not isinstance(provenance, Mapping):
+        raise ValueError("provenance is required")
+    if provenance.get("normalization_source") != normalization_source:
+        raise ValueError("provenance normalization_source does not match normalization_source")
+
+    def provenance_file(value: Any, label: str) -> Path:
+        path = _canonical_existing_file(value, label)
+        if not _inside(path, artifact_root):
+            raise ValueError(f"{label} must be inside artifact root")
+        return path
+
+    checkpoint = provenance_file(manifest.get("checkpoint"), "checkpoint")
+    threshold_source = provenance_file(manifest.get("threshold_source"), "threshold source")
+    if provenance.get("checkpoint") != str(checkpoint):
+        raise ValueError("provenance checkpoint does not match checkpoint")
+    if provenance.get("threshold_source") != str(threshold_source):
+        raise ValueError("provenance threshold_source does not match threshold_source")
+
     splits = manifest.get("splits")
     hashes = manifest.get("data_hashes")
     sizes = manifest.get("split_sizes")
@@ -237,11 +336,13 @@ def validate_downstream_manifest(
         if split not in splits or split not in hashes or split not in sizes:
             raise ValueError(f"manifest missing {split} split hash or size")
         record = splits[split]
-        if not isinstance(record, Mapping) or Path(str(record.get("source_path", ""))).suffix.lower() != ".npz":
+        if not isinstance(record, Mapping):
+            raise ValueError(f"{split} split record is invalid")
+        source_path = _canonical_existing_file(record.get("source_path"), f"{split} source_path")
+        if source_path.suffix.lower() != ".npz":
             raise ValueError(f"{split} source_path must point to an NPZ file")
         _required_sha(hashes[split], f"{split} data hash")
-        source_path = _resolve_path(str(record.get("source_path", "")))
-        if source_path.is_file() and sha256_file(source_path) != str(hashes[split]).lower():
+        if sha256_file(source_path) != str(hashes[split]).lower():
             raise ValueError(f"hash mismatch for {split}: source file does not match manifest")
         if int(record.get("size", -1)) != int(sizes[split]):
             raise ValueError(f"manifest split size mismatch for {split}")
@@ -250,30 +351,23 @@ def validate_downstream_manifest(
         if expected_hashes is not None and hashes[split].lower() != _required_sha(expected_hashes[split], f"expected {split} hash"):
             raise ValueError(f"hash mismatch for {split}")
     schema = manifest.get("field_schema")
-    if not isinstance(schema, Mapping) or any(field not in schema for field in _REQUIRED_FIELDS):
-        raise ValueError("manifest field schema is incomplete")
-    for field, (dtype, dims) in _EXPECTED_SCHEMA.items():
-        record = schema[field]
-        if not isinstance(record, Mapping) or record.get("dtype") != dtype or list(record.get("dims", ())) != dims:
-            raise ValueError(f"manifest field schema is invalid for {field}")
+    expected_schema = {
+        field: {"dtype": dtype, "dims": list(dims)}
+        for field, (dtype, dims) in _EXPECTED_SCHEMA.items()
+    }
+    if schema != expected_schema:
+        raise ValueError("manifest field schema is not the exact canonical schema")
     if not manifest.get("mask_manifest_hash") or not _SHA256.fullmatch(str(manifest["mask_manifest_hash"])):
         raise ValueError("mask manifest hash provenance is required")
     semantics = manifest.get("mask_semantics")
-    if not isinstance(semantics, Mapping) or not all(semantics.get(key) for key in ("native", "synthetic", "observed")):
-        raise ValueError("mask provenance semantics are incomplete")
-    method_root = _resolve_path(str(manifest.get("method_root", "")))
-    artifact_root = _resolve_path(str(manifest.get("artifact_root", "")))
-    if not _inside(artifact_root, method_root):
-        raise ValueError("artifact root must be inside method root")
-    for label in ("checkpoint", "threshold_source"):
-        value = manifest.get(label)
-        if value is not None and not _inside(_resolve_path(str(value), base=artifact_root), artifact_root):
-            raise ValueError(f"{label} must be inside artifact root")
+    if semantics != _EXPECTED_MASK_SEMANTICS:
+        raise ValueError("mask provenance semantics are not canonical")
     artifact_paths = manifest.get("artifact_paths", {})
     if not isinstance(artifact_paths, Mapping):
         raise ValueError("artifact_paths must be a mapping")
     for name, value in artifact_paths.items():
-        if not _inside(_resolve_path(str(value), base=artifact_root), artifact_root):
+        path = _canonical_existing_file(value, f"artifact path {name}")
+        if not _inside(path, artifact_root):
             raise ValueError(f"artifact path {name} must be inside artifact root")
     return dict(manifest)
 
