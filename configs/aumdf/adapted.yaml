@@ -1,0 +1,30 @@
+data_file: /user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed
+strict_data: true
+model:
+  input_dims: [768, 74, 35]
+  hidden_dim: 300
+  heads: 6
+  layers: 1
+  dropout: 0.8
+  window: 5
+  conv_kernel: 3
+  noise_threshold: 0.1
+  readout: regression
+training:
+  teacher_epochs: 20
+  student_epochs: 20
+  learning_rate: 0.001
+  batch_size: 32
+  seed: 2026
+  patience: 20
+  gradient_clip: 1.0
+loss:
+  lambda_reg: 0.1
+  lambda_csd: 0.1
+  lambda_srd: 0.1
+  qkv_coefficient: 0.0001
+  temperature: 0.07
+missingness:
+  mode: random
+  rates: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]
+  validation_rate: 0.3

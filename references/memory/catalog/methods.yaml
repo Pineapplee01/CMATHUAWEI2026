@@ -1,0 +1,26 @@
+schema_version: 1
+protocol:
+  version: problem2-fair-v1
+  seeds: [1, 2, 3]
+  views: [aligned_po, unaligned_po, unaligned_windowed]
+
+methods:
+  - {id: problem2_main, directory: Problem2-Main, display_name: Problem 2 main method, kind: project, adapter: e_emotion.problem2_fair.methods.main:create_adapter, input_layout: native, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: historical_only, vendor: null}
+  - {id: aumdf, directory: AUMDF, display_name: AUMDF, kind: project, adapter: e_emotion.baselines.aumdf.fair_adapter:create_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: null}
+  - {id: concat_mlp, directory: Concat-MLP, display_name: Concat-MLP, kind: control, adapter: e_emotion.problem2_fair.methods.direct_fusion:create_concat_mlp_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: null}
+  - {id: early_fusion_gru, directory: Early-Fusion-GRU, display_name: Early Fusion+GRU, kind: control, adapter: e_emotion.problem2_fair.methods.direct_fusion:create_early_fusion_gru_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: null}
+  - {id: ef_lstm, directory: EF-LSTM, display_name: EF-LSTM, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.ef_lstm:create_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: MMSA}
+  - {id: mult, directory: MulT, display_name: MulT, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.mult:create_adapter, input_layout: native, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: Multimodal-Transformer}
+  - {id: tfn, directory: TFN, display_name: TFN, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.l2:create_tfn_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: MMSA}
+  - {id: mfn, directory: MFN, display_name: MFN, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.l2:create_mfn_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: MMSA}
+  - {id: graph_mfn_dfg, directory: Graph-MFN, display_name: Graph-MFN/DFG, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.l2:create_graph_mfn_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: supported, state: ready, vendor: MMSA}
+  - {id: p_rmf, directory: P-RMF, display_name: P-RMF, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.p_rmf:create_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: P-RMF}
+  - {id: cmad, directory: CMAD, display_name: CMAD, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.cmad:create_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: CMAD}
+  - {id: masked_train, directory: Masked-Train, display_name: Masked-Train, kind: control, adapter: e_emotion.problem2_fair.methods.masked_train:create_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: null}
+  - {id: emoe, directory: EMOE, display_name: EMOE, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.l5:create_emoe_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: supported, state: ready, vendor: EMOE}
+  - {id: cacr, directory: CACR, display_name: CACR, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.l5:create_cacr_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: CACR}
+  - {id: tlra, directory: TLRA, display_name: TLRA, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.l5:create_tlra_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: TLRA}
+  - {id: mruf, directory: MRUF, display_name: MRUF, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.l5:create_mruf_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: MRUF}
+  - {id: qa_moe, directory: QA-MoE, display_name: QA-MoE, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.qa_moe:create_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: QA-MoE}
+  - {id: ebmc, directory: EBMC, display_name: EBMC, kind: adapted_vendor, adapter: e_emotion.problem2_fair.methods.ebmc:create_ebmc_adapter, input_layout: unaligned_windowed, views: [aligned_po, unaligned_po], q2: supported, q3: planned, state: ready, vendor: EBMC}
+  - {id: cica, directory: CICA, display_name: CICA, kind: paper_only, adapter: null, input_layout: native, views: [], q2: unavailable, q3: unavailable, state: paper_only, vendor: null}

@@ -1,13 +1,13 @@
-# 本地研究参考
+# Baseline Workspace
 
-本目录保存按E题官方参考索引收集的四套实现：`CMAD/`、`EMOE/`、`HyperDiff/` 和 `P-RMF/`。它们分别对应题面参考文献[4]、[7]、[2]、[5]；本地快照与上游提交的一致性尚未逐一核验。
+This directory mirrors the server Baseline reference workspace.
 
-完整的论文名称、链接、方法总结、与三项任务的关系，以及本次检索得到的其他方法，见 [reference.md](reference.md)。该汇总区分已发表文献、预印本、摘要级线索与工程适配建议。
+- [Memory](memory/README.md) holds method identity, source provenance,
+  operations, decisions and compact result summaries.
+- [Vendor](vendor/) holds immutable third-party source snapshots with their
+  own Git history.
+- [History](memory/history/) holds records created before the workspace
+  restructure.
 
-方法对比不按作者公开分数直接排序。针对本题的最小基线集合、`aligned/unaligned`适配边界、连续局部缺失矩阵和问题3解释验证，见 [reference.md中的对比方法簇实验协议](reference.md#101-对比方法簇与统一实验协议)。
-
-代码可用性核验后，又新增15个源码仓库，与原有4套合计19个第三方代码目录。完整状态、许可证和来源见 [reference.md 第11节](reference.md#11-代码公开与本地保存核验2026-09-24)，提交号与文件统计见 [code_manifest.json](code_manifest.json)。CmIR、SeRIn、ProMMA目前仅有占位仓库，未当作源码下载。L1–L6逐方法的“源码存在”和“赛题适配/训练完成”状态见 [baseline-readiness.md](baseline-readiness.md)。
-
-另有按题面参考文献[10]开发的 [AUMDF独立赛题适配实现](AUMDF/README.md)。它不是下载的作者源码，单独跟踪代码及验证说明；不计入上述19个第三方快照。
-
-这些第三方快照保持独立，不混入 `e_emotion` 公共包；Git忽略下载的源码子目录，AUMDF独立实现作为明确例外单独跟踪。下载仓库采用源码稀疏检出，不含数据集和模型权重，尚未安装其依赖或执行其训练。公开源码不等同已获得完整开源许可，使用时以清单中的逐项说明为准。
+Project-maintained baseline implementations live in src/e_emotion/baselines.
+Raw runs, checkpoints, predictions and logs live in artifacts/problem2.

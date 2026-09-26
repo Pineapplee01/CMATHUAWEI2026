@@ -1,0 +1,8 @@
+protocol_version: problem2-fair-v1
+q2_protocol_version: q2-continuous-local-v2
+views:
+  aligned_po: /user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本_retrain_20260925/processed_po
+  unaligned_po: /user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/未对齐版本/processed_po
+manifest_root: artifacts/problem2/_manifests
+seeds: [1, 2, 3]
+deferred_methods: []

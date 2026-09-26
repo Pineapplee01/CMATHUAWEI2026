@@ -26,8 +26,9 @@
 | 数据契约 | implemented | 统一样本、掩码、标签、预测和证据对象 |
 | 数据探针 | implemented | 检查附件字段、形状、标签和专项测试文件 |
 | 问题1任务域 | scaffolded | 预留特征提取与时序对齐接口 |
-| 问题2任务域 | scaffolded | 预留缺失模拟与鲁棒预测接口 |
-| 问题3任务域 | scaffolded | 预留贡献计算与证据映射接口 |
+| 问题2任务域 | baseline + Q2 evaluator + appendix3 adapter | 冻结模型连续区间评估与附件3导出按方法隔离 |
+| 问题2公平基线入口 | implemented core | `problem2-fair-v1` 统一 P/O、双视图、Q2-v2、最终投影和三种子汇总；方法目录与产物路径由 [Baseline Workspace](../references/memory/README.md) 管理 |
+| 问题3任务域 | Q3 evaluator in progress | 删除重推理贡献、局部窗口和近似时间定位按方法导出 |
 
 ## Success Metrics
 

@@ -23,7 +23,7 @@ SHA-256。`*.pkl`（包括 `Baseline/reference/_data/*.pkl`）在新运行边界
 `method_root/artifact_root` 下；越界路径会被拒绝。
 
 当前仍读取历史 PKL、或尚未把原生/合成 mask provenance 传入 manifest 的方法，在
-`configs/baselines.yaml` 中标记为 `strict_npz_status: not_ready`。该标记只约束新的
+`references/memory/catalog/methods.yaml` 中记录方法状态。该记录只约束新的
 严格 NPZ 对比，不会重命名、覆盖或重新解释既有历史运行。
 
 ## 标准对象

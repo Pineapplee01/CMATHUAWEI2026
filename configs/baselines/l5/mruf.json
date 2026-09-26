@@ -1,0 +1,113 @@
+{
+  "datasetCommonParams": {
+    "dataset_root_dir": "artifacts/problem2/_legacy_data",
+    "mosei": {
+      "aligned": {
+        "featurePath": "aligned_50.pkl",
+        "feature_dims": [
+          768,
+          74,
+          35
+        ],
+        "train_samples": 3395,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "seq_lens": [
+          50,
+          50,
+          50
+        ]
+      },
+      "unaligned": {
+        "featurePath": "unaligned_50.pkl",
+        "feature_dims": [
+          768,
+          74,
+          35
+        ],
+        "train_samples": 3395,
+        "num_classes": 3,
+        "language": "en",
+        "KeyEval": "Loss",
+        "seq_lens": [
+          50,
+          500,
+          500
+        ]
+      }
+    }
+  },
+  "mruf": {
+    "commonParams": {
+      "need_data_aligned": true,
+      "need_model_aligned": true,
+      "early_stop": 10,
+      "use_bert": true,
+      "use_finetune": true,
+      "attn_mask": true
+    },
+    "datasetParams": {
+      "mosi": {
+        "attn_dropout_a": 0.1,
+        "attn_dropout_v": 0.1,
+        "relu_dropout": 0.0,
+        "embed_dropout": 0.3,
+        "res_dropout": 0.0,
+        "dst_feature_dim_nheads": [
+          50,
+          10
+        ],
+        "batch_size": 24,
+        "update_epochs": 6,
+        "learning_rate": 7e-05,
+        "nlevels": 4,
+        "conv1d_kernel_size_l": 5,
+        "conv1d_kernel_size_a": 3,
+        "conv1d_kernel_size_v": 3,
+        "text_dropout": 0.45,
+        "attn_dropout": 0.4,
+        "output_dropout": 0.5,
+        "grad_clip": 0.6,
+        "patience": 3,
+        "weight_decay": 0.005,
+        "transformers": "bert",
+        "pretrained": "/user_home/gaojianan/CPMCM/AAAmodel/bert-base-uncased",
+        "lambda_router": 0.4,
+        "lambda_mca": 0.06,
+        "use_router": true,
+        "use_mca": true
+      },
+      "mosei": {
+        "attn_dropout_a": 0.0,
+        "attn_dropout_v": 0.0,
+        "relu_dropout": 0.0,
+        "embed_dropout": 0.2,
+        "res_dropout": 0.0,
+        "dst_feature_dim_nheads": [
+          40,
+          8
+        ],
+        "batch_size": 32,
+        "update_epochs": 5,
+        "learning_rate": 0.0001,
+        "nlevels": 4,
+        "conv1d_kernel_size_l": 5,
+        "conv1d_kernel_size_a": 1,
+        "conv1d_kernel_size_v": 3,
+        "text_dropout": 0.3,
+        "attn_dropout": 0.4,
+        "output_dropout": 0.5,
+        "grad_clip": 0.6,
+        "patience": 5,
+        "weight_decay": 0.002,
+        "transformers": "bert",
+        "pretrained": "/user_home/gaojianan/CPMCM/AAAmodel/bert-base-uncased",
+        "lambda_router": 0.5,
+        "lambda_mca": 0.1,
+        "use_router": true,
+        "use_mca": true
+      }
+    }
+  }
+}

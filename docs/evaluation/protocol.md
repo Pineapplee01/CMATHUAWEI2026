@@ -2,6 +2,8 @@
 
 适用问题2、问题3的情感极性／强度预测；不是问题1的特征质量评分器，也不是问题3的解释质量评分器。依据与验收状态见 [requirements.md](requirements.md)。本协议落实用户已接受的输出规则。官方后续发布的评分脚本或澄清若不同，须升级协议并重新评分，不能静默改变旧结果。
 
+公共数据读取、特征版本、padding/有效长度、归一化、连续局部缺失和方法边界见 [公共预处理与对比实验评估协议](common_preprocessing_comparison_protocol.md)。该文件是 `Baseline/reference/COMMON_PREPROCESSING_EVALUATION_PROTOCOL.md` 的项目内副本。
+
 ## 官方要求与团队选择
 
 题面规定三类极性、原始标签量表、Accuracy/F1/MAE/Pearson、数据使用边界及专项CSV。题面**没有规定** F1平均方式、预测截断、阈值搜索网格、CSV列名或综合总分。下述细化规则为团队统一约定，不是官方隐藏评分器的复刻。
@@ -68,4 +70,4 @@ python -m e_emotion score --truth data/derived/valid-labels.csv --predictions ar
 
 AUMDF `run.py evaluate` 新生成JSON及同名目录下每个条件的CSV，CSV与 `metrics.competition` 基于同一组记录。旧报告和权重保持原样，不补造旧的原始网络输出。历史记录只有最终强度，迁移核对时只能用其已记录的冻结阈值补出极性，并明确这是从旧记录恢复的输出。
 
-测试入口：`tests/test_scoring_protocol.py`、`references/AUMDF/tests/test_data_metrics.py`、`references/AUMDF/tests/test_training.py`。验证证据见 [validation.md](validation.md)。
+测试入口：`tests/test_scoring_protocol.py`、`tests/baselines/aumdf/test_data_metrics.py`、`tests/baselines/aumdf/test_training.py`。验证证据见 [validation.md](validation.md)。

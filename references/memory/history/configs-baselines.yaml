@@ -1,0 +1,118 @@
+# Project-owned registry for comparison methods synchronized to the remote repo.
+# Third-party snapshots remain local and are referenced by references/code_manifest.json.
+schema_version: 1
+protocol_version: e-competition-v1
+problem2_fair_protocol:
+  version: problem2-fair-v1
+  q2_protocol_version: q2-continuous-local-v2
+  views: [aligned_po, unaligned_po, unaligned_windowed]
+  seeds: [1, 2, 3]
+  first_wave: [problem2_main, tfn, mfn, graph_mfn_dfg, aumdf, masked_train, emoe, cacr, tlra, mruf, qa_moe, ebmc, concat_mlp, early_fusion_gru, ef_lstm, mult, p_rmf, cmad]
+  deferred_methods: []
+  paper_only: [cica]
+  status_note: "Only AUMDF has a complete fair training bridge; other first-wave methods remain blocked until their adapters pass public tests."
+data_contract:
+  feature_version: aligned_50
+  source_format: npz
+  processed_root: /user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed
+  split_files:
+    train: train.npz
+    valid: valid.npz
+    test: test.npz
+  feature_keys: {text: XT, audio: XA, vision: XV}
+  text_token_mask_key: Q
+  text_content_observed_mask_key: mT
+  audio_observed_mask_key: mA
+  vision_observed_mask_key: mV
+  sample_modality_available_key: q
+  content_missing_rate_key: rho_content
+  id_key: ids
+  regression_label_key: y_regression
+  classification_label_key: y_classification
+  normalization: organizer_processed_train_fitted
+strict_npz_comparison:
+  status: enforced
+  guard: e_emotion.evaluation.protocol_guard
+  historical_runs_unchanged: true
+  not_ready_reason: "Existing reference entrypoints either read historical PKL inputs or do not emit complete mask provenance; each must pass the guard before strict NPZ comparison."
+canonical_loader_migration:
+  status: loader_validated_model_retraining_pending
+  adapter: e_emotion.data.upstream.load_canonical_dataset
+  aligned_methods: [MMSA, EMOE, CACR, TLRA, MRUF]
+  validated_splits: {train: 3395, valid: 728, test: 727}
+  validated_shapes: {text_embedding: [N, 50, 768], audio: [N, 50, 74], vision: [N, 50, 35], bert_triplet: [N, 3, 50]}
+  token_fields: [I, Q, G]
+  native_masks: [mT, mA, mV]
+  q2_coordinate_masks: {text: mT, audio: "mT & mA", vision: "mT & mV"}
+  unaligned_status: not_ready
+deferred_clusters:
+  - id: L0
+    name: lower_bound
+    reason: "暂不实现；不作为首轮必做基线"
+sync_scope: [L1, L2, L3, L4, L5, L6]
+clusters:
+  L1:
+    name: direct_fusion
+    task: [Q2, Q3]
+    variant: aligned
+    methods:
+      - {id: concat_mlp, display_name: Concat-MLP, status: implemented_model_not_trained, strict_npz_status: model_ready_not_trained, source: src/e_emotion/baselines}
+      - {id: ef_lstm, display_name: EF-LSTM, status: method_root_deployed, strict_npz_status: trained_q2_complete, variant: aligned, source: scripts/methods/ef_lstm, run_root: EF-LSTM/runs}
+      - {id: early_fusion_gru, display_name: Early Fusion + GRU, status: implemented_model_not_trained, strict_npz_status: model_ready_not_trained, source: src/e_emotion/baselines}
+  L2:
+    name: classical_interaction
+    task: [Q2, Q3]
+    variant: aligned
+    methods:
+      - {id: tfn, display_name: TFN, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/TFN.py}
+      - {id: mfn, display_name: MFN, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/MFN.py}
+      - {id: graph_mfn_dfg, display_name: Graph-MFN/DFG, status: local_reference, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/Graph_MFN.py}
+  L3:
+    name: unaligned_cross_modal_attention
+    task: [Q2, Q3]
+    variant: unaligned
+    methods:
+      - id: mult_raw_unaligned
+        display_name: MulT raw unaligned
+        status: method_root_deployed_smoke_passed
+        strict_npz_status: not_applicable_raw_unaligned
+        variant: unaligned
+        source: scripts/methods/mult
+        run_root: MulT/runs/raw_unaligned
+        input_view: raw_unaligned
+        upstream: https://github.com/yaohungt/Multimodal-Transformer
+        author_source: references/Multimodal-Transformer
+      - id: mult_aligned_50_control
+        display_name: MulT aligned_50 control
+        status: method_root_deployed_training
+        strict_npz_status: training_q2_pending
+        variant: aligned
+        source: scripts/methods/mult
+        run_root: MulT/runs/aligned_50_control
+        input_view: aligned_50_control
+        upstream: https://github.com/yaohungt/Multimodal-Transformer
+        author_source: references/Multimodal-Transformer
+  L4:
+    name: missing_modality_robustness
+    task: [Q2]
+    methods:
+      - {id: masked_train, display_name: Masked-Train control, status: planned, strict_npz_status: not_ready, source: project_owned}
+      - {id: p_rmf, display_name: P-RMF, status: local_reference, strict_npz_status: not_ready, variant: unaligned, source: references/P-RMF}
+      - {id: cmad, display_name: CMAD, status: local_reference, strict_npz_status: not_ready, variant: aligned, source: references/CMAD}
+      - {id: aumdf, display_name: AUMDF, status: adapted_baseline, strict_npz_status: not_ready, variant: aligned, source: references/AUMDF}
+  L5:
+    name: reliability_dynamic_experts
+    task: [Q2, Q3]
+    variant: aligned
+    methods:
+      - {id: emoe, display_name: EMOE, status: local_reference, strict_npz_status: not_ready, source: references/EMOE}
+      - {id: qa_moe, display_name: QA-MoE, status: local_reference, strict_npz_status: not_ready, source: references/QA-MoE}
+      - {id: cica, display_name: CICA, status: paper_only, strict_npz_status: not_ready, source: references/reference.md}
+  L6:
+    name: explainable_interaction
+    task: [Q3]
+    variant: aligned
+    methods:
+      - {id: graph_mfn_dfg_attribution, display_name: Graph-MFN/DFG + attribution, status: local_reference_plus_project_diagnostics, strict_npz_status: not_ready, source: references/MMSA/src/MMSA/models/singleTask/Graph_MFN.py}
+      - {id: emoe_attribution, display_name: EMOE + attribution, status: local_reference_plus_project_diagnostics, strict_npz_status: not_ready, source: references/EMOE}
+      - {id: permutation_occlusion, display_name: Permutation/Occlusion attribution, status: planned, strict_npz_status: not_ready, source: project_owned}

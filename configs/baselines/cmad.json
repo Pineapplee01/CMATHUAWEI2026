@@ -1,0 +1,20 @@
+{
+  "data": "../_data/aligned_50.pkl",
+  "bert": "~/CPMCM/AAAmodel/bert-base-uncased",
+  "sequence_length": 50,
+  "audio_dim": 74,
+  "vision_dim": 35,
+  "selection_split": "valid",
+  "selection_metric": "MAE",
+  "primary_f1": "macro",
+  "additional_f1": ["weighted", "per_class"],
+  "outputs": "runs/competition",
+  "training": {
+    "dataset": "mosei", "seed": 5576, "epochs": 60, "batch_size": 64,
+    "learning_rate": 0.00002, "teacher_weight_decay": 0.0001,
+    "student_weight_decay": 0.0001, "adam_epsilon": 1e-8, "clip": 1.0,
+    "teacher_schedule": [80, 100], "student_schedule": [180, 200],
+    "begin_epoch": 20, "weights": 20.0, "delta": 0.1, "gamma": 1.0,
+    "temperature": 2.0, "tau": 0.2
+  }
+}

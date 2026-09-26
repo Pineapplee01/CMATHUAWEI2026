@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "snapshots": [
+    {"directory":"CACR","commit":"ff1815976cd2f2b7786f0840a860e15558042f11","tree":"118213b7360eac1d8672854f5bfccace5c0ce0ff","origin":"https://github.com/wwwwwyyyy559/Conflict-Aware-Adaptive-Cross-Reconstruction-for-Multimodal-Sentiment-Analysis.git","license":"LICENSE"},
+    {"directory":"CaReFlow","commit":"5c9f9c7a0bb3f1202ebb3258052da2b99710c565","tree":"fe4bf1ff8eb0fbfb4963da570b7636d12d9c9afc","origin":"https://github.com/TmacMai/CaReFlow.git","license":null},
+    {"directory":"CMAD","commit":"efc812bee1549922528179cc2e94bfa066a3b2b6","tree":"3e82a85c96c5bcfeb7c15f2537c86c806f1f7949","origin":"https://github.com/YetZzzzzz/CMAD","license":"LICENSE"},
+    {"directory":"CMU-MultimodalSDK","commit":"4f2eadcd7e7b9e20e83b868cdad385b41830285c","tree":"4eab82518d6d898d6e274022fb22f9d1bf86fd6b","origin":"https://github.com/CMU-MultiComp-Lab/CMU-MultimodalSDK.git","license":"LICENSE"},
+    {"directory":"DiscRead-MSA","commit":"b71c53100d0f0bc0508cb228b9ccf4a53b5d9089","tree":"a59542713a12243b285040fc726d6dc488dc8e90","origin":"https://github.com/GawaineXiukkie/DiscRead-MSA.git","license":"LICENSE"},
+    {"directory":"EBMC","commit":"18ee1f2e1993d87748c0033b496eeba983c2ce81","tree":"104feb33e63a2a67e5e1bce0798c6a46c8184d31","origin":"https://github.com/kangverse/EBMC.git","license":"LICENSE"},
+    {"directory":"EMOE","commit":"c4759c748105e18354cd9082b1d8c6d310f1f9d8","tree":"a5238b332e203aefa4b67eeb99fc042a22a0857b","origin":"https://github.com/fuyyyyy/EMOE","license":null},
+    {"directory":"HyperDiff","commit":"2bb0b04ca6ac40969c9d3d3baec22135cefcc9f6","tree":"8b38b9543a96fc98dfcf615863296132d6e686a1","origin":"https://github.com/wdqdp/HyperDiff","license":"LICENSE"},
+    {"directory":"MFN","commit":"b0453fb6e21b581c796246a0c32a6551f2028c1b","tree":"85f2ec6a21b8470cb5637efaf11050d756193ebb","origin":"https://github.com/pliang279/MFN.git","license":"LICENSE"},
+    {"directory":"MMRest","commit":"f83742052509769d488b5a204003a53cf1e60967","tree":"f36400db61dd97e8874d83ba92574de71baf77f9","origin":"https://github.com/hurriedpi/MMRest.git","license":"LICENSE"},
+    {"directory":"MMSA","commit":"a94e65d07fa1ae0d44e552390074b29b0898edfd","tree":"83b943af2a86a0252551b7397e10ce723ed301cb","origin":"https://github.com/thuiar/MMSA.git","license":"LICENSE"},
+    {"directory":"MRUF","commit":"c43c621fdfa05a7db351c949d2e2b0741e85bc4a","tree":"8c69460efb8ac93ed95c7b51458bac525e1066d6","origin":"https://github.com/ICIG/MRUF.git","license":"LICENSE"},
+    {"directory":"Multimodal-Transformer","commit":"a670936824ee722c8494fd98d204977a1d663c7a","tree":"a7c1b54314be1d545be54ae7890d47fb76a0d0c0","origin":"https://github.com/yaohungt/Multimodal-Transformer.git","license":"LICENSE"},
+    {"directory":"P-RMF","commit":"769c31b50f173b3f7670404a0939a95388393610","tree":"800429547d6a4703814c8ac5032142372af30747","origin":"https://github.com/hawksilent/P-RMF","license":"LICENSE"},
+    {"directory":"QA-MoE","commit":"36abacb80a28725ae3e4b17c4f9bcefce5ea6dd4","tree":"2c17044d5fa5b4f3a9219ac3ac4cc62a5cd2d72f","origin":"https://github.com/U235-Aurora/QA-MoE.git","license":null},
+    {"directory":"quality-aware-fusion-diagnostic","commit":"37bd773ab7f87106fa048379a8293cb6f95d41cc","tree":"e484a5887b26b770c1341c0b3604bed899cd5765","origin":"https://github.com/jadenmoon27/quality-aware-fusion-diagnostic.git","license":"LICENSE"},
+    {"directory":"SentiLLM","commit":"9042843409e165a28c2374ad0148215dd0928e74","tree":"b397517f98ec47ad68fae07ed475e9e07d820f41","origin":"https://github.com/especiallyW/SentiLLM.git","license":null},
+    {"directory":"TLRA","commit":"b9dc9294ce4a682039fc9efae35d5ea2a19913a2","tree":"e39ad2434a3c88041384e77c5cab2be9ebc586a5","origin":"https://github.com/liuxy1005/TLRA.git","license":null},
+    {"directory":"VG-TPT","commit":"87df82e59350d9052c1444b421395e442dd4b6af","tree":"773ab60916c9afc1a7b6631458b8446fb5057341","origin":"https://github.com/ma-tubu/VG-TPT.git","license":null}
+  ]
+}
