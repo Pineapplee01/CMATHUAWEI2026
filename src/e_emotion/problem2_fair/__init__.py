@@ -6,6 +6,7 @@ from e_emotion.problem2_fair.core import (
     Q2_V2_CONDITIONS,
     finalize_prediction,
     project_intensity,
+    validate_model_input_view,
 )
 from e_emotion.problem2_fair.q2 import (
     Q2_V2_PROTOCOL_VERSION,
@@ -52,6 +53,7 @@ __all__ = [
     "is_frozen_output_path",
     "project_intensity",
     "validate_q2_v2_manifest",
+    "validate_model_input_view",
     "summarize_runs",
     "summarize_view",
     "load_problem2_dataset",

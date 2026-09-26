@@ -20,6 +20,20 @@ Q2_V2_CONDITIONS = (("complete", None, 0.0),) + tuple(
 )
 
 
+def validate_model_input_view(source_view: str, model_input_view: str) -> None:
+    """Ensure a recorded model layout is a valid derivative of its source view."""
+    valid = {"aligned_po", "unaligned_po", "unaligned_windowed"}
+    if source_view not in {"aligned_po", "unaligned_po"}:
+        raise ValueError(f"unknown source view: {source_view!r}")
+    if model_input_view not in valid:
+        raise ValueError(f"missing or unknown model input view: {model_input_view!r}")
+    allowed = {"aligned_po"} if source_view == "aligned_po" else {"unaligned_po", "unaligned_windowed"}
+    if model_input_view not in allowed:
+        raise ValueError(
+            f"model input view {model_input_view!r} is incompatible with source view {source_view!r}"
+        )
+
+
 @dataclass(frozen=True)
 class Problem2Split:
     """One processed_po split retaining physical support and observation masks."""
@@ -132,4 +146,5 @@ __all__ = [
     "Q2_V2_CONDITIONS",
     "finalize_prediction",
     "project_intensity",
+    "validate_model_input_view",
 ]

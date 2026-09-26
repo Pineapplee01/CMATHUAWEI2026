@@ -25,6 +25,8 @@
 | **物理支持 / physical support (P)** | 该模态在时间轴上可定义连续窗口的范围；不代表内容一定可观测。 | padding mask、valid mask（未说明语义） |
 | **原生观测 / native observation (O)** | 输入中真实可用的内容位置；局部缺失仅从 O 中删除，且 O 是 P 的子集。 | P、padding（混用时） |
 | **未对齐窗口化版本 / unaligned-windowed variant** | 对原始50/500/500输入先施加局部缺失，再以共享物理窗口池化为50槽的等长方法适配变体。 | 未对齐原生复现 |
+| **源数据视图 / source data view** | 运行从 `processed_po` 读取的原始数据坐标系，只能是 `aligned_po` 或 `unaligned_po`。 | 输入视图、实验视图（未说明来源） |
+| **模型输入视图 / model input view** | 模型实际接收的时间布局；对齐源只能是 `aligned_po`，未对齐源只能是 `unaligned_po` 或 `unaligned_windowed`。 | 源数据视图、对齐版本（未说明是否池化） |
 | **Q2-v2 manifest** | 对 train/valid/test 的64个Q2条件、逐样本同步物理窗口、数据hash和mask hash的共享证据文件。 | 随机缺失列表、方法私有mask |
 | **公平 Baseline run / fair baseline run** | 使用 Problem 2 双视图、共享Q2-v2 manifest、冻结方法决策规则、公共强度投影和统一产物校验的运行。 | 已有历史run、源码快照 |
 | **Baseline Workspace** | 服务器 Baseline/reference 与本地 references 对应的源码、记忆和运行时工作区。 | reference 目录、方法文件夹 |

@@ -48,7 +48,9 @@ def summarize_view(
             mask_hash = report["mask_sha256"]
         elif report["mask_sha256"] != mask_hash:
             raise ValueError(f"{method} Q2-v2 mask hash differs across methods in {view}")
-        group = "unaligned_windowed" if view == "unaligned_po" and spec.input_layout == "unaligned_windowed" else view
+        group = report["model_input_view"]
+        if group not in groups:
+            raise ValueError(f"{method} reports unsupported model input view {group!r} for source view {view!r}")
         groups[group].append(report)
     return {
         "protocol_version": "problem2-fair-v1",

@@ -9,7 +9,7 @@ from typing import Iterable
 import numpy as np
 
 from e_emotion.problem2_fair.config import FAIR_SEEDS
-from e_emotion.problem2_fair.core import Q2_V2_CONDITIONS
+from e_emotion.problem2_fair.core import Q2_V2_CONDITIONS, validate_model_input_view
 from e_emotion.problem2_fair.run import PROTOCOL_VERSION
 
 
@@ -27,7 +27,10 @@ def summarize_runs(run_dirs: Iterable[str | Path]) -> dict:
     if not roots:
         raise ValueError("at least one run directory is required")
     summaries = [json.loads((root / "metrics.json").read_text(encoding="utf-8")) for root in roots]
-    identity = {(item.get("protocol_version"), item.get("method"), item.get("view")) for item in summaries}
+    identity = {
+        (item.get("protocol_version"), item.get("method"), item.get("view"), item.get("model_input_view"))
+        for item in summaries
+    }
     if len(identity) != 1 or next(iter(identity))[0] != PROTOCOL_VERSION:
         raise ValueError("runs must share one method, view and fair-comparison protocol")
     seeds = [item.get("seed") for item in summaries]
@@ -35,7 +38,8 @@ def summarize_runs(run_dirs: Iterable[str | Path]) -> dict:
         raise ValueError("runs must use distinct seeds")
     if tuple(sorted(seeds)) != FAIR_SEEDS:
         raise ValueError(f"runs must contain exactly the fair seed set {FAIR_SEEDS}")
-    _, method, view = next(iter(identity))
+    _, method, view, model_input_view = next(iter(identity))
+    validate_model_input_view(view, model_input_view)
     clean = {
         metric: _summary([float(item["clean"][metric]) for item in summaries if item["clean"][metric] is not None])
         for metric in _METRICS
@@ -48,7 +52,7 @@ def summarize_runs(run_dirs: Iterable[str | Path]) -> dict:
         q2 = json.loads((root / "q2_v2" / "metrics.json").read_text(encoding="utf-8"))
         if q2.get("n_conditions") != 64:
             raise ValueError(f"{root}: Q2-v2 is incomplete")
-        if any(q2.get(key) != summary.get(key) for key in ("method", "view", "seed")):
+        if any(q2.get(key) != summary.get(key) for key in ("method", "view", "model_input_view", "seed")):
             raise ValueError(f"{root}: Q2-v2 identity disagrees with run summary")
         mask_hash = q2.get("mask_sha256")
         if not isinstance(mask_hash, str) or len(mask_hash) != 64:
@@ -92,6 +96,8 @@ def summarize_runs(run_dirs: Iterable[str | Path]) -> dict:
         "protocol_version": PROTOCOL_VERSION,
         "method": method,
         "view": view,
+        "source_view": view,
+        "model_input_view": model_input_view,
         "seeds": sorted(seeds),
         "seed_count": len(seeds),
         "mask_sha256": expected_mask_hash,

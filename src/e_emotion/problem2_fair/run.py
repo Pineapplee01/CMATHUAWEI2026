@@ -13,7 +13,7 @@ import numpy as np
 from e_emotion.contracts import Polarity
 from e_emotion.evaluation import score_predictions, write_predictions_csv
 from e_emotion.problem2_fair.catalog import is_frozen_output_path
-from e_emotion.problem2_fair.core import Problem2Split, Q2_V2_CONDITIONS, finalize_prediction
+from e_emotion.problem2_fair.core import Problem2Split, Q2_V2_CONDITIONS, finalize_prediction, validate_model_input_view
 from e_emotion.problem2_fair.q2 import ensure_q2_v2_manifest, materialize_q2_condition, pool_unaligned_to_text_slots
 from e_emotion.problem2_fair.views import Problem2Dataset
 
@@ -118,6 +118,7 @@ class BaselineRun:
             if dataset.view == "unaligned_po" and getattr(self.adapter, "input_layout", "native") == "unaligned_windowed"
             else dataset.view
         )
+        validate_model_input_view(dataset.view, model_input_view)
         checkpoint = self.adapter.train(dataset, seed=seed, run_dir=target)
         checkpoint = Path(checkpoint).resolve()
         if not checkpoint.is_file():

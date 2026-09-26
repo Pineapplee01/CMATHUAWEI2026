@@ -11,7 +11,7 @@ from pathlib import Path
 from e_emotion.contracts import Polarity
 from e_emotion.evaluation import read_records_csv, score_predictions
 from e_emotion.problem2_fair.config import default_view_root
-from e_emotion.problem2_fair.core import Q2_V2_CONDITIONS, project_intensity
+from e_emotion.problem2_fair.core import Q2_V2_CONDITIONS, project_intensity, validate_model_input_view
 from e_emotion.problem2_fair.q2 import validate_q2_v2_manifest
 from e_emotion.problem2_fair.views import load_problem2_dataset
 
@@ -64,11 +64,13 @@ def verify_run(path: str | Path, *, require_source: bool = False) -> dict:
     validate_q2_v2_manifest(manifest)
     if summary.get("protocol_version") != "problem2-fair-v1":
         raise ValueError("unexpected run protocol version")
-    for key in ("method", "view", "seed"):
+    for key in ("method", "view", "model_input_view", "seed"):
         if summary.get(key) != q2.get(key) or summary.get(key) != provenance.get(key):
-            raise ValueError(f"run/Q2/protocol {key} identity differs")
+            label = key.replace("_", " ")
+            raise ValueError(f"run/Q2/protocol {label} identity differs")
     if summary["view"] != manifest.get("view"):
         raise ValueError("run and Q2-v2 manifest data views differ")
+    validate_model_input_view(summary["view"], summary["model_input_view"])
     expected_conditions = {
         (combination, position, float(fraction)) for combination, position, fraction in Q2_V2_CONDITIONS
     }

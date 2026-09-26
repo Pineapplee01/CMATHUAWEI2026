@@ -724,6 +724,41 @@ def test_cli_baseline_verify_recomputes_q2_metrics_from_source_truth(tmp_path, c
     assert "metric" in capsys.readouterr().out
 
 
+def test_cli_baseline_verify_rejects_tampered_model_input_view(tmp_path, capsys):
+    from e_emotion.cli.main import main
+    from e_emotion.problem2_fair import BaselineRun, RawMethodPrediction, load_problem2_dataset
+
+    class ToyAdapter:
+        method_id = "toy"
+
+        def reencode_text(self, split):
+            return split
+
+        def train(self, dataset, *, seed, run_dir):
+            checkpoint = run_dir / "checkpoint"
+            checkpoint.write_bytes(b"checkpoint")
+            return checkpoint
+
+        def predict(self, split, checkpoint):
+            return RawMethodPrediction(
+                np.asarray(split.regression),
+                tuple(Polarity.from_value(value) for value in split.classification),
+                "native",
+            )
+
+    root = tmp_path / "aligned_po"
+    _write_processed_po(root)
+    run = tmp_path / "run"
+    BaselineRun(ToyAdapter()).execute(load_problem2_dataset(root, view="aligned_po"), seed=2026, run_dir=run)
+    q2_path = run / "q2_v2" / "metrics.json"
+    payload = __import__("json").loads(q2_path.read_text(encoding="utf-8"))
+    payload["model_input_view"] = "unaligned_windowed"
+    q2_path.write_text(__import__("json").dumps(payload), encoding="utf-8")
+
+    assert main(["baseline", "verify", "--run-dir", str(run)]) == 2
+    assert "model input view" in capsys.readouterr().out
+
+
 def test_verify_run_reopens_hash_matched_default_view_for_early_artifacts(tmp_path, monkeypatch):
     import json
 
@@ -848,7 +883,8 @@ def test_report_aggregates_only_matching_method_and_view_runs(tmp_path):
         root.mkdir()
         (root / "metrics.json").write_text(
             __import__("json").dumps({
-                "protocol_version": "problem2-fair-v1", "method": "aumdf", "view": "aligned_po", "seed": seed,
+                "protocol_version": "problem2-fair-v1", "method": "aumdf", "view": "aligned_po",
+                "model_input_view": "aligned_po", "seed": seed,
                 "clean": {"accuracy": score, "macro_f1": score, "weighted_f1": score, "mae": 1 - score, "pearson": score},
             }),
             encoding="utf-8",
@@ -859,7 +895,7 @@ def test_report_aggregates_only_matching_method_and_view_runs(tmp_path):
             __import__("json").dumps({
                 "n_conditions": 64,
                 "mask_sha256": "a" * 64,
-                "method": "aumdf", "view": "aligned_po", "seed": seed,
+                "method": "aumdf", "view": "aligned_po", "model_input_view": "aligned_po", "seed": seed,
                     "conditions": [
                         {"combination": combination, "position": position, "requested_fraction": fraction, "accuracy": score}
                         for combination, position, fraction in Q2_V2_CONDITIONS
@@ -877,7 +913,7 @@ def test_report_aggregates_only_matching_method_and_view_runs(tmp_path):
     assert report["clean"]["accuracy"]["mean"] == pytest.approx(0.55)
 
 
-def test_report_rejects_runs_with_different_q2_mask_hashes(tmp_path):
+def test_report_rejects_missing_model_input_view(tmp_path):
     from e_emotion.problem2_fair import FAIR_SEEDS, Q2_V2_CONDITIONS, summarize_runs
 
     paths = []
@@ -894,9 +930,41 @@ def test_report_rejects_runs_with_different_q2_mask_hashes(tmp_path):
         q2.mkdir()
         (q2 / "metrics.json").write_text(
             __import__("json").dumps({
+                "n_conditions": 64, "mask_sha256": "a" * 64,
+                "method": "aumdf", "view": "aligned_po", "seed": seed,
+                "conditions": [
+                    {"combination": combination, "position": position, "requested_fraction": fraction, "accuracy": 0.5}
+                    for combination, position, fraction in Q2_V2_CONDITIONS
+                ],
+            }), encoding="utf-8",
+        )
+        paths.append(root)
+
+    with pytest.raises(ValueError, match="model input view"):
+        summarize_runs(paths)
+
+
+def test_report_rejects_runs_with_different_q2_mask_hashes(tmp_path):
+    from e_emotion.problem2_fair import FAIR_SEEDS, Q2_V2_CONDITIONS, summarize_runs
+
+    paths = []
+    for seed in FAIR_SEEDS:
+        root = tmp_path / str(seed)
+        root.mkdir()
+        (root / "metrics.json").write_text(
+            __import__("json").dumps({
+                "protocol_version": "problem2-fair-v1", "method": "aumdf", "view": "aligned_po",
+                "model_input_view": "aligned_po", "seed": seed,
+                "clean": {"accuracy": 0.5, "macro_f1": 0.5, "weighted_f1": 0.5, "mae": 0.5, "pearson": 0.5},
+            }), encoding="utf-8",
+        )
+        q2 = root / "q2_v2"
+        q2.mkdir()
+        (q2 / "metrics.json").write_text(
+            __import__("json").dumps({
                 "n_conditions": 64,
                 "mask_sha256": ("a" if seed != 3 else "b") * 64,
-                "method": "aumdf", "view": "aligned_po", "seed": seed,
+                "method": "aumdf", "view": "aligned_po", "model_input_view": "aligned_po", "seed": seed,
                 "conditions": [
                     {"combination": combination, "position": position, "requested_fraction": fraction, "accuracy": 0.5}
                     for combination, position, fraction in Q2_V2_CONDITIONS
@@ -920,7 +988,8 @@ def test_report_rejects_shared_but_nonstandard_q2_condition_set(tmp_path):
         root.mkdir()
         (root / "metrics.json").write_text(
             __import__("json").dumps({
-                "protocol_version": "problem2-fair-v1", "method": "aumdf", "view": "aligned_po", "seed": seed,
+                "protocol_version": "problem2-fair-v1", "method": "aumdf", "view": "aligned_po",
+                "model_input_view": "aligned_po", "seed": seed,
                 "clean": {"accuracy": 0.5, "macro_f1": 0.5, "weighted_f1": 0.5, "mae": 0.5, "pearson": 0.5},
             }), encoding="utf-8",
         )
@@ -929,7 +998,7 @@ def test_report_rejects_shared_but_nonstandard_q2_condition_set(tmp_path):
         (q2 / "metrics.json").write_text(
             __import__("json").dumps({
                 "n_conditions": 64, "mask_sha256": "a" * 64,
-                "method": "aumdf", "view": "aligned_po", "seed": seed,
+                "method": "aumdf", "view": "aligned_po", "model_input_view": "aligned_po", "seed": seed,
                 "conditions": [
                     {"combination": combination, "position": position, "requested_fraction": fraction, "accuracy": 0.5}
                     for combination, position, fraction in wrong_conditions
@@ -951,7 +1020,8 @@ def test_report_rejects_q2_identity_that_disagrees_with_run_summary(tmp_path):
         root.mkdir()
         (root / "metrics.json").write_text(
             __import__("json").dumps({
-                "protocol_version": "problem2-fair-v1", "method": "aumdf", "view": "aligned_po", "seed": seed,
+                "protocol_version": "problem2-fair-v1", "method": "aumdf", "view": "aligned_po",
+                "model_input_view": "aligned_po", "seed": seed,
                 "clean": {"accuracy": 0.5, "macro_f1": 0.5, "weighted_f1": 0.5, "mae": 0.5, "pearson": 0.5},
             }), encoding="utf-8",
         )
@@ -960,7 +1030,8 @@ def test_report_rejects_q2_identity_that_disagrees_with_run_summary(tmp_path):
         (q2 / "metrics.json").write_text(
             __import__("json").dumps({
                 "n_conditions": 64, "mask_sha256": "a" * 64,
-                "method": "other" if seed == 3 else "aumdf", "view": "aligned_po", "seed": seed,
+                "method": "other" if seed == 3 else "aumdf", "view": "aligned_po",
+                "model_input_view": "aligned_po", "seed": seed,
                 "conditions": [
                     {"combination": combination, "position": position, "requested_fraction": fraction, "accuracy": 0.5}
                     for combination, position, fraction in Q2_V2_CONDITIONS
