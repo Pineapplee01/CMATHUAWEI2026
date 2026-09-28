@@ -1,0 +1,8 @@
+{
+  "sha256": "baf5e3a81c3f509ffa749ca3fd26b2c94cb4488dd2ac174b67582895ea250a86",
+  "golden_8_samples_all_outputs_exact": true,
+  "all_727_test_classes_unchanged": true,
+  "test_accuracy": 0.7262723521320495,
+  "max_raw_intensity_difference": 4.440892098500626e-16,
+  "unit_tests_passed": 46
+}

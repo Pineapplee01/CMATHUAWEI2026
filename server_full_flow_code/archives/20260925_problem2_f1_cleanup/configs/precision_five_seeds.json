@@ -1,0 +1,33 @@
+{
+  "base_config": "configs/problem2_aligned.json",
+  "datasets": [
+    "processed_float64",
+    "processed_po"
+  ],
+  "precisions": [
+    "float32"
+  ],
+  "seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030
+  ],
+  "device": "cuda:3",
+  "epochs": 40,
+  "patience": 10,
+  "train_missing_seeds": [
+    3026,
+    3027,
+    3028
+  ],
+  "train_missing_rates": [
+    0.1,
+    0.3,
+    0.5
+  ],
+  "evaluation_missing_seed": 4026,
+  "selection_rule": "epoch: 0.7 valid full accuracy + 0.3 valid local30 accuracy; report all five test scores, mean and sample standard deviation",
+  "reuse_verified_seed_2026": true
+}

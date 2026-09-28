@@ -1,0 +1,21 @@
+样本编号,源文件,原文,极性,强度,文本归因,语音归因,视觉归因,主要参考模态,全面性,充分性,稳定性
+01,01.pkl,Replacing these wear components when replacing the timing belt is essential to ensuring the new belt performs to its mileage requirements,中,0.0,0.984251,0.014564,0.001185,文本,0.351575,0.022357,0.977778
+02,02.pkl,We want to live by each other’s happiness - not by each other’s misery.,正,0.522869,0.998387,0.0,0.001613,文本,0.276869,0.337716,0.648148
+03,03.pkl,"There's one lender at the moment which I think is just Bankwest who don't take rental income into account, they take rental yield into account.",负,-0.775159,0.997895,0.001664,0.000441,文本,0.578698,0.174853,0.972222
+04,04.pkl,"If I blow it at the team exercise, should I kiss my chances of cheering ""GO BLUE"" goodbye?] Absolutely not.",负,-0.525904,0.992585,0.005448,0.001968,文本,0.67757,0.010773,0.968254
+05,05.pkl,"Hi, my name is Chloe, video marketer for Red Wagon Marketing.",正,0.46189,0.948371,0.015528,0.0361,文本,0.17246,0.139648,1.0
+06,06.pkl,"If you're a fan of dancing in that sense, just like to watch people dance, see impressive dance moves then you might want to check out this movie solely for that",正,1.037466,0.999678,0.000206,0.000117,文本,0.539727,0.020179,0.944444
+07,07.pkl,"As Linn’s associate editor Michael Baadke reports in our November 28 issue, attendees “enthusiastically discussed the topics of growing the hobby, the future of stamp shows, and dealers and philatelic partnerships, along with ways the leading organizations involved in the stamp hobby can work together to make it succeed and grow",正,0.747478,0.999513,0.00029,0.000197,文本,0.436837,0.064063,0.962963
+08,08.pkl,"That brings us to tonight, the Universal Design Grand Challenge",正,0.974944,1.0,0.0,0.0,文本,0.620479,0.011138,0.333333
+09,09.pkl,"(uhh) I did not like this movie at all, I would not recommend it",负,-2.400106,0.980009,0.00795,0.012042,文本,0.512455,0.005482,0.892929
+10,10.pkl,(umm) And you know I really do like to see fluffy chick flicks sometimes so I'm not against that but this one was pretty terrible,负,-1.986864,0.996621,0.003379,0.0,文本,0.778119,0.006753,0.619048
+11,11.pkl,I would be ashamed to have made this film if I was a director,负,-1.999267,0.990895,3e-06,0.009102,文本,0.546435,0.054734,0.777778
+12,12.pkl,"Or worse, an individual previously had good credit, but usually by no fault of their own, or perhaps by fault of their own, they have let their credit sag, and credit scores is very low.",负,-1.07078,1.0,0.0,0.0,文本,0.709749,0.088324,0.333333
+13,13.pkl,"For example, I could take a set of data and from that data, I can find a relationship between any two of the given factors or more.",中,0.0,0.99743,0.00257,0.0,文本,0.35534,0.069554,0.666667
+14,14.pkl,He is the co-founder of Rossen and Vettese Limited and the former Executive Director of Uniform Final Examination (UFE) courses at Toronto's York University.,中,0.0,0.963759,0.024231,0.01201,文本,0.291371,0.075062,0.981481
+15,15.pkl,"However, despite their poverty, the family prioritize education because they believed in its power to transform lives",正,0.748872,0.962173,0.029041,0.008786,文本,0.442516,0.004666,1.0
+16,16.pkl,"It's a terrible, this is a terrible movie",负,-2.425683,0.9925,0.0075,0.0,文本,0.361777,0.025482,0.666667
+17,17.pkl,"Applying these four design concepts to your presentations is simple, easy and will make people think you turned into a design guru.",正,1.33467,0.977979,0.000191,0.02183,文本,0.478289,0.006981,1.0
+18,18.pkl,"-And in Denmark - the first Baltic Cod fishery has been MSC – certified -Meanwhile, the Faeroese Mackerel Fishery has been denied MSC certification based on the fact that the fishery has failed to reach an agreement on mackerel quotas with Norway and the European Union.",负,-0.404077,0.977,0.005388,0.017612,文本,0.426061,0.064696,0.952381
+19,19.pkl,"People are surprisingly forgiving brands when they own up to mistakes, and unfortunately some haters out there love to point fingers and jump all over imperfections, but for the most part, people understand",正,0.489034,0.972384,0.027616,0.0,文本,0.642223,0.051798,0.666667
+20,20.pkl,"And of course, click in the link of the description of this video for more, and we'll have more live updates and a stock market video (wrap-up) at the end of the day today.",正,1.03335,0.969157,0.019318,0.011525,文本,0.289244,0.039022,0.992593

@@ -1,0 +1,21 @@
+样本编号,源文件,原文,极性,强度,文本归因,语音归因,视觉归因,主要参考模态,全面性,充分性,稳定性
+01,01.pkl,Replacing these wear components when replacing the timing belt is essential to ensuring the new belt performs to its mileage requirements,正,0.175114,0.928837,0.045977,0.025186,文本,0.139961,0.019956,0.98089
+02,02.pkl,We want to live by each other’s happiness - not by each other’s misery.,正,0.314583,0.974173,0.02563,0.000197,文本,0.266936,0.129466,1.0
+03,03.pkl,"There's one lender at the moment which I think is just Bankwest who don't take rental income into account, they take rental yield into account.",负,-0.116493,0.944314,0.034181,0.021505,文本,0.312592,0.095328,0.969066
+04,04.pkl,"If I blow it at the team exercise, should I kiss my chances of cheering ""GO BLUE"" goodbye?] Absolutely not.",负,-0.078581,0.992497,0.006686,0.000816,文本,0.443734,0.012407,1.0
+05,05.pkl,"Hi, my name is Chloe, video marketer for Red Wagon Marketing.",正,1.261635,0.933115,0.027395,0.03949,文本,0.22184,0.003237,0.99177
+06,06.pkl,"If you're a fan of dancing in that sense, just like to watch people dance, see impressive dance moves then you might want to check out this movie solely for that",正,0.617251,0.982268,0.009112,0.008621,文本,0.342802,0.048045,0.980263
+07,07.pkl,"As Linn’s associate editor Michael Baadke reports in our November 28 issue, attendees “enthusiastically discussed the topics of growing the hobby, the future of stamp shows, and dealers and philatelic partnerships, along with ways the leading organizations involved in the stamp hobby can work together to make it succeed and grow",正,0.903746,0.941387,0.020093,0.03852,文本,0.399761,0.017491,0.994647
+08,08.pkl,"That brings us to tonight, the Universal Design Grand Challenge",正,1.139415,0.980662,0.008897,0.010441,文本,0.533861,0.033914,1.0
+09,09.pkl,"(uhh) I did not like this movie at all, I would not recommend it",负,-2.292385,0.995758,0.001562,0.00268,文本,0.767752,0.004758,1.0
+10,10.pkl,(umm) And you know I really do like to see fluffy chick flicks sometimes so I'm not against that but this one was pretty terrible,负,-1.734033,0.983558,0.004605,0.011838,文本,0.728363,0.018065,0.96164
+11,11.pkl,I would be ashamed to have made this film if I was a director,负,-1.621204,0.988357,0.009113,0.00253,文本,0.575469,0.292419,0.965278
+12,12.pkl,"Or worse, an individual previously had good credit, but usually by no fault of their own, or perhaps by fault of their own, they have let their credit sag, and credit scores is very low.",负,-0.38631,0.958365,0.019474,0.022161,文本,0.451139,0.060634,0.978416
+13,13.pkl,"For example, I could take a set of data and from that data, I can find a relationship between any two of the given factors or more.",中,0.0,0.973294,0.026706,0.0,文本,0.165098,0.088897,0.666667
+14,14.pkl,He is the co-founder of Rossen and Vettese Limited and the former Executive Director of Uniform Final Examination (UFE) courses at Toronto's York University.,正,0.255946,0.398062,0.276274,0.325663,视觉,0.022815,0.077156,0.987138
+15,15.pkl,"However, despite their poverty, the family prioritize education because they believed in its power to transform lives",正,1.170538,0.959809,0.014081,0.026111,文本,0.37331,0.028788,0.968861
+16,16.pkl,"It's a terrible, this is a terrible movie",负,-2.213112,0.98741,0.01259,0.0,文本,0.670148,0.006547,0.648148
+17,17.pkl,"Applying these four design concepts to your presentations is simple, easy and will make people think you turned into a design guru.",正,1.719157,0.987802,0.006594,0.005605,文本,0.552717,0.005546,0.989418
+18,18.pkl,"-And in Denmark - the first Baltic Cod fishery has been MSC – certified -Meanwhile, the Faeroese Mackerel Fishery has been denied MSC certification based on the fact that the fishery has failed to reach an agreement on mackerel quotas with Norway and the European Union.",中,0.0,0.809898,0.047571,0.142531,文本,0.091428,0.039556,0.981669
+19,19.pkl,"People are surprisingly forgiving brands when they own up to mistakes, and unfortunately some haters out there love to point fingers and jump all over imperfections, but for the most part, people understand",正,0.678155,0.937077,0.016471,0.046452,文本,0.356921,0.060441,0.991731
+20,20.pkl,"And of course, click in the link of the description of this video for more, and we'll have more live updates and a stock market video (wrap-up) at the end of the day today.",正,0.681777,0.949888,0.017796,0.032316,文本,0.404119,0.034583,0.975956

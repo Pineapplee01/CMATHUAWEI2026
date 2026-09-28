@@ -1,0 +1,22 @@
+{
+  "decision": "retain_original_main",
+  "reason": "Best new candidate chosen on valid improved by 2/728 but test declined by 3/727; no further tuning after candidate test evaluation.",
+  "candidate": "ote_domain_finetune",
+  "candidate_valid_accuracy": 0.6854395604395604,
+  "candidate_test_accuracy": 0.7028885832187071,
+  "candidate_test_correct": 511,
+  "retained_checkpoint": "AAAmodel/checkpoints/main.pt",
+  "retained_checkpoint_sha256": "cb759c0ac080e75888378b404e6ce749b89daea3b24141a7b60439b8a3b039ab",
+  "retained_valid_accuracy": 0.6826923076923077,
+  "retained_test_accuracy": 0.7070151306740028,
+  "target_test_accuracy": 0.75,
+  "target_met": false,
+  "candidates_trained": 5,
+  "test_evaluated_candidates": [
+    "ote_domain_finetune"
+  ],
+  "deployment_decision_used_test_comparison": true,
+  "active_experiment_branches_removed": true,
+  "archived_source": "archives/global_fusion_trial/source_snapshot.zip",
+  "archived_checkpoints": "AAAmodel/checkpoints/archive/global_fusion_trial"
+}

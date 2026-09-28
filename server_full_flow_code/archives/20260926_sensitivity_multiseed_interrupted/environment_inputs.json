@@ -1,0 +1,75 @@
+{
+  "environment": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.46.3",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "opensmile": "2.6.0",
+    "praatio": "6.2.0",
+    "scikit-learn": "1.6.1",
+    "soundfile": "0.13.1"
+  },
+  "inputs": {
+    "aligned": {
+      "train": {
+        "n": 3395,
+        "counts": [
+          967,
+          758,
+          1670
+        ]
+      },
+      "valid": {
+        "n": 728,
+        "counts": [
+          206,
+          184,
+          338
+        ]
+      },
+      "scaler": {
+        "path": "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本_retrain_20260925/processed_po/scaler_params.npz",
+        "sha256": "5101da0d28caed64ccc114dfc70dd2e11783aaaa0504237e1b1c9c13596459ac"
+      },
+      "bert": {
+        "path": "AAAmodel/bert-base-uncased/model.safetensors",
+        "sha256": "68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3"
+      },
+      "initialization": {
+        "path": "AAAmodel/checkpoints/runs/focus_boundary010_seed2026/processed_po_seed2026.pt",
+        "sha256": "07a7b9139bf90559df8e8b82873998a4fe6b4715688cfc8f0583e0b23b618d07"
+      }
+    },
+    "unaligned": {
+      "train": {
+        "n": 3395,
+        "counts": [
+          967,
+          758,
+          1670
+        ]
+      },
+      "valid": {
+        "n": 728,
+        "counts": [
+          206,
+          184,
+          338
+        ]
+      },
+      "scaler": {
+        "path": "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/未对齐版本/processed_po/scaler_params.npz",
+        "sha256": "d9542003d7a8fe97dbf2d38c110c46fc81f1a6e438407dcc1e741b720d811336"
+      },
+      "bert": {
+        "path": "AAAmodel/bert-base-uncased/model.safetensors",
+        "sha256": "68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3"
+      }
+    }
+  },
+  "source_files": {
+    "shared/common.py": "219517594e0f80e3ac3260659157361922835f48899ed16b44795f7f8a2ce105",
+    "problem2_retrain_v2 copy/超参敏感性实验.py": "dc04bf68a3af633cd9f7197094cf6aa83dc3b833960e465634bcac4639c94fe2",
+    "problem2_retrain_v2 copy/超参敏感性绘图.py": "d4d814a8bdb028f1fee7bfbddb0d7a72780d86453a22a9842f977fd29775b5de"
+  }
+}
