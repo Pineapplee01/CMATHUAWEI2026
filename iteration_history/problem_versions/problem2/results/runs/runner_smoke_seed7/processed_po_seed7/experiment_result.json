@@ -1,0 +1,18 @@
+{
+  "run_id": "runner_smoke_seed7",
+  "dataset": "processed_po",
+  "seed": 7,
+  "precision": "float32",
+  "best_epoch": 1,
+  "epochs_run": 1,
+  "valid_accuracy": 0.625,
+  "test_accuracy": 0.6602475928473177,
+  "test_local30_accuracy": 0.6217331499312242,
+  "test_macro_f1": 0.5560513092483951,
+  "test_mae": 0.6757345058284321,
+  "test_pearson": 0.6376939748554901,
+  "test_correct": 480,
+  "test_samples": 727,
+  "checkpoint": "AAAmodel/checkpoints/runs/runner_smoke_seed7/processed_po_seed7.pt",
+  "checkpoint_sha256": "29598d54c351b8c7274c6a916e6afeda8aad37bde6a58fa7eb6db2c78823bb77"
+}

@@ -1,0 +1,14 @@
+{
+  "branch": "unaligned",
+  "seeds": [
+    2026,
+    2031,
+    2033
+  ],
+  "title": "未对齐 soft_alignment+门控 B0（2026/2031/2033）252组均值",
+  "full_accuracy_mean": 0.69784502521779,
+  "full_accuracy_std": 0.0031766177121849816,
+  "local30_accuracy_mean": 0.6588720770288857,
+  "local30_accuracy_std": 0.010743121975112322,
+  "n_scenarios_per_seed": 252
+}

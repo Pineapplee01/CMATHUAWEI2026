@@ -1,0 +1,23 @@
+{
+  "branch": "aligned",
+  "seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035
+  ],
+  "title": "对齐 F1+门控 B0（2026–2035 十 seed）252组均值",
+  "full_accuracy_mean": 0.6932599724896836,
+  "full_accuracy_std": 0.006800732221087261,
+  "local30_accuracy_mean": 0.6552957359009629,
+  "local30_accuracy_std": 0.007427219342069351,
+  "protocol252_accuracy_mean": 0.6621353791401935,
+  "protocol252_accuracy_std": 0.004102698747801145,
+  "n_scenarios_per_seed": 252
+}

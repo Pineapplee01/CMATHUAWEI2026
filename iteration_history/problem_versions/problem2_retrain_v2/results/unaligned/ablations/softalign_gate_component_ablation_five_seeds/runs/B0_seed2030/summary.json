@@ -1,0 +1,56 @@
+{
+  "name": "B0_seed2030",
+  "dataset": "processed_po",
+  "architecture": "soft_alignment",
+  "seed": 2030,
+  "balance_beta": 0.25,
+  "neutral_weight": 1.0,
+  "train_class_counts": [
+    967,
+    758,
+    1670
+  ],
+  "class_weights": [
+    1.0512919875261513,
+    1.1172816640963994,
+    0.9170665548964914
+  ],
+  "boundary_weight": 0.1,
+  "boundary_margin": 0.5,
+  "boundary_warmup_epochs": 3,
+  "boundary_max_intensity": 0.5,
+  "effective_boundary_weight": 0.1,
+  "precision": "float32",
+  "best_epoch": 3,
+  "complete": {
+    "accuracy": 0.6538461538461539,
+    "macro_f1": 0.6250544375542867,
+    "weighted_f1": 0.6490997321325137,
+    "neutral_precision": 0.49693251533742333,
+    "neutral_recall": 0.44021739130434784,
+    "neutral_f1": 0.4668587896253602,
+    "mae": 0.5980994948601959,
+    "pearson": 0.6494437269212296,
+    "head_disagreement": 0.0
+  },
+  "local30": {
+    "accuracy": 0.5906593406593407,
+    "macro_f1": 0.5574703635309696,
+    "weighted_f1": 0.5870311026155182,
+    "neutral_precision": 0.4022346368715084,
+    "neutral_recall": 0.391304347826087,
+    "neutral_f1": 0.39669421487603307,
+    "mae": 0.6379162152588937,
+    "pearson": 0.5609884878605429,
+    "head_disagreement": 0.0
+  },
+  "selection_score": 0.6348901098901099,
+  "checkpoint": "AAAmodel/checkpoints/ablations_retrain_v2/softalign_gate_component_ablation_five_seeds/B0_seed2030.pt",
+  "checkpoint_sha256": "10c67d6701e772c026067c77386abef3beaa2ec082941f64554c8339ec4b53be",
+  "parameters": 109743462,
+  "device": "cuda:3",
+  "gpu_name": "NVIDIA GeForce RTX 4090",
+  "peak_gpu_bytes": 3406763008,
+  "elapsed_seconds": 166.6752337969956,
+  "epochs_run": 7
+}

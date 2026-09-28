@@ -1,0 +1,221 @@
+{
+  "rows": [
+    {
+      "name": "微调＋边界，β=0",
+      "run_id": "bert_finetune_seed2026",
+      "dataset": "processed_po",
+      "seed": 2026,
+      "precision": "float32",
+      "balance_beta": 0.0,
+      "neutral_weight": 1.0,
+      "train_class_counts": [
+        967,
+        758,
+        1670
+      ],
+      "class_weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "finetune_bert": true,
+      "bert_lr": 1e-05,
+      "boundary_weight": 0.1,
+      "boundary_margin": 0.5,
+      "boundary_warmup_epochs": 3,
+      "boundary_max_intensity": 0.5,
+      "effective_boundary_weight": 0.06666666666666667,
+      "best_epoch": 2,
+      "epochs_run": 6,
+      "valid_accuracy": 0.6456043956043956,
+      "test_accuracy": 0.6891334250343879,
+      "test_local30_accuracy": 0.6685006877579092,
+      "test_macro_f1": 0.6197473602296713,
+      "test_neutral_precision": 0.5,
+      "test_neutral_recall": 0.2848101265822785,
+      "test_neutral_f1": 0.3629032258064516,
+      "test_local30_neutral_precision": 0.5324675324675324,
+      "test_local30_neutral_recall": 0.25949367088607594,
+      "test_local30_neutral_f1": 0.34893617021276596,
+      "test_mae": 0.6386652632501609,
+      "test_pearson": 0.6888897115518113,
+      "test_correct": 501,
+      "test_samples": 727,
+      "checkpoint": "AAAmodel/checkpoints/runs/bert_finetune_seed2026/processed_po_seed2026.pt",
+      "checkpoint_sha256": "ac70a67d45e13848f453ee8d360905fbd51946013383fb0bcc34c48201978c89",
+      "fixed": 0,
+      "introduced": 0,
+      "neutral_hits": 45,
+      "polar_to_neutral": 45,
+      "weak_accuracy": 0.6615384615384615,
+      "raw_mae": 0.6457101296530358,
+      "validation_score": 0.6311813186813187,
+      "training_seconds": 117.70957598899258,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 2836822528
+    },
+    {
+      "name": "微调＋边界，β=0.1",
+      "run_id": "bert_balance010_seed2026",
+      "dataset": "processed_po",
+      "seed": 2026,
+      "precision": "float32",
+      "balance_beta": 0.1,
+      "neutral_weight": 1.0,
+      "train_class_counts": [
+        967,
+        758,
+        1670
+      ],
+      "class_weights": [
+        1.02108719491422,
+        1.046257433819571,
+        0.9667937411273743
+      ],
+      "finetune_bert": true,
+      "bert_lr": 1e-05,
+      "bert_trainable_layers": 12,
+      "boundary_weight": 0.1,
+      "boundary_margin": 0.5,
+      "boundary_warmup_epochs": 3,
+      "boundary_max_intensity": 0.5,
+      "effective_boundary_weight": 0.06666666666666667,
+      "best_epoch": 2,
+      "epochs_run": 6,
+      "valid_accuracy": 0.6428571428571429,
+      "test_accuracy": 0.687757909215956,
+      "test_local30_accuracy": 0.6685006877579092,
+      "test_macro_f1": 0.6231745955011688,
+      "test_neutral_precision": 0.4948453608247423,
+      "test_neutral_recall": 0.3037974683544304,
+      "test_neutral_f1": 0.3764705882352941,
+      "test_local30_neutral_precision": 0.5121951219512195,
+      "test_local30_neutral_recall": 0.26582278481012656,
+      "test_local30_neutral_f1": 0.35,
+      "test_mae": 0.6379104961471733,
+      "test_pearson": 0.6886719566726078,
+      "test_correct": 500,
+      "test_samples": 727,
+      "checkpoint": "AAAmodel/checkpoints/runs/bert_balance010_seed2026/processed_po_seed2026.pt",
+      "checkpoint_sha256": "8f991143360f2d65a3cbe21f2ea6c4d42366b4f4636a20f04395935e9a2f3fb2",
+      "fixed": 4,
+      "introduced": 5,
+      "neutral_hits": 48,
+      "polar_to_neutral": 49,
+      "weak_accuracy": 0.6461538461538462,
+      "raw_mae": 0.6452219310928229,
+      "validation_score": 0.6309065934065934,
+      "training_seconds": 122.27035598200746,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 2836823040
+    },
+    {
+      "name": "微调＋边界，β=0.25",
+      "run_id": "bert_balance025_seed2026",
+      "dataset": "processed_po",
+      "seed": 2026,
+      "precision": "float32",
+      "balance_beta": 0.25,
+      "neutral_weight": 1.0,
+      "train_class_counts": [
+        967,
+        758,
+        1670
+      ],
+      "class_weights": [
+        1.0512919875261513,
+        1.1172816640963994,
+        0.9170665548964914
+      ],
+      "finetune_bert": true,
+      "bert_lr": 1e-05,
+      "bert_trainable_layers": 12,
+      "boundary_weight": 0.1,
+      "boundary_margin": 0.5,
+      "boundary_warmup_epochs": 3,
+      "boundary_max_intensity": 0.5,
+      "effective_boundary_weight": 0.06666666666666667,
+      "best_epoch": 2,
+      "epochs_run": 6,
+      "valid_accuracy": 0.6456043956043956,
+      "test_accuracy": 0.6891334250343879,
+      "test_local30_accuracy": 0.6657496561210454,
+      "test_macro_f1": 0.628244158876973,
+      "test_neutral_precision": 0.49514563106796117,
+      "test_neutral_recall": 0.3227848101265823,
+      "test_neutral_f1": 0.39080459770114945,
+      "test_local30_neutral_precision": 0.5,
+      "test_local30_neutral_recall": 0.27848101265822783,
+      "test_local30_neutral_f1": 0.35772357723577236,
+      "test_mae": 0.635190033794142,
+      "test_pearson": 0.6918144993733282,
+      "test_correct": 501,
+      "test_samples": 727,
+      "checkpoint": "AAAmodel/checkpoints/runs/bert_balance025_seed2026/processed_po_seed2026.pt",
+      "checkpoint_sha256": "b5355d1a6903f174ee075edd79caa8d97426b31e6a29e7c9deddf27ffa109bfb",
+      "fixed": 8,
+      "introduced": 8,
+      "neutral_hits": 51,
+      "polar_to_neutral": 52,
+      "weak_accuracy": 0.6384615384615384,
+      "raw_mae": 0.6436013682451396,
+      "validation_score": 0.6311813186813187,
+      "training_seconds": 122.84598503296729,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 3275478016
+    }
+  ],
+  "confusion_matrices": {
+    "微调＋边界，β=0": [
+      [
+        159,
+        14,
+        34
+      ],
+      [
+        43,
+        45,
+        70
+      ],
+      [
+        34,
+        31,
+        297
+      ]
+    ],
+    "微调＋边界，β=0.1": [
+      [
+        160,
+        15,
+        32
+      ],
+      [
+        43,
+        48,
+        67
+      ],
+      [
+        36,
+        34,
+        292
+      ]
+    ],
+    "微调＋边界，β=0.25": [
+      [
+        160,
+        16,
+        31
+      ],
+      [
+        43,
+        51,
+        64
+      ],
+      [
+        36,
+        36,
+        290
+      ]
+    ]
+  }
+}

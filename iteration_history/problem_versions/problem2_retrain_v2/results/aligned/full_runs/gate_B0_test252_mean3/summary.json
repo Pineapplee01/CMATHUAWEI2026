@@ -1,0 +1,14 @@
+{
+  "branch": "aligned",
+  "seeds": [
+    2027,
+    2028,
+    2035
+  ],
+  "title": "对齐 F1+门控 B0（2027/2028/2035）252组均值",
+  "full_accuracy_mean": 0.6964695093993581,
+  "full_accuracy_std": 0.005559080996323775,
+  "local30_accuracy_mean": 0.656121045392022,
+  "local30_accuracy_std": 0.011004126547455306,
+  "n_scenarios_per_seed": 252
+}

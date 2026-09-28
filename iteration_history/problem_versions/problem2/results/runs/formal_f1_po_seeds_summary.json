@@ -1,0 +1,61 @@
+{
+  "protocol": "formal processed_po union_extent; P_A=P_V=1 at CLS/SEP",
+  "seeds": [
+    2026,
+    2027,
+    2028
+  ],
+  "note": "seed2026 from retrain_f1_po_s2026 (byte-identical formal repro); 2027/2028 from formal_f1_po_s2027_2028 via problem2/",
+  "metrics": {
+    "valid_accuracy": {
+      "mean": 0.6533882783882784,
+      "std_ddof1": 0.004196497889153684,
+      "values": [
+        0.657967032967033,
+        0.6497252747252747,
+        0.6524725274725275
+      ]
+    },
+    "test_accuracy": {
+      "mean": 0.702888583218707,
+      "std_ddof1": 0.02213683210375667,
+      "values": [
+        0.7262723521320495,
+        0.7001375515818432,
+        0.6822558459422283
+      ]
+    },
+    "test_local30_accuracy": {
+      "mean": 0.6616231086657497,
+      "std_ddof1": 0.0036392727800062708,
+      "values": [
+        0.6643741403026134,
+        0.657496561210454,
+        0.6629986244841816
+      ]
+    },
+    "test_neutral_f1": {
+      "mean": 0.406732265555795,
+      "std_ddof1": 0.10212760617775865,
+      "values": [
+        0.4470588235294118,
+        0.48253968253968255,
+        0.2905982905982906
+      ]
+    },
+    "test_macro_f1": {
+      "mean": 0.6425677955396765,
+      "std_ddof1": 0.0400875629013419,
+      "values": [
+        0.6669660310875738,
+        0.6644356306083439,
+        0.5963017249231116
+      ]
+    }
+  },
+  "checkpoints": [
+    "AAAmodel/checkpoints/runs/retrain_f1_po_s2026/retrain_processed_po_seed2026.pt",
+    "AAAmodel/checkpoints/runs/formal_f1_po_s2027_2028/processed_po_seed2027.pt",
+    "AAAmodel/checkpoints/runs/formal_f1_po_s2027_2028/processed_po_seed2028.pt"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "removed": [
+    "problem2_retrain_v2 copy/figures/07_valid_selection.svg",
+    "problem2_retrain_v2 copy/figures/02_duration.svg",
+    "problem2_retrain_v2 copy/figures/01_full_ablation.svg",
+    "problem2_retrain_v2 copy/figures/03_type_position.svg",
+    "problem2_retrain_v2 copy/figures/04_stability.svg",
+    "problem2_retrain_v2 copy/figures/10_valid_threshold.svg",
+    "problem2_retrain_v2 copy/figures/06_confusion.svg",
+    "problem2_retrain_v2 copy/figures/05_completion.svg",
+    "problem2_retrain_v2 copy/figures/08_valid_candidates.svg",
+    "problem2_retrain_v2 copy/figures/09_valid_parameter_endpoints.svg",
+    "problem2_retrain_v2 copy/sensitivity_results/figures/01_balance_beta.svg",
+    "problem2_retrain_v2 copy/sensitivity_results/figures/02_boundary_weight.svg",
+    "problem2_retrain_v2 copy/sensitivity_results/figures/03_bert_lr.svg",
+    "archives/20260926_sensitivity_extended_report/05_align_time_penalty.svg",
+    "archives/20260926_sensitivity_extended_report/04_align_max_half_frac.svg",
+    "archives/20260926_sensitivity_extended_report/06_joint_verification.svg"
+  ],
+  "formats_retained": [
+    "png",
+    "pdf"
+  ]
+}

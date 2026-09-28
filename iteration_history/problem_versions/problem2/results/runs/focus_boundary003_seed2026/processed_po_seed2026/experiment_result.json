@@ -1,0 +1,41 @@
+{
+  "run_id": "focus_boundary003_seed2026",
+  "dataset": "processed_po",
+  "seed": 2026,
+  "precision": "float32",
+  "balance_beta": 0.0,
+  "neutral_weight": 1.0,
+  "train_class_counts": [
+    967,
+    758,
+    1670
+  ],
+  "class_weights": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "boundary_weight": 0.03,
+  "boundary_margin": 0.5,
+  "boundary_warmup_epochs": 3,
+  "boundary_max_intensity": 0.5,
+  "effective_boundary_weight": 0.019999999999999997,
+  "best_epoch": 2,
+  "epochs_run": 12,
+  "valid_accuracy": 0.6483516483516484,
+  "test_accuracy": 0.6836313617606602,
+  "test_local30_accuracy": 0.6629986244841816,
+  "test_macro_f1": 0.6057074071795607,
+  "test_neutral_precision": 0.5063291139240507,
+  "test_neutral_recall": 0.25316455696202533,
+  "test_neutral_f1": 0.33755274261603374,
+  "test_local30_neutral_precision": 0.5909090909090909,
+  "test_local30_neutral_recall": 0.2468354430379747,
+  "test_local30_neutral_f1": 0.3482142857142857,
+  "test_mae": 0.629892878419477,
+  "test_pearson": 0.6691051086458059,
+  "test_correct": 497,
+  "test_samples": 727,
+  "checkpoint": "AAAmodel/checkpoints/runs/focus_boundary003_seed2026/processed_po_seed2026.pt",
+  "checkpoint_sha256": "67ce5043ec86ec33306cd37e6c15d2be66c7874ed58af67b0f0da182c5406a1a"
+}

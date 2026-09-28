@@ -1,0 +1,2 @@
+run_id,dataset,seed,precision,best_epoch,epochs_run,valid_accuracy,test_accuracy,test_local30_accuracy,test_macro_f1,test_mae,test_pearson,test_correct,test_samples,checkpoint,checkpoint_sha256
+runner_smoke_seed7,processed_po,7,float32,1,1,0.625,0.6602475928473177,0.6217331499312242,0.5560513092483951,0.6757345058284321,0.6376939748554901,480,727,AAAmodel/checkpoints/runs/runner_smoke_seed7/processed_po_seed7.pt,29598d54c351b8c7274c6a916e6afeda8aad37bde6a58fa7eb6db2c78823bb77

@@ -1,0 +1,7 @@
+{
+  "seed": 2026,
+  "variant": "C",
+  "scenarios": 40,
+  "smoke": true,
+  "test_samples": 16
+}

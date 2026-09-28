@@ -1,0 +1,38 @@
+[
+  {
+    "run_id": "try_zscore_s2026",
+    "dataset": "processed_all_zscore",
+    "seed": 2026,
+    "precision": "float32",
+    "balance_beta": 1.0,
+    "neutral_weight": 1.0,
+    "train_class_counts": [
+      967,
+      758,
+      1670
+    ],
+    "class_weights": [
+      1.1702861082385385,
+      1.4929639401934915,
+      0.6776447105788423
+    ],
+    "best_epoch": 2,
+    "epochs_run": 12,
+    "valid_accuracy": 0.6098901098901099,
+    "test_accuracy": 0.657496561210454,
+    "test_local30_accuracy": 0.6313617606602476,
+    "test_macro_f1": 0.6261009420843427,
+    "test_neutral_precision": 0.4378698224852071,
+    "test_neutral_recall": 0.46835443037974683,
+    "test_neutral_f1": 0.4525993883792049,
+    "test_local30_neutral_precision": 0.4198473282442748,
+    "test_local30_neutral_recall": 0.34810126582278483,
+    "test_local30_neutral_f1": 0.3806228373702422,
+    "test_mae": 0.6315245154518199,
+    "test_pearson": 0.6625835546183324,
+    "test_correct": 478,
+    "test_samples": 727,
+    "checkpoint": "AAAmodel/checkpoints/runs/try_zscore_s2026/processed_all_zscore_seed2026.pt",
+    "checkpoint_sha256": "3a494fc00cabbf5805e1873c174a7cfbcfadb16988b3e337a7c00f2afba49b5f"
+  }
+]

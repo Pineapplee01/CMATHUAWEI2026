@@ -1,0 +1,452 @@
+{
+  "checks": {
+    "appendix4_n": 20,
+    "variant": "unaligned_pooled50",
+    "mfa_success": 20,
+    "max_shapley_error": 2.384185791015625e-07,
+    "rationale_status_counts": {
+      "insufficient": 13,
+      "within_tolerance": 7
+    },
+    "av_original_time_verified": false,
+    "note": "音视由未对齐500轴按有效长度等分池化到50；局部槽索引是池化轴，非原生hop"
+  },
+  "validation": {
+    "n": 728,
+    "metrics": {
+      "accuracy": 0.6456043956043956,
+      "macro_f1": 0.6104447776111944,
+      "weighted_f1": 0.6374100037893141,
+      "neutral_precision": 0.5072463768115942,
+      "neutral_recall": 0.3804347826086957,
+      "neutral_f1": 0.43478260869565216,
+      "mae": 0.6097319197949734,
+      "pearson": 0.6671093826204134,
+      "head_disagreement": 0.0,
+      "raw_mae": 0.6233936871008904,
+      "raw_pearson": 0.6657232806711595
+    },
+    "confusion_matrix": [
+      [
+        146,
+        26,
+        34
+      ],
+      [
+        44,
+        70,
+        70
+      ],
+      [
+        42,
+        42,
+        254
+      ]
+    ],
+    "groups": {
+      "negative": {
+        "n": 206,
+        "errors": 60,
+        "accuracy": 0.7087378640776699
+      },
+      "neutral": {
+        "n": 184,
+        "errors": 114,
+        "accuracy": 0.3804347826086957
+      },
+      "positive": {
+        "n": 338,
+        "errors": 84,
+        "accuracy": 0.7514792899408284
+      },
+      "weak_non_neutral": {
+        "n": 147,
+        "errors": 72,
+        "accuracy": 0.5102040816326531
+      },
+      "vision_unavailable": {
+        "n": 15,
+        "errors": 8,
+        "accuracy": 0.4666666666666667
+      }
+    },
+    "modality_removal": {
+      "text": {
+        "accuracy": 0.4532967032967033,
+        "macro_f1": 0.3778853889170531,
+        "weighted_f1": 0.42076973150847724,
+        "neutral_precision": 0.38461538461538464,
+        "neutral_recall": 0.08152173913043478,
+        "neutral_f1": 0.13452914798206278,
+        "mae": 0.8685005975205459,
+        "pearson": 0.23048986313787176,
+        "head_disagreement": 0.0
+      },
+      "audio": {
+        "accuracy": 0.6332417582417582,
+        "macro_f1": 0.599986982595138,
+        "weighted_f1": 0.6260896509062979,
+        "neutral_precision": 0.4825174825174825,
+        "neutral_recall": 0.375,
+        "neutral_f1": 0.42201834862385323,
+        "mae": 0.6096688779770861,
+        "pearson": 0.6591162114798578,
+        "head_disagreement": 0.0
+      },
+      "vision": {
+        "accuracy": 0.635989010989011,
+        "macro_f1": 0.6061451150648393,
+        "weighted_f1": 0.6310285628222123,
+        "neutral_precision": 0.47435897435897434,
+        "neutral_recall": 0.40217391304347827,
+        "neutral_f1": 0.43529411764705883,
+        "mae": 0.5974519764777546,
+        "pearson": 0.649258506098005,
+        "head_disagreement": 0.0
+      }
+    },
+    "error_examples": [
+      {
+        "id": "236021$_$3",
+        "true_class": 1,
+        "true_intensity": 0.0,
+        "class": 0,
+        "intensity": -2.392094373703003,
+        "raw_intensity": -2.392094373703003,
+        "confidence": 0.990176260471344,
+        "vision_available": true,
+        "absolute_error": 2.392094373703003,
+        "text": "he thinks the whole situation is silly",
+        "text_scope": "input token slots only; possibly truncated",
+        "after_removing": {
+          "text": {
+            "class": 2,
+            "correct": false,
+            "confidence": 0.9462904334068298
+          },
+          "audio": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9918377995491028
+          },
+          "vision": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9906083345413208
+          }
+        }
+      },
+      {
+        "id": "x2lOwQaAn4g$_$4",
+        "true_class": 1,
+        "true_intensity": 0.0,
+        "class": 2,
+        "intensity": 1.9005060195922852,
+        "raw_intensity": 1.9005060195922852,
+        "confidence": 0.9884823560714722,
+        "vision_available": true,
+        "absolute_error": 1.9005060195922852,
+        "text": "all of these exercises are jean friendly and guarantee getting in some fitness time even on work hours",
+        "text_scope": "input token slots only; possibly truncated",
+        "after_removing": {
+          "text": {
+            "class": 2,
+            "correct": false,
+            "confidence": 0.9802834391593933
+          },
+          "audio": {
+            "class": 2,
+            "correct": false,
+            "confidence": 0.9882673621177673
+          },
+          "vision": {
+            "class": 2,
+            "correct": false,
+            "confidence": 0.9850839972496033
+          }
+        }
+      },
+      {
+        "id": "f_ZJ7L14oYQ$_$21",
+        "true_class": 2,
+        "true_intensity": 2.0,
+        "class": 0,
+        "intensity": -2.2682552337646484,
+        "raw_intensity": -2.2682552337646484,
+        "confidence": 0.9836298823356628,
+        "vision_available": true,
+        "absolute_error": 4.268255233764648,
+        "text": "they just so much more convenient than stupid boots that take forever to put on and just aren ' t comfortable!",
+        "text_scope": "input token slots only; possibly truncated",
+        "after_removing": {
+          "text": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.5376573801040649
+          },
+          "audio": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9844367504119873
+          },
+          "vision": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9843206405639648
+          }
+        }
+      },
+      {
+        "id": "HmXXW45eZL4$_$4",
+        "true_class": 1,
+        "true_intensity": 0.0,
+        "class": 0,
+        "intensity": -1.5382078886032104,
+        "raw_intensity": -1.5382078886032104,
+        "confidence": 0.9752737879753113,
+        "vision_available": true,
+        "absolute_error": 1.5382078886032104,
+        "text": "never ever look hurt, look sad, look angry, start crying, run off stage.",
+        "text_scope": "input token slots only; possibly truncated",
+        "after_removing": {
+          "text": {
+            "class": 1,
+            "correct": true,
+            "confidence": 0.5716439485549927
+          },
+          "audio": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9737690091133118
+          },
+          "vision": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9820151329040527
+          }
+        }
+      },
+      {
+        "id": "0utROiKxejc$_$4",
+        "true_class": 1,
+        "true_intensity": 0.0,
+        "class": 0,
+        "intensity": -1.6724727153778076,
+        "raw_intensity": -1.6724727153778076,
+        "confidence": 0.972884476184845,
+        "vision_available": true,
+        "absolute_error": 1.6724727153778076,
+        "text": "when i approached the wholesalers regarding this, they didn ' t helped me and they will not accept returns and because of these conditions, i went into huge losses.",
+        "text_scope": "input token slots only; possibly truncated",
+        "after_removing": {
+          "text": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.8789463043212891
+          },
+          "audio": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9780182242393494
+          },
+          "vision": {
+            "class": 0,
+            "correct": false,
+            "confidence": 0.9679311513900757
+          }
+        }
+      }
+    ],
+    "scope": "entire validation split; no test or appendix4 labels; frozen checkpoint",
+    "error_attribution_scope": "group associations and model interventions, not human-emotion causal proof"
+  },
+  "identity": {
+    "checkpoint": "b5355d1a6903f174ee075edd79caa8d97426b31e6a29e7c9deddf27ffa109bfb",
+    "scaler": "5101da0d28caed64ccc114dfc70dd2e11783aaaa0504237e1b1c9c13596459ac",
+    "encoder": "68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3",
+    "inputs": {
+      "01.pkl": "70e55e2709905d7ea9becf70d8dd91d83688e5902b6c5e601aa6d16e703e4659",
+      "02.pkl": "17e1a7c74f20dd25ca240b289add7a3b632ff2d6fb73d71eb1e1c6006b1f3cb9",
+      "03.pkl": "0d959289f51abebc34cb911895d7da4c70bb032d2fe281906b8f27ef6411cd8b",
+      "04.pkl": "f05343ac26cc037a6023a8e00ca1ffa7d5578db9bac6f2dad2e97bebf2ee188c",
+      "05.pkl": "cf0cd1b562e4516a25a04c23953f9baecaa0f42ce4044aa4eb9b1aba221e70a9",
+      "06.pkl": "3a5e9de011531ec38d60430053a221bfde7e05b253cbbf414b6ec08c42b9eee4",
+      "07.pkl": "b6f9a61599a16d0dee901ec277cdb32bde3ab50a223b15823fd0368b61f32314",
+      "08.pkl": "842aa20b0b30bd8cdef2d1f2e3c458abf01caaacb416b23a4dc8b7129ca660f3",
+      "09.pkl": "f42d91d2c1b8e6cad707eccd029c57eb1cb9e9300544ad1ba10bf0a96627ce65",
+      "10.pkl": "b12cb66e785c60faaa92d91be71bcae87dd4c0282bdd7e53241a7bb3e7413aa9",
+      "11.pkl": "64b0b19f12977bb24684cbb874d88e3dde71ad7f93821f8a382d05d3047c3005",
+      "12.pkl": "fd7cb86a2952ef384b0f1ce0dc58391332379e1d065d48100735b40ce991a624",
+      "13.pkl": "4d8b77cdc24eecaa5104f19eaff60bad12fbf1886f40f1d95491decc9b31f7e0",
+      "14.pkl": "17b0576012b71cdbebddfd38375e19f21fbe8e1eefa4813ac945196c734c9f55",
+      "15.pkl": "e12cb1d0b69558c7f81eecb2063769b872e58718051c7ea6b2761c066763f594",
+      "16.pkl": "359fae06a5df658729772eda07de43a12627a53574df95164942eb5f7a594153",
+      "17.pkl": "5d52d13cec0e716c6dab949e3296607d6f32bf320cb4029fde1d2b532101a41c",
+      "18.pkl": "7991357145a879fa8d85a028f043a6835243b24a6454bf5ec89c485cbc6335cf",
+      "19.pkl": "14041c0d6b2d351cd900603044f617d549e25821fa04b3f57d62c4a4e52fad4e",
+      "20.pkl": "2ed97e598f321dc82392e6b3d85963c629cea4ea8bc166705b697a7694ff7f44"
+    },
+    "code": {
+      "problem3/modality.py": "9e012798c9336c2466767dcb0330e3773a563cdeb1a966e86a440a3b41bcb90c",
+      "problem3/evidence.py": "e275df331cb48d24a0ee78a41c888f08c198e33127f94b95c95e67c4f225bd2b",
+      "problem3/backtrace.py": "d07d5167ce2a0f49071132c49384326634682fa445c71a4ad9a6af2439b3e487",
+      "problem3/report.py": "4710ae87e75ba53c94c25c8095e1c5a90441443bb1d642159844437df4e6a0e7",
+      "problem3_unaligned/predictor.py": "31a213024e06a52de6e6a6d23db7ad69dcf87060c84131a3d4487135f8dd7fff",
+      "problem3_unaligned/compat.py": "761fbe69e3bfb78a0e0a22008f83ef58fe0ded8da9b2ba86333ff79446274b8f",
+      "shared/data.py": "9f932951c9b6928420f2530252107a74c0b73b35d0f450424148184cdc00f8be",
+      "problem2/data.py": "4f9510dabb5afc15ecceaf80793ee7282a47b025ba23ecace6a0c4029d30b6f4",
+      "problem2/inference.py": "1bc83444f24ee314362fb9f7c579753e5c813a13f7eabaada61c71832e30808a",
+      "problem2/output_contract.py": "f1b1e0d9794a3ab60df3da0db971eafcad81110c56b0d37b2f9f67b1982461e6",
+      "archives/20260925_problem2_f1_cleanup/problem2/model.py": "7ff5716a6b1636874d4df7142f3ed16ee31d428c5187901f92932405357698c1"
+    },
+    "settings": {
+      "seed": 2026,
+      "allow_unaligned_pool": true,
+      "evidence_work": "problem3_unaligned/work/v3_mfa",
+      "evidence_mapping": "problem3_unaligned/results/mapping_v3_mfa",
+      "evidence_windows": [
+        1,
+        3,
+        5
+      ],
+      "evidence_stride": 2,
+      "rationale_budget_fraction": 0.3,
+      "rationale_max_spans": 3,
+      "rationale_beam_width": 3,
+      "rationale_candidates_per_modality": 4,
+      "rationale_random_repeats": 5
+    },
+    "variant": "appendix4_unaligned_pooled50",
+    "restore": "archives/20260925_problem2_f1_cleanup/problem2/model.py"
+  },
+  "mapping_identity": {
+    "01": "8531a75c13032d580e61037b60ae6f786e14a603a55fc442f964d40d252c0dc4",
+    "02": "7e83f6de2fadd88d1b6489e684c7c514e4a7dd62b4637bd5bddd8c31bbf10304",
+    "03": "40a76b15f79b48fe28c6950aef8bc37c25f1e26a8ebdf9cfcf3a9b90a3cc5979",
+    "04": "391515e58a05937a3cdc3c100896de272dbbe6acbc96a2cca6ba0e26086fadfc",
+    "05": "b49b09b105bb8b3309edc958116bcea5832aeee1c0cded5c8aeb9ccd82d7d7b4",
+    "06": "f8e12388e05c0838f051db66a3e720fa68fad567af0550a610820b3aa12f8b89",
+    "07": "8b0c33c10457048c4fe733f9ecfc09921233ee61b0370f23f9e89e9100a08fef",
+    "08": "d3db1053cf205c5a44a96a932814db56d0d21777ea04e22cb560e726964605e0",
+    "09": "5941b8d510f7d48dc17ad02c1e4aea9cd89a480bf1686847f5e8268757d2e27a",
+    "10": "90a01a0141a9df1c433acb7b6e934cfd1f32cec238bb8f5f2c5e24c8086d73c6",
+    "11": "c9a2aa5d640116b8994c7c5cb495ed9ca0a68b4cccd3b00db812d311385140ec",
+    "12": "805d5e093621f3d612b8b37431e80d73e7c034660fae9c665cd672def1fd68fd",
+    "13": "4346e12fe980f72b3bacf83ac6d15f0b1f0a4b5777fdcdd2c4bc63ad2bb6a282",
+    "14": "79e2de8249a39261bddcf1c88174333eb753639e21df0e8c45ca14f0a2726e54",
+    "15": "27047a990943e81ff33f1d2df4fcf3ba21030310d401aa7dc37f69d86cafa24f",
+    "16": "84219efb91f9d8fbe2377d52bd4796c3025d8b21e40542c1f662e8eddcb6be05",
+    "17": "28243fcff470949ca1b6c7c4f00360df7c4a294ba798579610b83a7c9ac41f36",
+    "18": "7a719563f4fc24bf0a181a376039183376264383a1e2f4c95d5662a7caf081cd",
+    "19": "9960bc97eceb5ebb06f72419ac1acf9474ff6004b3b3c93123d8435cb887837b",
+    "20": "6f7a2bb88d007376cdaee42013268d72cc91a1253cbbc6b9ffae4ec8912d1fb0"
+  },
+  "release_code": {
+    "problem3/evidence.py": "e275df331cb48d24a0ee78a41c888f08c198e33127f94b95c95e67c4f225bd2b",
+    "problem3/predictor.py": "186d6d15eec4615f2bea771e6eeefa959aba71762c599843da414430edcd5a2f",
+    "problem3/backtrace.py": "d07d5167ce2a0f49071132c49384326634682fa445c71a4ad9a6af2439b3e487",
+    "problem3/problem3.py": "65b8c9c400b917db1945ae2cd8310d3b701574998df62211fa5c0fbab45b5203",
+    "problem3/report.py": "4710ae87e75ba53c94c25c8095e1c5a90441443bb1d642159844437df4e6a0e7",
+    "problem3/modality.py": "9e012798c9336c2466767dcb0330e3773a563cdeb1a966e86a440a3b41bcb90c",
+    "problem3_unaligned/compat.py": "761fbe69e3bfb78a0e0a22008f83ef58fe0ded8da9b2ba86333ff79446274b8f",
+    "problem3_unaligned/predictor.py": "31a213024e06a52de6e6a6d23db7ad69dcf87060c84131a3d4487135f8dd7fff",
+    "problem3_unaligned/problem3.py": "9c8f8273d84c74f7e1c18b24ceedeff83db9a3d02625918ac1bfe9f5f21b3752"
+  },
+  "training": {
+    "name": "processed_po_seed2026",
+    "architecture": "cross_attention",
+    "hidden": 96,
+    "seed": 2026,
+    "device": "cuda:3",
+    "epochs": 12,
+    "patience": 4,
+    "batch_size": 16,
+    "lr": 0.0001,
+    "neutral_weight": 1.0,
+    "balance_beta": 0.25,
+    "data_dir": "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed_po",
+    "features_prestandardized": true,
+    "text_representation": "per_slot_online",
+    "text_encoder": "bert-base-uncased",
+    "selection_rule": "0.7 valid full acc + 0.3 valid TAV30 acc",
+    "checkpoint": "AAAmodel/checkpoints/runs/bert_balance025_seed2026/processed_po_seed2026.pt",
+    "output": "problem2/results/runs/bert_balance025_seed2026/processed_po_seed2026",
+    "finetune_bert": true,
+    "boundary_weight": 0.1,
+    "boundary_margin": 0.5,
+    "boundary_max_intensity": 0.5,
+    "boundary_warmup_epochs": 3,
+    "bert_lr": 1e-05,
+    "gradient_accumulation": 4,
+    "init_checkpoint": "AAAmodel/checkpoints/runs/focus_boundary010_seed2026/processed_po_seed2026.pt",
+    "precision": "float32",
+    "train_class_counts": [
+      967,
+      758,
+      1670
+    ],
+    "class_weights": [
+      1.0512919875261513,
+      1.1172816640963994,
+      0.9170665548964914
+    ],
+    "init_checkpoint_sha256": "07a7b9139bf90559df8e8b82873998a4fe6b4715688cfc8f0583e0b23b618d07",
+    "bert_source_sha256": "68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3"
+  },
+  "best_epoch": 2,
+  "checkpoint_validation": {
+    "seed": 2026,
+    "balance_beta": 0.25,
+    "neutral_weight": 1.0,
+    "train_class_counts": [
+      967,
+      758,
+      1670
+    ],
+    "class_weights": [
+      1.0512919875261513,
+      1.1172816640963994,
+      0.9170665548964914
+    ],
+    "boundary_weight": 0.1,
+    "boundary_margin": 0.5,
+    "boundary_warmup_epochs": 3,
+    "boundary_max_intensity": 0.5,
+    "effective_boundary_weight": 0.06666666666666667,
+    "name": "processed_po_seed2026",
+    "epoch": 2,
+    "loss": 0.8087362966411068,
+    "selection_score": 0.6311813186813187,
+    "complete": {
+      "accuracy": 0.6456043956043956,
+      "macro_f1": 0.6104447776111944,
+      "weighted_f1": 0.6374100037893141,
+      "neutral_precision": 0.5072463768115942,
+      "neutral_recall": 0.3804347826086957,
+      "neutral_f1": 0.43478260869565216,
+      "mae": 0.6097309241548524,
+      "pearson": 0.6671092077124464,
+      "head_disagreement": 0.0
+    },
+    "local30": {
+      "accuracy": 0.5975274725274725,
+      "macro_f1": 0.561457408449703,
+      "weighted_f1": 0.5889267119652822,
+      "neutral_precision": 0.45255474452554745,
+      "neutral_recall": 0.33695652173913043,
+      "neutral_f1": 0.3862928348909657,
+      "mae": 0.6196358310435801,
+      "pearson": 0.6066409462039222,
+      "head_disagreement": 0.0
+    },
+    "elapsed_seconds": 40.59541067801183
+  },
+  "artifacts_sha256": {
+    "results/附件4全量预测与解释.csv": "9a3d06f5b4137024b6ee26df2fd6563e62df3ff9523afe4bb9d6f56c5ec86847",
+    "results/问题三主要结果.md": "e5d3f3a450aeefcae5d795edb314735ad4c2a71e5e249839736985bd93f57591",
+    "results/验证集预测.csv": "88e54c897b29759f46f2a45a0d7bda4b05605d12bcbd67862ca22b3e359267a1",
+    "figures/验证集分析.pdf": "17d35f91bbdc7122d3c21aaa6be301e6b9ce1149dc1c4902900f5b133f9e9f3a",
+    "figures/模态与局部证据.pdf": "30adc3091c3186a695b89fd5ca84fbd9ba799793ec5e9923180f0da3e181cd74",
+    "figures/典型样本解释卡.pdf": "45129afde008bcb6e721ca4b0edc2aaf6d2adebaf9e126f567d9d0d90a8272f0"
+  }
+}

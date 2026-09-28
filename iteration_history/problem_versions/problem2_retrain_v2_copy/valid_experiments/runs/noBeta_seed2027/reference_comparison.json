@@ -1,0 +1,11 @@
+{
+  "reference_accuracy": 0.6346153846153846,
+  "current_accuracy": 0.6332417582417582,
+  "changed_predictions": 1,
+  "changed_ids": [
+    "XIGpuL-Kkyk$_$0"
+  ],
+  "current_top2_probability_gaps": [
+    0.0004711449146270752
+  ]
+}

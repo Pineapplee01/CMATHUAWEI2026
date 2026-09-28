@@ -1,0 +1,56 @@
+{
+  "name": "G_seed2026",
+  "dataset": "processed_po",
+  "architecture": "ablation",
+  "seed": 2026,
+  "balance_beta": 0.25,
+  "neutral_weight": 1.0,
+  "train_class_counts": [
+    8,
+    15,
+    25
+  ],
+  "class_weights": [
+    1.2114596310394783,
+    1.03528191823349,
+    0.9111637671272728
+  ],
+  "boundary_weight": 0.1,
+  "boundary_margin": 0.5,
+  "boundary_warmup_epochs": 3,
+  "boundary_max_intensity": 0.5,
+  "effective_boundary_weight": 0.03333333333333333,
+  "precision": "float32",
+  "best_epoch": 1,
+  "complete": {
+    "accuracy": 0.4375,
+    "macro_f1": 0.2333333333333333,
+    "weighted_f1": 0.39375,
+    "neutral_precision": 0.0,
+    "neutral_recall": 0.0,
+    "neutral_f1": 0.0,
+    "mae": 0.9201698784619048,
+    "pearson": 0.03139911998473354,
+    "head_disagreement": 0.0
+  },
+  "local30": {
+    "accuracy": 0.4375,
+    "macro_f1": 0.2888888888888889,
+    "weighted_f1": 0.4125,
+    "neutral_precision": 0.14285714285714285,
+    "neutral_recall": 0.3333333333333333,
+    "neutral_f1": 0.2,
+    "mae": 0.9210740551371537,
+    "pearson": -0.05640451872549551,
+    "head_disagreement": 0.0
+  },
+  "selection_score": 0.4375,
+  "checkpoint": "AAAmodel/checkpoints/ablations/continuous_ablation_check_smoke/G_seed2026.pt",
+  "checkpoint_sha256": "bcb7b5b6fc2867d01554fdc52e980f487083298dfb5349f1b5f2d4beaf4b0658",
+  "parameters": 109978497,
+  "device": "cuda:3",
+  "gpu_name": "NVIDIA GeForce RTX 4090",
+  "peak_gpu_bytes": 2705917952,
+  "elapsed_seconds": 1.943507955991663,
+  "epochs_run": 1
+}

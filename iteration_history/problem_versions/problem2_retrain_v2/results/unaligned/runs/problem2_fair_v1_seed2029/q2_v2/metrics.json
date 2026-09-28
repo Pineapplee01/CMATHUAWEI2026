@@ -1,0 +1,2703 @@
+{
+  "protocol_version": "problem2-fair-v1",
+  "q2_protocol_version": "q2-continuous-local-v2",
+  "method": "problem2_main",
+  "view": "unaligned_po",
+  "model_input_view": "unaligned_po",
+  "seed": 2029,
+  "checkpoint": "/user_home/gaojianan/CPMCM/AAAmodel/checkpoints/runs/retrain_v2_unaligned_modalgate_s2027_2030/retrain_processed_po_seed2029.pt",
+  "checkpoint_sha256": "de2d71204e0a3239221f254b3cde7f81ca425ab190a61e985e7aec5bb07f3186",
+  "mask_sha256": "0dfd6dd9696db7431a7bcad59a3f56d221ed2f42a5a7ecf49ccc3d6c8978c3b1",
+  "n_conditions": 64,
+  "n_predictions": 46528,
+  "conditions": [
+    {
+      "combination": "complete",
+      "position": null,
+      "requested_fraction": 0.0,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6189904164978847,
+      "pearson": 0.6871095761651504,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "beginning",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.687757909215956,
+      "macro_f1": 0.613560711687855,
+      "weighted_f1": 0.666446086781733,
+      "mae": 0.6137547792942112,
+      "pearson": 0.687019678381531,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          40,
+          42,
+          76
+        ],
+        [
+          41,
+          21,
+          300
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "beginning",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6740027510316369,
+      "macro_f1": 0.5949425827721974,
+      "weighted_f1": 0.6523747951299003,
+      "mae": 0.6459827732213469,
+      "pearson": 0.6642276576528261,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          159,
+          15,
+          33
+        ],
+        [
+          54,
+          38,
+          66
+        ],
+        [
+          42,
+          27,
+          293
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "beginning",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6478679504814305,
+      "macro_f1": 0.5768391286527753,
+      "weighted_f1": 0.6321391989642984,
+      "mae": 0.6956305929076703,
+      "pearson": 0.6169806451753262,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          152,
+          24,
+          31
+        ],
+        [
+          49,
+          40,
+          69
+        ],
+        [
+          50,
+          33,
+          279
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "middle",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6850068775790922,
+      "macro_f1": 0.6189227725875003,
+      "weighted_f1": 0.6686320305657251,
+      "mae": 0.6221510052710341,
+      "pearson": 0.6712249856236105,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          147,
+          21,
+          39
+        ],
+        [
+          37,
+          49,
+          72
+        ],
+        [
+          36,
+          24,
+          302
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "middle",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6382393397524071,
+      "macro_f1": 0.5810127539635822,
+      "weighted_f1": 0.62822876231252,
+      "mae": 0.6924378931386066,
+      "pearson": 0.6191545728771659,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          138,
+          30,
+          39
+        ],
+        [
+          34,
+          50,
+          74
+        ],
+        [
+          52,
+          34,
+          276
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "middle",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.5928473177441541,
+      "macro_f1": 0.5363088758535713,
+      "weighted_f1": 0.586094607752846,
+      "mae": 0.7779357303844419,
+      "pearson": 0.5621986315061567,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          131,
+          38,
+          38
+        ],
+        [
+          36,
+          44,
+          78
+        ],
+        [
+          60,
+          46,
+          256
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "end",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6698762035763411,
+      "macro_f1": 0.5986468374717596,
+      "weighted_f1": 0.6488570913290287,
+      "mae": 0.6492672996075955,
+      "pearson": 0.6439188803816297,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          156,
+          15,
+          36
+        ],
+        [
+          37,
+          41,
+          80
+        ],
+        [
+          51,
+          21,
+          290
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "end",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6464924346629987,
+      "macro_f1": 0.5814545910449396,
+      "weighted_f1": 0.6327129139416188,
+      "mae": 0.7082121020513804,
+      "pearson": 0.5842123467019513,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          144,
+          27,
+          36
+        ],
+        [
+          41,
+          45,
+          72
+        ],
+        [
+          53,
+          28,
+          281
+        ]
+      ]
+    },
+    {
+      "combination": "T",
+      "position": "end",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.5928473177441541,
+      "macro_f1": 0.5432112988564601,
+      "weighted_f1": 0.5901930229724524,
+      "mae": 0.7894560564750452,
+      "pearson": 0.5124492613886305,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          130,
+          34,
+          43
+        ],
+        [
+          44,
+          50,
+          64
+        ],
+        [
+          53,
+          58,
+          251
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "beginning",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6918844566712518,
+      "macro_f1": 0.6129733241482825,
+      "weighted_f1": 0.6682700386650612,
+      "mae": 0.6202641359469877,
+      "pearson": 0.6867979051221338,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          40,
+          40,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "beginning",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6091915933247136,
+      "weighted_f1": 0.6664587807726113,
+      "mae": 0.6255765108757929,
+      "pearson": 0.6843376617193833,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          40,
+          37,
+          81
+        ],
+        [
+          38,
+          15,
+          309
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "beginning",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6973865199449794,
+      "macro_f1": 0.6148480902207293,
+      "weighted_f1": 0.6707117179699247,
+      "mae": 0.627593650081254,
+      "pearson": 0.6844829479735809,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          159,
+          15,
+          33
+        ],
+        [
+          39,
+          38,
+          81
+        ],
+        [
+          37,
+          15,
+          310
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "middle",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6946354883081155,
+      "macro_f1": 0.6185317105413958,
+      "weighted_f1": 0.6722867350275752,
+      "mae": 0.618184601231749,
+      "pearson": 0.6875648914823511,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          42,
+          77
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "middle",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6918844566712518,
+      "macro_f1": 0.6099748806456814,
+      "weighted_f1": 0.666381967872431,
+      "mae": 0.6217179979885943,
+      "pearson": 0.6866307936372321,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          40,
+          38,
+          80
+        ],
+        [
+          38,
+          17,
+          307
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "middle",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6946354883081155,
+      "macro_f1": 0.6101869433134719,
+      "weighted_f1": 0.6675408888248425,
+      "mae": 0.6271648887227823,
+      "pearson": 0.6851465611581183,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          40,
+          37,
+          81
+        ],
+        [
+          38,
+          14,
+          310
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "end",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.618916308503727,
+      "pearson": 0.6871717516313369,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "end",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6196345627679303,
+      "pearson": 0.6868395375699375,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "A",
+      "position": "end",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6141817557513449,
+      "weighted_f1": 0.6693200226955183,
+      "mae": 0.6219536869366619,
+      "pearson": 0.6856437377458175,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          40,
+          79
+        ],
+        [
+          38,
+          17,
+          307
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "beginning",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.617673709683395,
+      "weighted_f1": 0.6710050446124597,
+      "mae": 0.6205499014288338,
+      "pearson": 0.6862902633777419,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          38,
+          42,
+          78
+        ],
+        [
+          39,
+          18,
+          305
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "beginning",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6946354883081155,
+      "macro_f1": 0.618242568254859,
+      "weighted_f1": 0.6720539054738869,
+      "mae": 0.626336860099836,
+      "pearson": 0.684057170007181,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          156,
+          19,
+          32
+        ],
+        [
+          38,
+          42,
+          78
+        ],
+        [
+          39,
+          16,
+          307
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "beginning",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6905089408528198,
+      "macro_f1": 0.6114650285223399,
+      "weighted_f1": 0.6669816595953081,
+      "mae": 0.6307594788213592,
+      "pearson": 0.681867175371937,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          156,
+          19,
+          32
+        ],
+        [
+          40,
+          40,
+          78
+        ],
+        [
+          39,
+          17,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "middle",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6195247449044767,
+      "pearson": 0.6867689685074886,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "middle",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6211738158724444,
+      "pearson": 0.6861990908062189,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "middle",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6973865199449794,
+      "macro_f1": 0.6207847707847708,
+      "weighted_f1": 0.6744537214275866,
+      "mae": 0.6246383267693195,
+      "pearson": 0.6850931839953366,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          38,
+          42,
+          78
+        ],
+        [
+          38,
+          16,
+          308
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "end",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6189900611656557,
+      "pearson": 0.6871099711618714,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "end",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6189604291715343,
+      "pearson": 0.687120382341833,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "V",
+      "position": "end",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6190072788076136,
+      "pearson": 0.6876186397120845,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "beginning",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.687757909215956,
+      "macro_f1": 0.6100622485490993,
+      "weighted_f1": 0.6646617167938703,
+      "mae": 0.6138716352979606,
+      "pearson": 0.6870623431577504,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          41,
+          40,
+          77
+        ],
+        [
+          41,
+          19,
+          302
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "beginning",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6767537826685007,
+      "macro_f1": 0.5936209977404973,
+      "weighted_f1": 0.6525740320427755,
+      "mae": 0.6463362936856922,
+      "pearson": 0.6604067758236792,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          160,
+          14,
+          33
+        ],
+        [
+          55,
+          36,
+          67
+        ],
+        [
+          43,
+          23,
+          296
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "beginning",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6492434662998624,
+      "macro_f1": 0.5630570679572494,
+      "weighted_f1": 0.6239744169036165,
+      "mae": 0.6919949484172822,
+      "pearson": 0.6146339965915227,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          154,
+          18,
+          35
+        ],
+        [
+          51,
+          31,
+          76
+        ],
+        [
+          50,
+          25,
+          287
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "middle",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6850068775790922,
+      "macro_f1": 0.6187460419753347,
+      "weighted_f1": 0.6687993497440906,
+      "mae": 0.6219578884282378,
+      "pearson": 0.6714970095361832,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          147,
+          22,
+          38
+        ],
+        [
+          37,
+          49,
+          72
+        ],
+        [
+          36,
+          24,
+          302
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "middle",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6382393397524071,
+      "macro_f1": 0.5782877639154148,
+      "weighted_f1": 0.6267461062278145,
+      "mae": 0.689504581087542,
+      "pearson": 0.6190685361795457,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          138,
+          30,
+          39
+        ],
+        [
+          34,
+          48,
+          76
+        ],
+        [
+          53,
+          31,
+          278
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "middle",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.5955983493810179,
+      "macro_f1": 0.5286255859335708,
+      "weighted_f1": 0.5821129068611665,
+      "mae": 0.7718558576465931,
+      "pearson": 0.5612393674565672,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          133,
+          32,
+          42
+        ],
+        [
+          38,
+          37,
+          83
+        ],
+        [
+          63,
+          36,
+          263
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "end",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6698762035763411,
+      "macro_f1": 0.5986468374717596,
+      "weighted_f1": 0.6488570913290287,
+      "mae": 0.6492783944752047,
+      "pearson": 0.6439138929603808,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          156,
+          15,
+          36
+        ],
+        [
+          37,
+          41,
+          80
+        ],
+        [
+          51,
+          21,
+          290
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "end",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6464924346629987,
+      "macro_f1": 0.5814545910449396,
+      "weighted_f1": 0.6327129139416188,
+      "mae": 0.7081186948215588,
+      "pearson": 0.5834127489262636,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          144,
+          27,
+          36
+        ],
+        [
+          41,
+          45,
+          72
+        ],
+        [
+          53,
+          28,
+          281
+        ]
+      ]
+    },
+    {
+      "combination": "TA",
+      "position": "end",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.5969738651994498,
+      "macro_f1": 0.5449100022354675,
+      "weighted_f1": 0.5930476314238666,
+      "mae": 0.7867359212951651,
+      "pearson": 0.51057493531924,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          130,
+          34,
+          43
+        ],
+        [
+          44,
+          49,
+          65
+        ],
+        [
+          53,
+          54,
+          255
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "beginning",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6850068775790922,
+      "macro_f1": 0.6132381164885999,
+      "weighted_f1": 0.6647890652476358,
+      "mae": 0.615689712447655,
+      "pearson": 0.6855609555619254,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          39,
+          43,
+          76
+        ],
+        [
+          43,
+          22,
+          297
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "beginning",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.671251719394773,
+      "macro_f1": 0.5924234010921575,
+      "weighted_f1": 0.6493838528495881,
+      "mae": 0.6479605961076583,
+      "pearson": 0.6585508199905008,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          14,
+          36
+        ],
+        [
+          54,
+          38,
+          66
+        ],
+        [
+          43,
+          26,
+          293
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "beginning",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6492434662998624,
+      "macro_f1": 0.5809341443814533,
+      "weighted_f1": 0.6345241110433859,
+      "mae": 0.6960261462978405,
+      "pearson": 0.6065299462921545,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          152,
+          21,
+          34
+        ],
+        [
+          51,
+          42,
+          65
+        ],
+        [
+          49,
+          35,
+          278
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "middle",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6850068775790922,
+      "macro_f1": 0.6189227725875003,
+      "weighted_f1": 0.6686320305657251,
+      "mae": 0.6221384392743722,
+      "pearson": 0.6711371145809097,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          147,
+          21,
+          39
+        ],
+        [
+          37,
+          49,
+          72
+        ],
+        [
+          36,
+          24,
+          302
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "middle",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6382393397524071,
+      "macro_f1": 0.5797359509775956,
+      "weighted_f1": 0.6276941581244407,
+      "mae": 0.6912627999607089,
+      "pearson": 0.6203053508187693,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          138,
+          30,
+          39
+        ],
+        [
+          34,
+          49,
+          75
+        ],
+        [
+          51,
+          34,
+          277
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "middle",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.5969738651994498,
+      "macro_f1": 0.5466645911069288,
+      "weighted_f1": 0.592525633461139,
+      "mae": 0.7781331479422572,
+      "pearson": 0.5606828005485486,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          130,
+          38,
+          39
+        ],
+        [
+          34,
+          50,
+          74
+        ],
+        [
+          61,
+          47,
+          254
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "end",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6698762035763411,
+      "macro_f1": 0.5986468374717596,
+      "weighted_f1": 0.6488570913290287,
+      "mae": 0.6492668839328376,
+      "pearson": 0.6439194784501028,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          156,
+          15,
+          36
+        ],
+        [
+          37,
+          41,
+          80
+        ],
+        [
+          51,
+          21,
+          290
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "end",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6464924346629987,
+      "macro_f1": 0.5814545910449396,
+      "weighted_f1": 0.6327129139416188,
+      "mae": 0.7081854930867805,
+      "pearson": 0.5842419589755622,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          144,
+          27,
+          36
+        ],
+        [
+          41,
+          45,
+          72
+        ],
+        [
+          53,
+          28,
+          281
+        ]
+      ]
+    },
+    {
+      "combination": "TV",
+      "position": "end",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.5914718019257221,
+      "macro_f1": 0.5427060263197354,
+      "weighted_f1": 0.589062360887778,
+      "mae": 0.7884821681249603,
+      "pearson": 0.5160685138994443,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          131,
+          33,
+          43
+        ],
+        [
+          44,
+          50,
+          64
+        ],
+        [
+          53,
+          60,
+          249
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "beginning",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6918844566712518,
+      "macro_f1": 0.6148047317008518,
+      "weighted_f1": 0.66902591159804,
+      "mae": 0.6217726285410218,
+      "pearson": 0.685913857089622,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          39,
+          18,
+          305
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "beginning",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6918844566712518,
+      "macro_f1": 0.609618232435492,
+      "weighted_f1": 0.6659984052345684,
+      "mae": 0.6351705719090973,
+      "pearson": 0.6803924030902988,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          38,
+          81
+        ],
+        [
+          40,
+          14,
+          308
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "beginning",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6918844566712518,
+      "macro_f1": 0.6083381997319025,
+      "weighted_f1": 0.6651862013150154,
+      "mae": 0.6444190124037741,
+      "pearson": 0.6766694011438354,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          159,
+          16,
+          32
+        ],
+        [
+          41,
+          37,
+          80
+        ],
+        [
+          40,
+          15,
+          307
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "middle",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6946354883081155,
+      "macro_f1": 0.6185317105413958,
+      "weighted_f1": 0.6722867350275752,
+      "mae": 0.6187141164543862,
+      "pearson": 0.6872260593525739,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          42,
+          77
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "middle",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6905089408528198,
+      "macro_f1": 0.6089793326813643,
+      "weighted_f1": 0.6652962009481428,
+      "mae": 0.6243127435012593,
+      "pearson": 0.6856760923992973,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          40,
+          38,
+          80
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "middle",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6960110041265475,
+      "macro_f1": 0.616625588582366,
+      "weighted_f1": 0.6714367721809358,
+      "mae": 0.6334857685846945,
+      "pearson": 0.6824687457244917,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          39,
+          40,
+          79
+        ],
+        [
+          39,
+          15,
+          308
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "end",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.618915954975215,
+      "pearson": 0.6871721455145994,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "end",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6158622338492789,
+      "weighted_f1": 0.6702621670502467,
+      "mae": 0.6196045204487113,
+      "pearson": 0.6868495709978991,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          41,
+          78
+        ],
+        [
+          38,
+          18,
+          306
+        ]
+      ]
+    },
+    {
+      "combination": "AV",
+      "position": "end",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6932599724896836,
+      "macro_f1": 0.6141817557513449,
+      "weighted_f1": 0.6693200226955183,
+      "mae": 0.6220402424631217,
+      "pearson": 0.6861299369424573,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          157,
+          18,
+          32
+        ],
+        [
+          39,
+          40,
+          79
+        ],
+        [
+          38,
+          17,
+          307
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "beginning",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6836313617606602,
+      "macro_f1": 0.6087937379305012,
+      "weighted_f1": 0.6619496062842564,
+      "mae": 0.6162216465020308,
+      "pearson": 0.6853599614495395,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          158,
+          17,
+          32
+        ],
+        [
+          40,
+          41,
+          77
+        ],
+        [
+          43,
+          21,
+          298
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "beginning",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6685006877579092,
+      "macro_f1": 0.5867104809492977,
+      "weighted_f1": 0.6446778275232256,
+      "mae": 0.6501893925631418,
+      "pearson": 0.6540983455325577,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          156,
+          13,
+          38
+        ],
+        [
+          54,
+          36,
+          68
+        ],
+        [
+          44,
+          24,
+          294
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "beginning",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6533700137551581,
+      "macro_f1": 0.5762165730250837,
+      "weighted_f1": 0.6330245675968408,
+      "mae": 0.6926965801055478,
+      "pearson": 0.6045580733713725,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          153,
+          18,
+          36
+        ],
+        [
+          52,
+          37,
+          69
+        ],
+        [
+          50,
+          27,
+          285
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "middle",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6850068775790922,
+      "macro_f1": 0.6187460419753347,
+      "weighted_f1": 0.6687993497440906,
+      "mae": 0.6219965411141762,
+      "pearson": 0.6714018384036575,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          147,
+          22,
+          38
+        ],
+        [
+          37,
+          49,
+          72
+        ],
+        [
+          36,
+          24,
+          302
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "middle",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.640990371389271,
+      "macro_f1": 0.5806906035738987,
+      "weighted_f1": 0.6290036528343858,
+      "mae": 0.6885799794568804,
+      "pearson": 0.6198357558052061,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          138,
+          29,
+          40
+        ],
+        [
+          33,
+          48,
+          77
+        ],
+        [
+          51,
+          31,
+          280
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "middle",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6011004126547456,
+      "macro_f1": 0.5451094320786988,
+      "weighted_f1": 0.5922962430197134,
+      "mae": 0.7714358889475084,
+      "pearson": 0.5589550244986808,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          131,
+          32,
+          44
+        ],
+        [
+          35,
+          46,
+          77
+        ],
+        [
+          63,
+          39,
+          260
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "end",
+      "requested_fraction": 0.1,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6698762035763411,
+      "macro_f1": 0.5986468374717596,
+      "weighted_f1": 0.6488570913290287,
+      "mae": 0.6492779804401895,
+      "pearson": 0.6439144900969497,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          156,
+          15,
+          36
+        ],
+        [
+          37,
+          41,
+          80
+        ],
+        [
+          51,
+          21,
+          290
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "end",
+      "requested_fraction": 0.3,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.6464924346629987,
+      "macro_f1": 0.5814545910449396,
+      "weighted_f1": 0.6327129139416188,
+      "mae": 0.708092273566497,
+      "pearson": 0.5834409712055043,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          144,
+          27,
+          36
+        ],
+        [
+          41,
+          45,
+          72
+        ],
+        [
+          53,
+          28,
+          281
+        ]
+      ]
+    },
+    {
+      "combination": "TAV",
+      "position": "end",
+      "requested_fraction": 0.5,
+      "status": "ok",
+      "decision_source": "native_logits_argmax",
+      "protocol_version": "e-competition-v1",
+      "n": 727,
+      "accuracy": 0.5997248968363136,
+      "macro_f1": 0.5480894294710023,
+      "weighted_f1": 0.595894683872743,
+      "mae": 0.7858029605862822,
+      "pearson": 0.5129405090508534,
+      "pearson_undefined_reason": null,
+      "class_order": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "class_support": [
+        207,
+        158,
+        362
+      ],
+      "confusion_matrix": [
+        [
+          130,
+          34,
+          43
+        ],
+        [
+          44,
+          50,
+          64
+        ],
+        [
+          53,
+          53,
+          256
+        ]
+      ]
+    }
+  ]
+}

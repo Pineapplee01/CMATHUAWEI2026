@@ -1,0 +1,56 @@
+{
+  "protocol_version": "problem2-fair-v1",
+  "method": "problem2_main",
+  "view": "unaligned_po",
+  "model_input_view": "unaligned_po",
+  "seed": 2030,
+  "data_root": "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/未对齐版本/processed_po",
+  "checkpoint": "/user_home/gaojianan/CPMCM/AAAmodel/checkpoints/runs/retrain_v2_unaligned_modalgate_s2027_2030/retrain_processed_po_seed2030.pt",
+  "checkpoint_sha256": "5ecdc72e17b846e3b0761b329cff962909f45cd656beddccd7c747967c64c25a",
+  "decision_sources": {
+    "valid": "native_logits_argmax",
+    "clean_test": "native_logits_argmax"
+  },
+  "clean": {
+    "protocol_version": "e-competition-v1",
+    "n": 727,
+    "accuracy": 0.6932599724896836,
+    "macro_f1": 0.6426383228109432,
+    "weighted_f1": 0.6858757401243559,
+    "mae": 0.6346007649507293,
+    "pearson": 0.695316831106139,
+    "pearson_undefined_reason": null,
+    "class_order": [
+      "Negative",
+      "Neutral",
+      "Positive"
+    ],
+    "class_support": [
+      207,
+      158,
+      362
+    ],
+    "confusion_matrix": [
+      [
+        135,
+        31,
+        41
+      ],
+      [
+        24,
+        65,
+        69
+      ],
+      [
+        21,
+        37,
+        304
+      ]
+    ]
+  },
+  "q2": {
+    "n_conditions": 64,
+    "n_predictions": 46528,
+    "mask_sha256": "0dfd6dd9696db7431a7bcad59a3f56d221ed2f42a5a7ecf49ccc3d6c8978c3b1"
+  }
+}

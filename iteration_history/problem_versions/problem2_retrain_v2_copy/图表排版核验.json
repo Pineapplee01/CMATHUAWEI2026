@@ -1,0 +1,85 @@
+{
+  "formats": [
+    "png",
+    "pdf"
+  ],
+  "full_ablation_metrics": [
+    "accuracy",
+    "macro_f1",
+    "mae",
+    "pearson"
+  ],
+  "full_ablation_layout": "2x2, separate aligned and unaligned figures",
+  "duration_layout": "two separate metric figures, equal panels, 3 top + 2 centered bottom",
+  "unaligned_validation_sources": [
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_five_seeds/runs/B0_seed2026/valid_full.csv",
+      "sha256": "3afd9fc3ad6de5d47e58f07055f3716bda3f4ddf641e5f797f4a43ab1f8c32cf"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_five_seeds/runs/noC_seed2026/valid_full.csv",
+      "sha256": "f1df96713f4c7e7b26050339a513b89884b703fd9491625bbc817142caa34cec"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_five_seeds/runs/noQ_seed2026/valid_full.csv",
+      "sha256": "3d84fc6af33c5337bd7fcbfb6bdefaee12b575c6044b721603efef71f1f5ebdc"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_five_seeds/runs/noB_seed2026/valid_full.csv",
+      "sha256": "1d6e357ec5374eed4c30a86160fc820862d13c493f4ce32710a71904cbec0da3"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_five_seeds/runs/noBeta_seed2026/valid_full.csv",
+      "sha256": "3d38db98c83e226db054c5c208bc025dd23c29cb8e4eade17701eba3d55c3564"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/B0_seed2031/valid_full.csv",
+      "sha256": "4d420f20aaf19288e31a01fe1f922d4dc51cfd8bdafee6827646d4f575dcc106"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noC_seed2031/valid_full.csv",
+      "sha256": "dd4c6ad19b2be5dd7e431c10db3df359d41c3f37bb860cb13f71777ab8431dad"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noQ_seed2031/valid_full.csv",
+      "sha256": "e0678f997172aaa62962185ae5e1609dd35cbf5a663452168a80bfb4652fe7e1"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noB_seed2031/valid_full.csv",
+      "sha256": "94462e265e594b9f8d6468bfe10e1910527688428613a81b23556f0ecdbfaa47"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noBeta_seed2031/valid_full.csv",
+      "sha256": "eab5e52d1480861db5f8a3add410b656807e3130f81c8f16fe83ccc3aa0c9cb2"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/B0_seed2033/valid_full.csv",
+      "sha256": "f4a39ddbc7f5e642aeff96f553eefd1746f2f557397f3f6cd3cf5cbac926bae2"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noC_seed2033/valid_full.csv",
+      "sha256": "af47f7c504c10be13d0d5e62df85d4cb78c09d46473332c3e6ee06f0fa15fb0e"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noQ_seed2033/valid_full.csv",
+      "sha256": "3ec2b92391ba83e1d3c12dcc4330ffa73fdfc47dd1a7a572d4d87b2eced918e7"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noB_seed2033/valid_full.csv",
+      "sha256": "b945310017df15059f965de0d90486c7367a374d3bc68fff80558caee51ef703"
+    },
+    {
+      "path": "problem2_retrain_v2/results/unaligned/ablations/softalign_gate_component_ablation_s2031_2035/runs/noBeta_seed2033/valid_full.csv",
+      "sha256": "c915ee120fe7482c12c2364a65299811662f4c56978e6c4922c003c801f4d2f6"
+    }
+  ],
+  "removed": [
+    "07_valid_selection",
+    "08_valid_candidates"
+  ],
+  "subplot_titles": {
+    "language": "Chinese",
+    "position": "above each panel",
+    "overall_title": false
+  }
+}

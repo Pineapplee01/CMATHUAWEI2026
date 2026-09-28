@@ -1,0 +1,11 @@
+{
+  "reference_accuracy": 0.6428571428571429,
+  "current_accuracy": 0.6442307692307693,
+  "changed_predictions": 1,
+  "changed_ids": [
+    "_7HVhnSYX1Y$_$26"
+  ],
+  "current_top2_probability_gaps": [
+    0.0005436241626739502
+  ]
+}

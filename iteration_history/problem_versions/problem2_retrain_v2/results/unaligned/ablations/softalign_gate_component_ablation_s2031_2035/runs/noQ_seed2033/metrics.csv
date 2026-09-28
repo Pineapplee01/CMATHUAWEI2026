@@ -1,0 +1,2 @@
+variant,seed,modalities,rate,position,mask_seed,accuracy,macro_f1,weighted_f1,neutral_precision,neutral_recall,neutral_f1,mae,pearson,head_disagreement
+noQ,2033,none,0.0,none,0,0.686382393397524,0.5897835395567667,0.6509720505937535,0.5471698113207547,0.18354430379746836,0.27488151658767773,0.6448568149173545,0.6868672743543256,0.0

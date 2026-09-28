@@ -1,0 +1,548 @@
+[
+  {
+    "modalities": "T",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "T_0.1_random_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "T_0.1_random_5027"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "T_0.1_random_5028"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "T_0.2_random_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "T_0.2_random_5027"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "T_0.2_random_5028"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.3,
+    "position": "start",
+    "mask_seed": 5026,
+    "key": "T_0.3_start_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.3,
+    "position": "middle",
+    "mask_seed": 5026,
+    "key": "T_0.3_middle_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.3,
+    "position": "end",
+    "mask_seed": 5026,
+    "key": "T_0.3_end_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "T_0.3_random_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "T_0.3_random_5027"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "T_0.3_random_5028"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "T_0.4_random_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "T_0.4_random_5027"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "T_0.4_random_5028"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "T_0.5_random_5026"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "T_0.5_random_5027"
+  },
+  {
+    "modalities": "T",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "T_0.5_random_5028"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "A_0.1_random_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "A_0.1_random_5027"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "A_0.1_random_5028"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "A_0.2_random_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "A_0.2_random_5027"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "A_0.2_random_5028"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.3,
+    "position": "start",
+    "mask_seed": 5026,
+    "key": "A_0.3_start_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.3,
+    "position": "middle",
+    "mask_seed": 5026,
+    "key": "A_0.3_middle_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.3,
+    "position": "end",
+    "mask_seed": 5026,
+    "key": "A_0.3_end_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "A_0.3_random_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "A_0.3_random_5027"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "A_0.3_random_5028"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "A_0.4_random_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "A_0.4_random_5027"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "A_0.4_random_5028"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "A_0.5_random_5026"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "A_0.5_random_5027"
+  },
+  {
+    "modalities": "A",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "A_0.5_random_5028"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "V_0.1_random_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "V_0.1_random_5027"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.1,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "V_0.1_random_5028"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "V_0.2_random_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "V_0.2_random_5027"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.2,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "V_0.2_random_5028"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.3,
+    "position": "start",
+    "mask_seed": 5026,
+    "key": "V_0.3_start_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.3,
+    "position": "middle",
+    "mask_seed": 5026,
+    "key": "V_0.3_middle_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.3,
+    "position": "end",
+    "mask_seed": 5026,
+    "key": "V_0.3_end_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "V_0.3_random_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "V_0.3_random_5027"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "V_0.3_random_5028"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "V_0.4_random_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "V_0.4_random_5027"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.4,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "V_0.4_random_5028"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "V_0.5_random_5026"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "V_0.5_random_5027"
+  },
+  {
+    "modalities": "V",
+    "rate": 0.5,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "V_0.5_random_5028"
+  },
+  {
+    "modalities": "TA",
+    "rate": 0.3,
+    "position": "start",
+    "mask_seed": 5026,
+    "key": "TA_0.3_start_5026"
+  },
+  {
+    "modalities": "TA",
+    "rate": 0.3,
+    "position": "middle",
+    "mask_seed": 5026,
+    "key": "TA_0.3_middle_5026"
+  },
+  {
+    "modalities": "TA",
+    "rate": 0.3,
+    "position": "end",
+    "mask_seed": 5026,
+    "key": "TA_0.3_end_5026"
+  },
+  {
+    "modalities": "TA",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "TA_0.3_random_5026"
+  },
+  {
+    "modalities": "TA",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "TA_0.3_random_5027"
+  },
+  {
+    "modalities": "TA",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "TA_0.3_random_5028"
+  },
+  {
+    "modalities": "TV",
+    "rate": 0.3,
+    "position": "start",
+    "mask_seed": 5026,
+    "key": "TV_0.3_start_5026"
+  },
+  {
+    "modalities": "TV",
+    "rate": 0.3,
+    "position": "middle",
+    "mask_seed": 5026,
+    "key": "TV_0.3_middle_5026"
+  },
+  {
+    "modalities": "TV",
+    "rate": 0.3,
+    "position": "end",
+    "mask_seed": 5026,
+    "key": "TV_0.3_end_5026"
+  },
+  {
+    "modalities": "TV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "TV_0.3_random_5026"
+  },
+  {
+    "modalities": "TV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "TV_0.3_random_5027"
+  },
+  {
+    "modalities": "TV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "TV_0.3_random_5028"
+  },
+  {
+    "modalities": "AV",
+    "rate": 0.3,
+    "position": "start",
+    "mask_seed": 5026,
+    "key": "AV_0.3_start_5026"
+  },
+  {
+    "modalities": "AV",
+    "rate": 0.3,
+    "position": "middle",
+    "mask_seed": 5026,
+    "key": "AV_0.3_middle_5026"
+  },
+  {
+    "modalities": "AV",
+    "rate": 0.3,
+    "position": "end",
+    "mask_seed": 5026,
+    "key": "AV_0.3_end_5026"
+  },
+  {
+    "modalities": "AV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "AV_0.3_random_5026"
+  },
+  {
+    "modalities": "AV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "AV_0.3_random_5027"
+  },
+  {
+    "modalities": "AV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "AV_0.3_random_5028"
+  },
+  {
+    "modalities": "TAV",
+    "rate": 0.3,
+    "position": "start",
+    "mask_seed": 5026,
+    "key": "TAV_0.3_start_5026"
+  },
+  {
+    "modalities": "TAV",
+    "rate": 0.3,
+    "position": "middle",
+    "mask_seed": 5026,
+    "key": "TAV_0.3_middle_5026"
+  },
+  {
+    "modalities": "TAV",
+    "rate": 0.3,
+    "position": "end",
+    "mask_seed": 5026,
+    "key": "TAV_0.3_end_5026"
+  },
+  {
+    "modalities": "TAV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5026,
+    "key": "TAV_0.3_random_5026"
+  },
+  {
+    "modalities": "TAV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5027,
+    "key": "TAV_0.3_random_5027"
+  },
+  {
+    "modalities": "TAV",
+    "rate": 0.3,
+    "position": "random",
+    "mask_seed": 5028,
+    "key": "TAV_0.3_random_5028"
+  }
+]

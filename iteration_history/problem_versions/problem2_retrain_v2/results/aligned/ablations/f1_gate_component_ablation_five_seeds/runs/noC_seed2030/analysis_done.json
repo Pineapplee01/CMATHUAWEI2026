@@ -1,0 +1,7 @@
+{
+  "seed": 2030,
+  "variant": "noC",
+  "scenarios": 78,
+  "smoke": false,
+  "test_samples": 727
+}

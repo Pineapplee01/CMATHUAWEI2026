@@ -1,0 +1,25 @@
+{
+  "samples": 20,
+  "mfa_success": 20,
+  "token_bridge_success": 20,
+  "failed_samples": [],
+  "reference_method": {
+    "reference_config": "/user_home/gaojianan/CPMCM/problem1_v3/config_q1.json",
+    "reference_sha256": {
+      "/user_home/gaojianan/CPMCM/problem1_v3/config_q1.json": "693c9c2af1c4727ea20af855fd4a5f247134aca41348dd9c7351f7a441c8f644",
+      "/user_home/gaojianan/CPMCM/problem1_v3/mfa_alignment/word_alignment.py": "0c0b02371925b9708b4442cbdd9095f10f534947250f843dc0dfe478b12cdc47",
+      "/user_home/gaojianan/CPMCM/problem1_v3/mfa_alignment/aggregate.py": "c5f6529ea3ab5f435ece02f9436b7e0ede9456839a4e399a1ee46ca0d455c8e3"
+    },
+    "dictionary": "/user_home/gaojianan/CPMCM/AAAmodel/mfa/english_us_arpa_v3.0.0.dict",
+    "acoustic": "/user_home/gaojianan/CPMCM/AAAmodel/mfa/english_us_arpa_acoustic_v3.0.0.zip",
+    "resource_sha256": {
+      "/user_home/gaojianan/CPMCM/AAAmodel/mfa/english_us_arpa_v3.0.0.dict": "e8c6c7b036ae2b7c78d2768b8dc6b1f9359175b842956d00b48c53c9c332e6b0",
+      "/user_home/gaojianan/CPMCM/AAAmodel/mfa/english_us_arpa_acoustic_v3.0.0.zip": "d35ce271ded357d833d2f4b8d1041dc3748b9538567ba13f2c697f4e4126711b"
+    },
+    "policy": "MFA content-word intervals; no special-token times; first-50-word reference view; no uniform fallback",
+    "implementation": "problem3 independent adapter, preserving isolated MFA runs",
+    "prediction_interface_changed": false,
+    "reference_common_hop_seconds": 0.04,
+    "features_reaggregated": false
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "branch": "unaligned",
+  "seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035
+  ],
+  "title": "未对齐 soft_alignment+门控 B0（2026–2035 十 seed）252组均值",
+  "full_accuracy_mean": 0.6944979367262725,
+  "full_accuracy_std": 0.005083001944764997,
+  "local30_accuracy_mean": 0.6537826685006878,
+  "local30_accuracy_std": 0.008330423808121722,
+  "protocol252_accuracy_mean": 0.6626410995393114,
+  "protocol252_accuracy_std": 0.004069828843304114,
+  "n_scenarios_per_seed": 252
+}

@@ -1,0 +1,23 @@
+{
+  "checkpoint": "AAAmodel/checkpoints/runs/retrain_v2_aligned_modalgate_s2026/retrain_processed_po_seed2026.pt",
+  "test_accuracy": 0.687757909215956,
+  "n": 727,
+  "mean": {
+    "T": 0.6956340670585632,
+    "A": 0.15623512864112854,
+    "V": 0.14813078939914703
+  },
+  "std": {
+    "T": 0.06975416839122772,
+    "A": 0.038683854043483734,
+    "V": 0.0351153127849102
+  },
+  "argmax_share": {
+    "T": 1.0,
+    "A": 0.0,
+    "V": 0.0
+  },
+  "best_epoch": 3,
+  "test_correct": 500,
+  "test_samples": 727
+}

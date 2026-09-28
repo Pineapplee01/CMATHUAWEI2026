@@ -1,0 +1,395 @@
+{
+  "rows": [
+    {
+      "name": "原模型",
+      "seed": 2026,
+      "balance_beta": 0,
+      "boundary_weight": 0,
+      "effective_boundary_weight": 0,
+      "best_epoch": 2,
+      "epochs_run": null,
+      "checkpoint": "AAAmodel/checkpoints/problem2_aligned.pt",
+      "accuracy": 0.6808803301237965,
+      "macro_f1": 0.6036100413071807,
+      "weighted_f1": 0.6587679771072337,
+      "neutral_precision": 0.5063291139240507,
+      "neutral_recall": 0.25316455696202533,
+      "neutral_f1": 0.33755274261603374,
+      "mae": 0.6309816637280986,
+      "pearson": 0.6685717684866344,
+      "head_disagreement": 0.0,
+      "valid_accuracy": 0.6483516483516484,
+      "local30_accuracy": 0.6602475928473177,
+      "weak_accuracy": 0.6615384615384615,
+      "correct": 495,
+      "neutral_hits": 40,
+      "polar_to_neutral": 39,
+      "opposite_polarity": 75,
+      "fixed": 0,
+      "introduced": 0,
+      "raw_mae": 0.6363559936822112,
+      "neutral_ap": 0.445530795660378,
+      "neutral_auc": 0.7372694712019755,
+      "neutral_vs_weak_auc": 0.5834956183057449,
+      "checkpoint_sha256": "3410d5e8a06242e54ea6e328dfcff16b08a252a49a7a4b78779238d13c8520da"
+    },
+    {
+      "name": "完全平衡",
+      "seed": 2026,
+      "balance_beta": 1.0,
+      "boundary_weight": 0.0,
+      "effective_boundary_weight": 0.0,
+      "best_epoch": 1,
+      "epochs_run": 11,
+      "checkpoint": "AAAmodel/checkpoints/runs/20260925_030256_579306/processed_po_seed2026.pt",
+      "accuracy": 0.6492434662998624,
+      "macro_f1": 0.6116331809471723,
+      "weighted_f1": 0.6520776837372728,
+      "neutral_precision": 0.4107142857142857,
+      "neutral_recall": 0.43670886075949367,
+      "neutral_f1": 0.4233128834355828,
+      "mae": 0.6787174855533774,
+      "pearson": 0.6302440152284925,
+      "head_disagreement": 0.0,
+      "valid_accuracy": 0.6126373626373627,
+      "local30_accuracy": 0.6299862448418156,
+      "weak_accuracy": 0.5,
+      "correct": 472,
+      "neutral_hits": 69,
+      "polar_to_neutral": 99,
+      "opposite_polarity": 67,
+      "fixed": 37,
+      "introduced": 60,
+      "raw_mae": 0.6832910681166142,
+      "neutral_ap": 0.4209694538921058,
+      "neutral_auc": 0.7200395986741118,
+      "neutral_vs_weak_auc": 0.561684518013632,
+      "checkpoint_sha256": "2681b02c165b692c4658a3aa929765b04ac5213010c89c3bd5cf90b7bec4754f",
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 665530368,
+      "elapsed_seconds": 28.378330694977194
+    },
+    {
+      "name": "温和平衡",
+      "seed": 2026,
+      "balance_beta": 0.5,
+      "boundary_weight": 0.0,
+      "effective_boundary_weight": 0.0,
+      "best_epoch": 2,
+      "epochs_run": 12,
+      "checkpoint": "AAAmodel/checkpoints/runs/focus_mild_seed2026/processed_po_seed2026.pt",
+      "accuracy": 0.6588720770288858,
+      "macro_f1": 0.5988291157564204,
+      "weighted_f1": 0.6482505601520269,
+      "neutral_precision": 0.43243243243243246,
+      "neutral_recall": 0.3037974683544304,
+      "neutral_f1": 0.35687732342007433,
+      "mae": 0.6316382450418102,
+      "pearson": 0.6671815928708874,
+      "head_disagreement": 0.0,
+      "valid_accuracy": 0.6428571428571429,
+      "local30_accuracy": 0.640990371389271,
+      "weak_accuracy": 0.6076923076923076,
+      "correct": 479,
+      "neutral_hits": 48,
+      "polar_to_neutral": 63,
+      "opposite_polarity": 75,
+      "fixed": 11,
+      "introduced": 27,
+      "raw_mae": 0.6333073027155899,
+      "neutral_ap": 0.43544156501494685,
+      "neutral_auc": 0.7338657649440502,
+      "neutral_vs_weak_auc": 0.5757059396299903,
+      "checkpoint_sha256": "86b162aed589af591eebf7ec92a6504377b00946b25a169a4327fab50be30144",
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 665529856,
+      "elapsed_seconds": 29.28609490697272
+    },
+    {
+      "name": "边界0.03",
+      "seed": 2026,
+      "balance_beta": 0.0,
+      "boundary_weight": 0.03,
+      "effective_boundary_weight": 0.019999999999999997,
+      "best_epoch": 2,
+      "epochs_run": 12,
+      "checkpoint": "AAAmodel/checkpoints/runs/focus_boundary003_seed2026/processed_po_seed2026.pt",
+      "accuracy": 0.6836313617606602,
+      "macro_f1": 0.6057074071795607,
+      "weighted_f1": 0.6612335130434819,
+      "neutral_precision": 0.5063291139240507,
+      "neutral_recall": 0.25316455696202533,
+      "neutral_f1": 0.33755274261603374,
+      "mae": 0.629892878419477,
+      "pearson": 0.6691051086458057,
+      "head_disagreement": 0.0,
+      "valid_accuracy": 0.6483516483516484,
+      "local30_accuracy": 0.6629986244841816,
+      "weak_accuracy": 0.6615384615384615,
+      "correct": 497,
+      "neutral_hits": 40,
+      "polar_to_neutral": 39,
+      "opposite_polarity": 73,
+      "fixed": 2,
+      "introduced": 0,
+      "raw_mae": 0.6358135335230328,
+      "neutral_ap": 0.44380071887651384,
+      "neutral_auc": 0.7363017507953105,
+      "neutral_vs_weak_auc": 0.583933787731256,
+      "checkpoint_sha256": "67ce5043ec86ec33306cd37e6c15d2be66c7874ed58af67b0f0da182c5406a1a",
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 665132544,
+      "elapsed_seconds": 30.791394547035452
+    },
+    {
+      "name": "边界0.1",
+      "seed": 2026,
+      "balance_beta": 0.0,
+      "boundary_weight": 0.1,
+      "effective_boundary_weight": 0.06666666666666667,
+      "best_epoch": 2,
+      "epochs_run": 12,
+      "checkpoint": "AAAmodel/checkpoints/runs/focus_boundary010_seed2026/processed_po_seed2026.pt",
+      "accuracy": 0.686382393397524,
+      "macro_f1": 0.6079016509732525,
+      "weighted_f1": 0.6633691515263166,
+      "neutral_precision": 0.5194805194805194,
+      "neutral_recall": 0.25316455696202533,
+      "neutral_f1": 0.3404255319148936,
+      "mae": 0.6281364420547474,
+      "pearson": 0.6705128407935248,
+      "head_disagreement": 0.0,
+      "valid_accuracy": 0.646978021978022,
+      "local30_accuracy": 0.6602475928473177,
+      "weak_accuracy": 0.676923076923077,
+      "correct": 499,
+      "neutral_hits": 40,
+      "polar_to_neutral": 37,
+      "opposite_polarity": 73,
+      "fixed": 6,
+      "introduced": 2,
+      "raw_mae": 0.6350811440411166,
+      "neutral_ap": 0.43904391606220167,
+      "neutral_auc": 0.7337879023825945,
+      "neutral_vs_weak_auc": 0.5854430379746836,
+      "checkpoint_sha256": "07a7b9139bf90559df8e8b82873998a4fe6b4715688cfc8f0583e0b23b618d07",
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 665132544,
+      "elapsed_seconds": 31.41720313503174
+    },
+    {
+      "name": "温和+边界0.03",
+      "seed": 2026,
+      "balance_beta": 0.5,
+      "boundary_weight": 0.03,
+      "effective_boundary_weight": 0.019999999999999997,
+      "best_epoch": 2,
+      "epochs_run": 12,
+      "checkpoint": "AAAmodel/checkpoints/runs/focus_mild_boundary003_seed2026/processed_po_seed2026.pt",
+      "accuracy": 0.657496561210454,
+      "macro_f1": 0.5996958291352458,
+      "weighted_f1": 0.6480432441449702,
+      "neutral_precision": 0.43859649122807015,
+      "neutral_recall": 0.31645569620253167,
+      "neutral_f1": 0.36764705882352944,
+      "mae": 0.6323141642243771,
+      "pearson": 0.6644463851340304,
+      "head_disagreement": 0.0,
+      "valid_accuracy": 0.6456043956043956,
+      "local30_accuracy": 0.6423658872077029,
+      "weak_accuracy": 0.6,
+      "correct": 478,
+      "neutral_hits": 50,
+      "polar_to_neutral": 64,
+      "opposite_polarity": 77,
+      "fixed": 11,
+      "introduced": 28,
+      "raw_mae": 0.6330493787842248,
+      "neutral_ap": 0.43426340448157397,
+      "neutral_auc": 0.7331427554448178,
+      "neutral_vs_weak_auc": 0.5757059396299903,
+      "checkpoint_sha256": "0af8bdec1bed1ebf59b396b64d4d0a8b15f54b938d76a67ae8553e9e0fbb3b78",
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 665133056,
+      "elapsed_seconds": 32.615062643017154
+    },
+    {
+      "name": "温和+边界0.1",
+      "seed": 2026,
+      "balance_beta": 0.5,
+      "boundary_weight": 0.1,
+      "effective_boundary_weight": 0.06666666666666667,
+      "best_epoch": 2,
+      "epochs_run": 12,
+      "checkpoint": "AAAmodel/checkpoints/runs/focus_mild_boundary010_seed2026/processed_po_seed2026.pt",
+      "accuracy": 0.656121045392022,
+      "macro_f1": 0.5975811312657596,
+      "weighted_f1": 0.6462756722396903,
+      "neutral_precision": 0.4336283185840708,
+      "neutral_recall": 0.310126582278481,
+      "neutral_f1": 0.36162361623616235,
+      "mae": 0.6321043105214407,
+      "pearson": 0.6646781767146561,
+      "head_disagreement": 0.0,
+      "valid_accuracy": 0.646978021978022,
+      "local30_accuracy": 0.6354883081155434,
+      "weak_accuracy": 0.6,
+      "correct": 477,
+      "neutral_hits": 49,
+      "polar_to_neutral": 64,
+      "opposite_polarity": 77,
+      "fixed": 11,
+      "introduced": 29,
+      "raw_mae": 0.6327312158004661,
+      "neutral_ap": 0.43171764776012367,
+      "neutral_auc": 0.73095148050099,
+      "neutral_vs_weak_auc": 0.5759493670886076,
+      "checkpoint_sha256": "e628fcf238173facc072cd02bad6a76ffa1b7bf907a76779243e7c4b9db7c251",
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "peak_gpu_bytes": 665133056,
+      "elapsed_seconds": 30.12820619001286
+    }
+  ],
+  "details": {
+    "原模型": {
+      "confusion_matrix": [
+        [
+          155,
+          14,
+          38
+        ],
+        [
+          47,
+          40,
+          71
+        ],
+        [
+          37,
+          25,
+          300
+        ]
+      ],
+      "weak_samples": 130
+    },
+    "完全平衡": {
+      "confusion_matrix": [
+        [
+          143,
+          38,
+          26
+        ],
+        [
+          36,
+          69,
+          53
+        ],
+        [
+          41,
+          61,
+          260
+        ]
+      ],
+      "weak_samples": 130
+    },
+    "温和平衡": {
+      "confusion_matrix": [
+        [
+          158,
+          22,
+          27
+        ],
+        [
+          48,
+          48,
+          62
+        ],
+        [
+          48,
+          41,
+          273
+        ]
+      ],
+      "weak_samples": 130
+    },
+    "边界0.03": {
+      "confusion_matrix": [
+        [
+          155,
+          14,
+          38
+        ],
+        [
+          47,
+          40,
+          71
+        ],
+        [
+          35,
+          25,
+          302
+        ]
+      ],
+      "weak_samples": 130
+    },
+    "边界0.1": {
+      "confusion_matrix": [
+        [
+          155,
+          13,
+          39
+        ],
+        [
+          47,
+          40,
+          71
+        ],
+        [
+          34,
+          24,
+          304
+        ]
+      ],
+      "weak_samples": 130
+    },
+    "温和+边界0.03": {
+      "confusion_matrix": [
+        [
+          155,
+          23,
+          29
+        ],
+        [
+          47,
+          50,
+          61
+        ],
+        [
+          48,
+          41,
+          273
+        ]
+      ],
+      "weak_samples": 130
+    },
+    "温和+边界0.1": {
+      "confusion_matrix": [
+        [
+          156,
+          23,
+          28
+        ],
+        [
+          47,
+          49,
+          62
+        ],
+        [
+          49,
+          41,
+          272
+        ]
+      ],
+      "weak_samples": 130
+    }
+  }
+}

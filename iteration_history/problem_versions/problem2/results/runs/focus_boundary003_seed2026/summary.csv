@@ -1,0 +1,2 @@
+dataset,precision,balance_beta,neutral_weight,boundary_weight,boundary_margin,boundary_warmup_epochs,boundary_max_intensity,seed_count,test_accuracy_mean,test_accuracy_std,test_accuracy_max,local30_accuracy_mean
+processed_po,float32,0.0,1.0,0.03,0.5,3,0.5,1,0.6836313617606602,,0.6836313617606602,0.6629986244841816

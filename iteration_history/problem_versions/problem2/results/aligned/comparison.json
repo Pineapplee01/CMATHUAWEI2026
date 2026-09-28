@@ -1,0 +1,126 @@
+[
+  {
+    "name": "processed_pooled",
+    "dataset": "processed",
+    "architecture": "pooled",
+    "seed": 2026,
+    "best_epoch": 3,
+    "complete": {
+      "accuracy": 0.6414835164835165,
+      "macro_f1": 0.6071701148188772,
+      "weighted_f1": 0.6321561968485924,
+      "mae": 0.5871924053625363,
+      "pearson": 0.6545324376344437,
+      "head_disagreement": 0.0
+    },
+    "local30": {
+      "accuracy": 0.5892857142857143,
+      "macro_f1": 0.5145343695543043,
+      "weighted_f1": 0.5540676249067169,
+      "mae": 0.6373044733749657,
+      "pearson": 0.5706825129639255,
+      "head_disagreement": 0.0
+    },
+    "selection_score": 0.6258241758241758,
+    "checkpoint": "AAAmodel/checkpoints/aligned/processed_pooled.pt",
+    "checkpoint_sha256": "1cc53dd87ff5d2fc001e88431307cf66f814a4c2fe91c879f244e141e563a4ab",
+    "parameters": 253547,
+    "device": "cuda:3",
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "peak_gpu_bytes": 707509248,
+    "elapsed_seconds": 25.503530482994393
+  },
+  {
+    "name": "processed_cross_attention",
+    "dataset": "processed",
+    "architecture": "cross_attention",
+    "seed": 2026,
+    "best_epoch": 2,
+    "complete": {
+      "accuracy": 0.6442307692307693,
+      "macro_f1": 0.599603581413163,
+      "weighted_f1": 0.6285235643415089,
+      "mae": 0.5999983273584649,
+      "pearson": 0.6413438528653854,
+      "head_disagreement": 0.0
+    },
+    "local30": {
+      "accuracy": 0.5892857142857143,
+      "macro_f1": 0.5221501333980112,
+      "weighted_f1": 0.5590176422534535,
+      "mae": 0.6324084040774668,
+      "pearson": 0.5700637957436074,
+      "head_disagreement": 0.0
+    },
+    "selection_score": 0.6277472527472527,
+    "checkpoint": "AAAmodel/checkpoints/aligned/processed_cross_attention.pt",
+    "checkpoint_sha256": "c930e88467b6deafb1e6dd657fe9f50ef489f834b8ae49d115033eb30e72d029",
+    "parameters": 328331,
+    "device": "cuda:3",
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "peak_gpu_bytes": 707509248,
+    "elapsed_seconds": 25.376363835996017
+  },
+  {
+    "name": "processed_po_pooled",
+    "dataset": "processed_po",
+    "architecture": "pooled",
+    "seed": 2026,
+    "best_epoch": 3,
+    "complete": {
+      "accuracy": 0.635989010989011,
+      "macro_f1": 0.6006767873576647,
+      "weighted_f1": 0.6260521925187449,
+      "mae": 0.5883200341156432,
+      "pearson": 0.656236814956624,
+      "head_disagreement": 0.0
+    },
+    "local30": {
+      "accuracy": 0.5961538461538461,
+      "macro_f1": 0.5612491450400352,
+      "weighted_f1": 0.5880218215884445,
+      "mae": 0.631024760694561,
+      "pearson": 0.6013506735925144,
+      "head_disagreement": 0.0
+    },
+    "selection_score": 0.6240384615384614,
+    "checkpoint": "AAAmodel/checkpoints/aligned/processed_po_pooled.pt",
+    "checkpoint_sha256": "bead249fe3233df5249fcf8304d8fddba7b96c53d46494328611409c64383db1",
+    "parameters": 253547,
+    "device": "cuda:3",
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "peak_gpu_bytes": 717077504,
+    "elapsed_seconds": 21.312806014961097
+  },
+  {
+    "name": "processed_po_cross_attention",
+    "dataset": "processed_po",
+    "architecture": "cross_attention",
+    "seed": 2026,
+    "best_epoch": 2,
+    "complete": {
+      "accuracy": 0.6483516483516484,
+      "macro_f1": 0.6060790644123978,
+      "weighted_f1": 0.6338455311669597,
+      "mae": 0.5979321321690773,
+      "pearson": 0.6429827865148493,
+      "head_disagreement": 0.0
+    },
+    "local30": {
+      "accuracy": 0.5989010989010989,
+      "macro_f1": 0.5438294325516411,
+      "weighted_f1": 0.5781930113904142,
+      "mae": 0.6194251847303135,
+      "pearson": 0.5927913286427766,
+      "head_disagreement": 0.0
+    },
+    "selection_score": 0.6335164835164835,
+    "checkpoint": "AAAmodel/checkpoints/aligned/processed_po_cross_attention.pt",
+    "checkpoint_sha256": "3410d5e8a06242e54ea6e328dfcff16b08a252a49a7a4b78779238d13c8520da",
+    "parameters": 328331,
+    "device": "cuda:3",
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "peak_gpu_bytes": 717077504,
+    "elapsed_seconds": 23.043691470986232
+  }
+]

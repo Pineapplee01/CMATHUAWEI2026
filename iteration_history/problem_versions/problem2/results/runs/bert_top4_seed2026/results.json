@@ -1,0 +1,46 @@
+[
+  {
+    "run_id": "bert_top4_seed2026",
+    "dataset": "processed_po",
+    "seed": 2026,
+    "precision": "float32",
+    "balance_beta": 0.0,
+    "neutral_weight": 1.0,
+    "train_class_counts": [
+      967,
+      758,
+      1670
+    ],
+    "class_weights": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "finetune_bert": true,
+    "bert_lr": 2e-06,
+    "bert_trainable_layers": 4,
+    "boundary_weight": 0.1,
+    "boundary_margin": 0.5,
+    "boundary_warmup_epochs": 3,
+    "boundary_max_intensity": 0.5,
+    "effective_boundary_weight": 0.1,
+    "best_epoch": 3,
+    "epochs_run": 7,
+    "valid_accuracy": 0.6497252747252747,
+    "test_accuracy": 0.6822558459422283,
+    "test_local30_accuracy": 0.6629986244841816,
+    "test_macro_f1": 0.6095000888355074,
+    "test_neutral_precision": 0.4835164835164835,
+    "test_neutral_recall": 0.27848101265822783,
+    "test_neutral_f1": 0.3534136546184739,
+    "test_local30_neutral_precision": 0.5113636363636364,
+    "test_local30_neutral_recall": 0.2848101265822785,
+    "test_local30_neutral_f1": 0.36585365853658536,
+    "test_mae": 0.6359733209004972,
+    "test_pearson": 0.672643071650932,
+    "test_correct": 496,
+    "test_samples": 727,
+    "checkpoint": "AAAmodel/checkpoints/runs/bert_top4_seed2026/processed_po_seed2026.pt",
+    "checkpoint_sha256": "3acf076c9678e0549fecca59a0cc58c23a2cb9d066c66f1f3e87b9b5bb9f0faf"
+  }
+]

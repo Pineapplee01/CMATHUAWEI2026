@@ -1,0 +1,40 @@
+{
+  "run_id": "retrain_v2_unaligned_modalgate_s2027_2030",
+  "dataset": "processed_po",
+  "seed": 2027,
+  "precision": "float32",
+  "balance_beta": 0.25,
+  "neutral_weight": 1.0,
+  "train_class_counts": [
+    967,
+    758,
+    1670
+  ],
+  "class_weights": [
+    1.0512919875261513,
+    1.1172816640963994,
+    0.9170665548964914
+  ],
+  "finetune_bert": true,
+  "bert_lr": 1e-05,
+  "bert_trainable_layers": 12,
+  "boundary_weight": 0.1,
+  "boundary_margin": 0.5,
+  "boundary_warmup_epochs": 3,
+  "boundary_max_intensity": 0.5,
+  "effective_boundary_weight": 0.06666666666666667,
+  "best_epoch": 2,
+  "epochs_run": 6,
+  "valid_accuracy": 0.6552197802197802,
+  "test_accuracy": 0.687757909215956,
+  "test_macro_f1": 0.6299305985526995,
+  "test_neutral_precision": 0.5247524752475248,
+  "test_neutral_recall": 0.33544303797468356,
+  "test_neutral_f1": 0.4092664092664093,
+  "test_mae": 0.6176808706875478,
+  "test_pearson": 0.685681636637446,
+  "test_correct": 500,
+  "test_samples": 727,
+  "checkpoint": "AAAmodel/checkpoints/runs/retrain_v2_unaligned_modalgate_s2027_2030/retrain_processed_po_seed2027.pt",
+  "checkpoint_sha256": "9fcd76a60d80d5417661c4923bad2cf77ee73410568843595a756e404c211671"
+}
