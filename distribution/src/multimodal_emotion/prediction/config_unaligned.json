@@ -1,0 +1,32 @@
+{
+  "name": "unaligned_soft_alignment",
+  "architecture": "soft_alignment",
+  "hidden": 96,
+  "seed": 2031,
+  "official_seeds": [
+    2031
+  ],
+  "device": "cuda:0",
+  "epochs": 12,
+  "patience": 4,
+  "batch_size": 16,
+  "lr": 0.0001,
+  "neutral_weight": 1.0,
+  "balance_beta": 0.25,
+  "data_dir": "results/appendix_2/unaligned",
+  "checkpoint": "reference/checkpoints/selected/problem2/unaligned_gate_B0_primary.pt",
+  "output": "results/appendix_2/predictions",
+  "result_tag": "unaligned",
+  "finetune_bert": true,
+  "boundary_weight": 0.1,
+  "boundary_margin": 0.5,
+  "boundary_max_intensity": 0.5,
+  "boundary_warmup_epochs": 3,
+  "bert_lr": 1e-05,
+  "gradient_accumulation": 4,
+  "heads": 4,
+  "dropout": 0.1,
+  "align_max_half_frac": 0.2,
+  "align_min_half": 1.0,
+  "align_time_penalty": 2.0
+}

@@ -1,0 +1,12 @@
+{
+  "name": "retrain_B0_clssep_avP0_test252",
+  "architecture": "f1",
+  "seed": 2026,
+  "device": "cuda:2",
+  "data_dir": "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本_retrain_20260925/processed_po",
+  "checkpoint": "AAAmodel/checkpoints/ablations_retrain/f1_component_ablation_five_seeds/B0_seed2026.pt",
+  "output": "problem2_retrain/results/aligned/full_runs/retrain_B0_test252",
+  "precision": "float32",
+  "finetune_bert": true,
+  "note": "Frozen full F1 (B0) from problem2_retrain; CLS/SEP P_A=P_V=0; 252 test scenarios same grid as formal"
+}

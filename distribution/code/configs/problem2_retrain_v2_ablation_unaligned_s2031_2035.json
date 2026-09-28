@@ -1,0 +1,13 @@
+{
+  "base_config": "configs/problem2_retrain_v2_unaligned.json",
+  "run_name": "softalign_gate_component_ablation_s2031_2035",
+  "device": "cuda:2",
+  "seeds": [2031, 2032, 2033, 2034, 2035],
+  "report_seeds": [2031, 2032, 2033, 2034, 2035],
+  "mask_seeds": [5026, 5027, 5028],
+  "epochs": 12,
+  "patience": 4,
+  "main_rate": 0.3,
+  "rates": [0.1, 0.2, 0.3, 0.4, 0.5],
+  "note": "未对齐 soft_alignment 组件拆除第二批种子 2031–2035"
+}

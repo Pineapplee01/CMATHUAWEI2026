@@ -1,0 +1,14 @@
+{
+  "seed": 2027,
+  "official_seeds": [
+    2027
+  ],
+  "device": "cuda:0",
+  "checkpoint": "AAAmodel/checkpoints/selected/problem2/aligned_gate_B0_primary.pt",
+  "appendix4": "AAAdata/Appendix_4/对齐版本",
+  "results": "AAA提交版代码及结果/问题三/主要结果",
+  "result_tag": "对齐版本",
+  "evidence_eta": 0.7,
+  "stability_repeats": 3,
+  "stability_noise": 0.01
+}
