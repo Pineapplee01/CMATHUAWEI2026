@@ -1,0 +1,14 @@
+{
+  "seed": 2027,
+  "official_seeds": [
+    2027
+  ],
+  "device": "cuda:0",
+  "checkpoint": "reference/checkpoints/selected/problem2/aligned_gate_B0_primary.pt",
+  "appendix4": "data/appendix_4/aligned",
+  "results": "results/appendix_4/explanations",
+  "result_tag": "aligned",
+  "evidence_eta": 0.7,
+  "stability_repeats": 3,
+  "stability_noise": 0.01
+}

@@ -1,0 +1,10 @@
+build/
+dist/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+
+# Contest attachments remain in the local distribution but are not publishable
+# through the GitHub repository because they are 3.8 GiB in total.
+data/*
+!data/README.md

@@ -1,0 +1,15 @@
+{
+  "seed": 2031,
+  "official_seeds": [
+    2031
+  ],
+  "device": "cuda:0",
+  "checkpoint": "reference/checkpoints/selected/problem2/unaligned_gate_B0_primary.pt",
+  "appendix4": "data/appendix_4/unaligned",
+  "results": "results/appendix_4/explanations",
+  "result_tag": "unaligned",
+  "evidence_eta": 0.7,
+  "associate_topk": 5,
+  "stability_repeats": 3,
+  "stability_noise": 0.01
+}
