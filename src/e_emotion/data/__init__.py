@@ -20,13 +20,10 @@ from e_emotion.data.repositories import (
     ExplainabilityRepository,
     MissingModalityRepository,
 )
-from e_emotion.data.upstream import load_canonical_dataset
 from e_emotion.data.validation import (
     ValidationReport,
-    inspect_processed_root,
     inspect_data_root,
     validate_attachment2_payload,
-    validate_processed_root,
     validate_data_root,
 )
 
@@ -41,10 +38,8 @@ __all__ = [
     "ExplainabilityRepository",
     "MissingModalityRepository",
     "ValidationReport",
-    "inspect_processed_root",
     "inspect_data_root",
     "validate_attachment2_payload",
-    "validate_processed_root",
     "validate_data_root",
     "contiguous_missing_mask",
     "native_coordinate_mask",
@@ -53,5 +48,4 @@ __all__ = [
     "build_manifest",
     "load_processed_dataset",
     "load_processed_split",
-    "load_canonical_dataset",
 ]
