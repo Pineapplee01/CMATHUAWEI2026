@@ -1,0 +1,12 @@
+{
+  "candidate_accuracy": 0.6634615384615384,
+  "candidate_correct": 483,
+  "baseline_accuracy": 0.6826923076923077,
+  "baseline_correct": 497,
+  "samples": 728,
+  "decision": "reject_and_restore_baseline",
+  "main_checkpoint_sha256": "cb759c0ac080e75888378b404e6ce749b89daea3b24141a7b60439b8a3b039ab",
+  "main_checkpoint_unchanged": true,
+  "production_source_restored": true,
+  "candidate_checkpoint": "AAAmodel/checkpoints/archive/attention_trial.pt"
+}

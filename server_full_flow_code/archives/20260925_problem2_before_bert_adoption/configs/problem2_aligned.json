@@ -1,0 +1,20 @@
+{
+  "name": "processed_all_zscore_cross_attention",
+  "architecture": "cross_attention",
+  "hidden": 96,
+  "seed": 2026,
+  "device": "cuda:3",
+  "epochs": 40,
+  "patience": 10,
+  "batch_size": 64,
+  "lr": 0.0005,
+  "neutral_weight": 1.0,
+  "balance_beta": 1.0,
+  "data_dir": "/user_home/gaojianan/CPMCM/AAAdata/Appendix_2/标准化/对齐版本/processed_all_zscore",
+  "features_prestandardized": true,
+  "text_representation": "per_slot",
+  "text_encoder": "bert-base-uncased",
+  "selection_rule": "0.7 valid full acc + 0.3 valid TAV30 acc",
+  "checkpoint": "AAAmodel/checkpoints/problem2_aligned.pt",
+  "output": "problem2/results/aligned/selected"
+}

@@ -1,0 +1,55 @@
+{
+  "status": "design_only_not_executed",
+  "aligned_seeds": [
+    2027,
+    2028,
+    2035
+  ],
+  "unaligned_seeds": [
+    2026,
+    2031,
+    2033
+  ],
+  "seed_selection": "user_specified_after_historical_results",
+  "n": 3,
+  "std_ddof": 1,
+  "variants": [
+    "B_full",
+    "B_miss",
+    "G",
+    "C",
+    "R",
+    "ALL"
+  ],
+  "same_baseline_checkpoint_for_full_and_missing": true,
+  "mask_seeds": [
+    5026,
+    5027,
+    5028
+  ],
+  "rates": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.7
+  ],
+  "main_rate": 0.3,
+  "positions": [
+    "start",
+    "middle",
+    "end",
+    "random"
+  ],
+  "modalities": [
+    "T",
+    "A",
+    "V",
+    "TA",
+    "TV",
+    "AV",
+    "TAV"
+  ],
+  "notes": "指定子集描述性统计；不直接比较此前五seed标准差；新六组尚需实现训练目标。"
+}

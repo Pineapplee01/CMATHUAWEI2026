@@ -1,0 +1,44 @@
+{
+  "L": 50,
+  "paths": {
+    "labels": "AAAdata/Appendix_1/label-100.xlsx",
+    "video_root": "AAAdata/Appendix_1/MOSEI数据集部分原始视频-100条",
+    "qc": "AAAdata/Appendix_1/media_qc/results_full.csv",
+    "bert": "AAAmodel/bert-base-uncased",
+    "openface": "AAAmodel/OpenFace/build/bin/FeatureExtraction",
+    "covarep": "AAAmodel/covarep",
+    "matlab": "/user_home/gaojianan/MATLAB/R2026a/bin/matlab",
+    "output": "problem1_v3/results",
+    "dictionary": "AAAmodel/mfa/english_us_arpa_v3.0.0.dict",
+    "acoustic": "AAAmodel/mfa/english_us_arpa_acoustic_v3.0.0.zip"
+  },
+  "mfa": {
+    "mfa_executable": "mfa",
+    "fallback_uniform": false
+  },
+  "av_sync": {
+    "common_hop_sec": 0.04
+  },
+  "text": {
+    "padding": "max_length",
+    "truncation": true
+  },
+  "audio": {
+    "sample_rate": 16000,
+    "frame_ms": 25,
+    "hop_ms": 10,
+    "frame_energy_floor": 1e-06,
+    "tau_a_percentile": 5.0,
+    "k_min": 2,
+    "covarep_hop_sec": 0.01
+  },
+  "vision": {
+    "backend": "openface",
+    "tau_v": 0.5,
+    "confidence_min": 0.8,
+    "black_mean_max": 5.0,
+    "white_mean_min": 250.0,
+    "blur_var_min": 20.0,
+    "max_frames_per_window_spotcheck": 5
+  }
+}
