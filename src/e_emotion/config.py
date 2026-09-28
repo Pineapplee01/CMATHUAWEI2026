@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from collections.abc import Mapping
 from typing import Any
 
 import yaml
@@ -22,6 +23,10 @@ class AppConfig:
     config_path: Path
     project_root: Path
     data_root: Path
+    processed_root: Path
+    split_files: Mapping[str, str]
+    feature_version: str
+    source_format: str
     output_root: Path
     variant: DatasetVariant | None
     seed: int
@@ -36,6 +41,10 @@ class AppConfig:
             "config_path": str(self.config_path),
             "project_root": str(self.project_root),
             "data_root": str(self.data_root),
+            "processed_root": str(self.processed_root),
+            "split_files": dict(self.split_files),
+            "feature_version": self.feature_version,
+            "source_format": self.source_format,
             "output_root": str(self.output_root),
             "variant": self.variant.value if self.variant else None,
             "seed": self.seed,
@@ -80,6 +89,25 @@ def load_config(path: str | Path) -> AppConfig:
     if not _is_within(data_root, allowed_data_root):
         raise ConfigError(f"dataset.data_root must be inside {allowed_data_root}")
 
+    processed_root = _resolve_path(project_root, dataset.get("processed_root", "data/processed"))
+    source_format = str(dataset.get("source_format", "npz")).lower()
+    if source_format != "npz":
+        raise ConfigError("dataset.source_format must be npz for the processed-data protocol")
+    feature_version = str(dataset.get("feature_version", "aligned_50"))
+    if feature_version not in {"aligned_50", "unaligned_50"}:
+        raise ConfigError("dataset.feature_version must be aligned_50 or unaligned_50")
+    raw_split_files = dataset.get(
+        "split_files", {"train": "train.npz", "valid": "valid.npz", "test": "test.npz"}
+    )
+    if not isinstance(raw_split_files, Mapping) or set(raw_split_files) != {"train", "valid", "test"}:
+        raise ConfigError("dataset.split_files must define train, valid and test")
+    split_files: dict[str, str] = {}
+    for split in ("train", "valid", "test"):
+        value = raw_split_files[split]
+        if not isinstance(value, str) or Path(value).name != value or not value.endswith(".npz"):
+            raise ConfigError(f"dataset.split_files.{split} must be a simple .npz filename")
+        split_files[split] = value
+
     raw_variant = dataset.get("variant")
     if raw_variant is None or raw_variant == "":
         variant = None
@@ -102,6 +130,10 @@ def load_config(path: str | Path) -> AppConfig:
         config_path=config_path,
         project_root=project_root,
         data_root=data_root,
+        processed_root=processed_root,
+        split_files=split_files,
+        feature_version=feature_version,
+        source_format=source_format,
         output_root=output_root,
         variant=variant,
         seed=seed,

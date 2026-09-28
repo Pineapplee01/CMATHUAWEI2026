@@ -1,0 +1,288 @@
+{
+  "generated_at": "2026-09-26T10:14:57.812563+00:00",
+  "reference_root": "/user_home/gaojianan/CPMCM/Baseline/reference",
+  "vendor": {
+    "CACR": {
+      "summary": {
+        "files": 261,
+        "bytes": 33942132400
+      },
+      "git": null
+    },
+    "CaReFlow": {
+      "summary": {
+        "files": 12,
+        "bytes": 58564
+      },
+      "git": null
+    },
+    "CMAD": {
+      "summary": {
+        "files": 256,
+        "bytes": 13254588538
+      },
+      "git": null
+    },
+    "CMU-MultimodalSDK": {
+      "summary": {
+        "files": 65,
+        "bytes": 175331
+      },
+      "git": null
+    },
+    "DiscRead-MSA": {
+      "summary": {
+        "files": 29,
+        "bytes": 207069
+      },
+      "git": null
+    },
+    "EBMC": {
+      "summary": {
+        "files": 83,
+        "bytes": 3793082301
+      },
+      "git": null
+    },
+    "EMOE": {
+      "summary": {
+        "files": 226,
+        "bytes": 94540665852
+      },
+      "git": null
+    },
+    "HyperDiff": {
+      "summary": {
+        "files": 41,
+        "bytes": 1136874
+      },
+      "git": null
+    },
+    "MFN": {
+      "summary": {
+        "files": 51,
+        "bytes": 7040356
+      },
+      "git": {
+        "commit": "b0453fb6e21b581c796246a0c32a6551f2028c1b",
+        "tree": "85f2ec6a21b8470cb5637efaf11050d756193ebb",
+        "origin": "https://github.com/pliang279/MFN.git"
+      }
+    },
+    "MMRest": {
+      "summary": {
+        "files": 121,
+        "bytes": 7063718088
+      },
+      "git": null
+    },
+    "MMSA": {
+      "summary": {
+        "files": 505,
+        "bytes": 3807089103
+      },
+      "git": null
+    },
+    "MRUF": {
+      "summary": {
+        "files": 183,
+        "bytes": 6041193447
+      },
+      "git": null
+    },
+    "Multimodal-Transformer": {
+      "summary": {
+        "files": 57,
+        "bytes": 454171
+      },
+      "git": {
+        "commit": "a670936824ee722c8494fd98d204977a1d663c7a",
+        "tree": "a7c1b54314be1d545be54ae7890d47fb76a0d0c0",
+        "origin": "https://github.com/yaohungt/Multimodal-Transformer.git"
+      }
+    },
+    "P-RMF": {
+      "summary": {
+        "files": 270,
+        "bytes": 8839694882
+      },
+      "git": null
+    },
+    "QA-MoE": {
+      "summary": {
+        "files": 132,
+        "bytes": 2420757473
+      },
+      "git": null
+    },
+    "quality-aware-fusion-diagnostic": {
+      "summary": {
+        "files": 47,
+        "bytes": 491338
+      },
+      "git": null
+    },
+    "SentiLLM": {
+      "summary": {
+        "files": 21,
+        "bytes": 116283
+      },
+      "git": null
+    },
+    "TLRA": {
+      "summary": {
+        "files": 171,
+        "bytes": 6675464445
+      },
+      "git": null
+    },
+    "VG-TPT": {
+      "summary": {
+        "files": 20,
+        "bytes": 846298
+      },
+      "git": null
+    }
+  },
+  "artifacts": {
+    "CACR": {
+      "runs": {
+        "files": 197,
+        "bytes": 33941849022
+      },
+      "log": {
+        "files": 1,
+        "bytes": 14
+      },
+      "pt": {
+        "files": 1,
+        "bytes": 36
+      }
+    },
+    "CaReFlow": {},
+    "CMAD": {
+      "runs": {
+        "files": 193,
+        "bytes": 13253676742
+      }
+    },
+    "CMU-MultimodalSDK": {},
+    "DiscRead-MSA": {},
+    "EBMC": {
+      "runs": {
+        "files": 55,
+        "bytes": 895894161
+      }
+    },
+    "EMOE": {
+      "runs": {
+        "files": 169,
+        "bytes": 94539992103
+      }
+    },
+    "HyperDiff": {},
+    "MFN": {
+      "runs": {
+        "files": 2,
+        "bytes": 5149970
+      }
+    },
+    "MMRest": {
+      "runs": {
+        "files": 19,
+        "bytes": 186301
+      }
+    },
+    "MMSA": {
+      "runs": {
+        "files": 327,
+        "bytes": 3806016930
+      },
+      "results": {
+        "files": 1,
+        "bytes": 6570
+      }
+    },
+    "MRUF": {
+      "runs": {
+        "files": 124,
+        "bytes": 6040837308
+      }
+    },
+    "Multimodal-Transformer": {},
+    "P-RMF": {
+      "runs": {
+        "files": 200,
+        "bytes": 8837227693
+      },
+      "log": {
+        "files": 1,
+        "bytes": 0
+      },
+      "ckpt": {
+        "files": 3,
+        "bytes": 0
+      }
+    },
+    "QA-MoE": {
+      "runs": {
+        "files": 67,
+        "bytes": 2420509365
+      }
+    },
+    "quality-aware-fusion-diagnostic": {},
+    "SentiLLM": {},
+    "TLRA": {
+      "runs": {
+        "files": 119,
+        "bytes": 6675208005
+      }
+    },
+    "VG-TPT": {},
+    "AUMDF": {
+      "runs": {
+        "files": 161,
+        "bytes": 3060695476
+      },
+      "artifacts": {
+        "files": 46,
+        "bytes": 1134711818
+      }
+    },
+    "Concat-MLP": {
+      "runs": {
+        "files": 127,
+        "bytes": 3313922693
+      }
+    },
+    "Early-Fusion-GRU": {
+      "runs": {
+        "files": 84,
+        "bytes": 1810003905
+      }
+    },
+    "EF-LSTM": {
+      "runs": {
+        "files": 19,
+        "bytes": 16986155
+      }
+    },
+    "MulT": {
+      "runs": {
+        "files": 58,
+        "bytes": 521453241
+      }
+    },
+    "TFN": {
+      "runs": {
+        "files": 100,
+        "bytes": 2528373962
+      }
+    },
+    "problem2_fair": {},
+    "protocol_src": {},
+    "protocol_tests": {},
+    "_data": {},
+    "data_views": {}
+  }
+}

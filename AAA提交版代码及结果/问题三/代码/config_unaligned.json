@@ -1,0 +1,15 @@
+{
+  "seed": 2031,
+  "official_seeds": [
+    2031
+  ],
+  "device": "cuda:0",
+  "checkpoint": "AAAmodel/checkpoints/selected/problem2/unaligned_gate_B0_primary.pt",
+  "appendix4": "AAAdata/Appendix_4/未对齐版本",
+  "results": "AAA提交版代码及结果/问题三/主要结果",
+  "result_tag": "未对齐版本",
+  "evidence_eta": 0.7,
+  "associate_topk": 5,
+  "stability_repeats": 3,
+  "stability_noise": 0.01
+}

@@ -15,6 +15,7 @@ from e_emotion.data.repositories import (
     ExplainabilityRepository,
     MissingModalityRepository,
 )
+from e_emotion.data.processed import build_processed_manifest, load_processed_dataset
 
 
 @dataclass(frozen=True)
@@ -115,3 +116,83 @@ def validate_data_root(data_root: str | Path) -> dict[str, Any]:
         "attachment4_unaligned": sum(explain.path_for(i, "unaligned").is_file() for i in range(1, 21)),
     }
     return reports
+
+
+def inspect_processed_root(processed_root: str | Path) -> dict[str, Any]:
+    """Inspect the canonical processed NPZ root without opening legacy PKL files."""
+
+    root = Path(processed_root).expanduser().resolve()
+    split_records: dict[str, Any] = {}
+    for split in ("train", "valid", "test"):
+        path = root / f"{split}.npz"
+        split_records[split] = {
+            "path": str(path),
+            "exists": path.is_file(),
+            "bytes": path.stat().st_size if path.is_file() else None,
+        }
+    return {
+        "processed_root": str(root),
+        "source_format": "npz",
+        "feature_version": "aligned_50",
+        "splits": split_records,
+        "mask_semantics": {
+            "text_token_padding": "P = ~Q",
+            "text_content_observed": "mT (content positions; mT is a subset of Q)",
+            "audio_native_valid": "mA (native availability; not a pure padding mask)",
+            "vision_native_valid": "mV (native availability; not a pure padding mask)",
+            "synthetic_missing": "generated separately for Q2",
+            "observed": "native_valid_mask & ~synthetic_missing_mask",
+        },
+    }
+
+
+def validate_processed_root(
+    processed_root: str | Path,
+    *,
+    expected_split_sizes: Mapping[str, int] | None = None,
+) -> dict[str, Any]:
+    """Validate train/valid/test through the shared NPZ contract."""
+
+    report = inspect_processed_root(processed_root)
+    errors: list[str] = []
+    try:
+        dataset = load_processed_dataset(processed_root)
+    except (OSError, ValueError) as exc:
+        report["errors"] = [str(exc)]
+        report["valid"] = False
+        return report
+
+    manifest = build_processed_manifest(dataset)
+    split_sizes = manifest["split_sizes"]
+    if expected_split_sizes is not None:
+        for split, expected in expected_split_sizes.items():
+            actual = split_sizes.get(split)
+            if actual != int(expected):
+                errors.append(f"{split} size must be {expected}, got {actual}")
+
+    native_false_counts: dict[str, dict[str, int]] = {}
+    observed_false_counts: dict[str, dict[str, int]] = {}
+    for split_name in ("train", "valid", "test"):
+        split = dataset[split_name]
+        native_false_counts[split_name] = {
+            modality: int((~split.native_valid_mask[modality]).sum())
+            for modality in ("text", "audio", "vision")
+        }
+        observed_false_counts[split_name] = {
+            modality: int((~split.observed_mask[modality]).sum())
+            for modality in ("text", "audio", "vision")
+        }
+
+    report.update(
+        {
+            "valid": not errors,
+            "errors": errors,
+            "split_sizes": split_sizes,
+            "field_schema": manifest["field_schema"],
+            "data_hashes": manifest["data_hashes"],
+            "native_invalid_counts": native_false_counts,
+            "observed_invalid_counts": observed_false_counts,
+            "sample_id_coverage": manifest["sample_id_coverage"],
+        }
+    )
+    return report

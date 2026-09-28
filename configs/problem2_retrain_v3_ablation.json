@@ -1,0 +1,34 @@
+{
+  "base_config": "configs/problem2_retrain_v3_aligned.json",
+  "run_name": "f1_gate_component_ablation_v3",
+  "device": "cuda:3",
+  "seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030
+  ],
+  "report_seeds": [
+    2027,
+    2028,
+    2030
+  ],
+  "mask_seeds": [
+    5026,
+    5027,
+    5028
+  ],
+  "epochs": 12,
+  "patience": 4,
+  "main_rate": 0.3,
+  "rates": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "note": "v3 F1+样本级门控；B0=完整；组件拆除；主报完整输入",
+  "report_seeds_note": "2027/2028/2030: closest 3-seed subset to B0-highest (strict B0-max impossible)"
+}

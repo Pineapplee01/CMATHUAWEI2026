@@ -1,29 +1,27 @@
-# 2026年中国研究生数学建模竞赛 E题
+# 复杂场景下多模态情感识别
 
-本项目面向“复杂场景下多模态情感预测的数学建模与算法设计”，采用共享核心与三任务域结构：
+采用现有分析报告的竞赛背景。环境为CPMCM（Python 3.11、GPU PyTorch）；模型在AAAmodel，数据在AAAdata，各问代码、说明与结果在problemX。
 
-1. 问题1：多模态特征提取与时序对齐；
-2. 问题2：局部模态缺失下的鲁棒情感预测；
-3. 问题3：可解释多模态情感预测。
+- 问题一：[三种模态无效片段识别](problem1/三种模态无效片段识别方法.md)。
+- 问题二：[问题二正式模型与运行入口](problem2/README.md)。正式权重为 `AAAmodel/checkpoints/problem2_aligned.pt`，seed2026 test ACC=72.63%，不增加CLS/SEP输出分支；唯一架构文件为 `problem2/model.py`。
+- 问题三：[代码与配置](problem3/)。加载问题二使用 `problem2.training.restore`，应核对问题三配置中的checkpoint及SHA是否对应问题二正式模型。
 
-## 初始化环境
+## 问题二论文消融实验
 
-```powershell
-conda env create -f environment.yml
-conda activate cmath-e2026
-python -m pip install -e ".[data,visualization,test]"
+```bash
+conda activate CPMCM
+python -m problem2.ablation
 ```
 
-将题目附件完整复制到 `data/raw/` 后，执行数据探针：
+默认五个seed，对六组实验输出性能、连续缺失鲁棒性、稳定性、隐空间补偿和门控干预分析，生成六张PNG/PDF论文图。详细设置及小样本检查命令见[消融实验说明](problem2/消融实验说明.md)。研究实验不自动替换问题二正式模型，也不能把其新模块描述为已采用模型的既有功能。
 
-```powershell
-e-emotion inspect-data --config configs/base.yaml
-e-emotion validate-data --config configs/base.yaml
-pytest
+旧README、旧架构与过期入口见[整理归档](archives/20260925_problem2_f1_cleanup/README.md)。保留历史结果与模型用于审计，当前使用以上入口。
+
+## 完整运行总入口
+
+```bash
+conda activate CPMCM
+python run_problem2.py
 ```
 
-问题2和问题3的 `dataset.variant` 必须明确填写 `aligned` 或 `unaligned` 后再运行。共享核心提供契约、校验器、评分和任务接口；AUMDF 的历史适配记录位于 [Baseline Workspace](references/memory/history/aumdf/README.md)。
-
-独立的 [竞赛需求清单](docs/evaluation/requirements.md) 区分官方规则与团队约定。所有基线应接入 [统一评分层](docs/evaluation/protocol.md)：输出适配时固定截断，评分时不改预测。使用 `python -m e_emotion score --help` 查看跨模型CSV评分入口。
-
-术语约束见 [UBIQUITOUS_LANGUAGE.md](UBIQUITOUS_LANGUAGE.md)，项目上下文见 [conductor/index.md](conductor/index.md)。
+默认串联代码检查、正式权重test/valid及连续缺失评估、附件3预测、五seed六组研究消融与绘图。自选seed、仅评估及断点续跑用法见[总脚本使用说明](problem2/完整运行脚本使用说明.md)。
